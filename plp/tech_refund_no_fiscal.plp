@@ -1,0 +1,62 @@
+{
+  "plpVersion": "2.0.0",
+  "feedbackToken": "pqbismefnkDkalHYhBbcdltjlQKzALkj",
+  "feedbackUrl": "https:\/\/shop.piletilevi.ee\/cgi-bin\/wspd_cgi.sh\/WService=plevi\/proc\/myygikorv.p?ajax=feedback",
+  "printingDriverVersion": "",
+  "printingDriverVersionUrl": "",
+  "salesPointText": "Пункт продажи:",
+  "salesPointCountry": "",
+  "salesPoint": "Kvitki TEST Salespoint",
+  "transactionDateTime": "23.04.2018 21:51",
+  "fiscalData": {
+    "operation": "refund",
+    "businessTransactionId": "16373979",
+    "saleTransactionId": "16373978",
+    "cardPaymentUnitSettings": {
+      "cardPaymentUnit": "",
+      "cardPaymentUnitXml": "",
+      "cardPaymentUnitIp": "",
+      "cardPaymentUnitPort": ""
+    },
+    "printerData": {
+      "type": "",
+      "printerName": "",
+      "printerRegNumber": "",
+      "comPortNumber": 0,
+      "comPortBaudRate": 0,
+      "readTimeout": 0,
+      "writeTimeout": 0,
+      "adminPw": "",
+      "cashierPw": "",
+      "certUserPw": "",
+      "sysAdminPw": ""
+    },
+    "payments": [
+      {
+        "type": "1",
+        "name": "Наличные деньги",
+        "cost": 4.0,
+        "components": [
+          {
+            "amount": 1,
+            "cost": 2.0,
+            "kkm": true,
+            "name": "Билет",
+            "ticketId": "159749923",
+            "type": "Билеты",
+            "vatGroup": "0"
+          },
+          {
+            "amount": 1,
+            "cost": 2.0,
+            "kkm": true,
+            "name": "Билет",
+            "ticketId": "159749924",
+            "type": "Билеты",
+            "vatGroup": "0"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "plpVersion": "2.0.0",
+  "feedbackToken": "ATepjldkLchbaPabicdlTjIkMclpCLGH",
+  "feedbackUrl": "https:\/\/shop.piletilevi.ee\/cgi-bin\/wspd_cgi.sh\/WService=plevi\/proc\/myygikorv.p?ajax=feedback",
+  "printingDriverVersion": "",
+  "printingDriverVersionUrl": "",
+  "salesPointText": "Пункт продажи:",
+  "salesPointCountry": "Беларусь",
+  "salesPoint": "* Kvitki.by",
+  "transactionDateTime": "23.04.2018 21:58",
+  "fiscalData": {
+    "operation": "refund",
+    "businessTransactionId": "16374004",
+    "saleTransactionId": "13152081",
+    "cardPaymentUnitSettings": {
+      "cardPaymentUnit": "",
+      "cardPaymentUnitXml": "",
+      "cardPaymentUnitIp": "",
+      "cardPaymentUnitPort": ""
+    },
+    "printerData": {
+      "type": "fiscal",
+      "printerName": "ШТРИХ-ФР-К (B.2)",
+      "printerRegNumber": "123321",
+      "comPortNumber": 5,
+      "comPortBaudRate": 115200,
+      "readTimeout": 30,
+      "writeTimeout": 30,
+      "adminPw": "29000",
+      "cashierPw": "1000",
+      "certUserPw": "",
+      "sysAdminPw": "30000"
+    },
+    "payments": [
+      {
+        "type": "1",
+        "name": "Наличные деньги",
+        "cost": 44.0,
+        "components": [
+          {
+            "amount": 1,
+            "cost": 20.0,
+            "kkm": true,
+            "name": "Билет",
+            "ticketId": "130911027",
+            "type": "Билеты",
+            "vatGroup": "0"
+          },
+          {
+            "amount": 1,
+            "cost": 20.0,
+            "kkm": true,
+            "name": "Билет",
+            "ticketId": "130911028",
+            "type": "Билеты",
+            "vatGroup": "0"
+          },
+          {
+            "amount": 2,
+            "cost": 2.0,
+            "kkm": true,
+            "name": "Ceрвиcный сбор",
+            "type": "Дополнительные оплаты",
+            "vatGroup": "0"
+          }
+        ]
+      }
+    ]
+  }
+}

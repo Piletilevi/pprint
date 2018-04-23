@@ -1,0 +1,29 @@
+{
+  "plpVersion": "2.0.0",
+  "feedbackToken": "pqbismefnkDkalHYhBbcdltjlQKzALkj",
+  "feedbackUrl": "https:\/\/shop.piletilevi.ee\/cgi-bin\/wspd_cgi.sh\/WService=plevi\/proc\/cashier_mod.p?ajax=feedback",
+  "operationToken": "251857",
+  "printingDriverVersion": "",
+  "printingDriverVersionUrl": "",
+  "salesPointText": "Пункт продажи:",
+  "salesPointCountry": "",
+  "salesPoint": "Kvitki TEST Salespoint",
+  "transactionDateTime": "23.04.2018 21:50",
+  "fiscalData": {
+    "operation": "insertcash",
+    "cashAmount": 10.0,
+    "printerData": {
+      "type": "",
+      "printerName": "",
+      "printerRegNumber": "",
+      "comPortNumber": 0,
+      "comPortBaudRate": 0,
+      "readTimeout": 0,
+      "writeTimeout": 0,
+      "adminPw": "",
+      "cashierPw": "",
+      "certUserPw": "",
+      "sysAdminPw": ""
+    }
+  }
+}

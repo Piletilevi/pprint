@@ -1,0 +1,29 @@
+{
+  "plpVersion": "2.0.0",
+  "feedbackToken": "ATepjldkLchbaPabicdlTjIkMclpCLGH",
+  "feedbackUrl": "https:\/\/shop.piletilevi.ee\/cgi-bin\/wspd_cgi.sh\/WService=plevi\/proc\/cashier_mod.p?ajax=feedback",
+  "operationToken": "251864",
+  "printingDriverVersion": "",
+  "printingDriverVersionUrl": "",
+  "salesPointText": "Пункт продажи:",
+  "salesPointCountry": "Беларусь",
+  "salesPoint": "* Kvitki.by",
+  "transactionDateTime": "23.04.2018 21:57",
+  "fiscalData": {
+    "operation": "insertcash",
+    "cashAmount": 10.0,
+    "printerData": {
+      "type": "fiscal",
+      "printerName": "ШТРИХ-ФР-К (B.2)",
+      "printerRegNumber": "123321",
+      "comPortNumber": 5,
+      "comPortBaudRate": 115200,
+      "readTimeout": 30,
+      "writeTimeout": 30,
+      "adminPw": "29000",
+      "cashierPw": "1000",
+      "certUserPw": "",
+      "sysAdminPw": "30000"
+    }
+  }
+}

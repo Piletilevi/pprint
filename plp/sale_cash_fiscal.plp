@@ -1,0 +1,131 @@
+{
+  "plpVersion": "2.0.0",
+  "feedbackToken": "kScaLiUkiiXafnBFipIYfkjkhkVppjxk",
+  "feedbackUrl": "https:\/\/shop.piletilevi.ee\/cgi-bin\/wspd_cgi.sh\/WService=plevi\/proc\/myygikorv.p?ajax=feedback",
+  "printingDriverVersion": "",
+  "printingDriverVersionUrl": "",
+  "salesPointText": "Пункт продажи:",
+  "salesPointCountry": "Беларусь",
+  "salesPoint": "* Kvitki.by",
+  "transactionDateTime": "23.04.2018 21:50",
+  "ticketData": {
+    "printerData": {
+      "type": "tickets",
+      "printerName": "Kvitki"
+    },
+    "tickets": [
+      {
+        "ticketId": "159749923",
+        "ticketBarCode": "68270101923844",
+        "eventName1": "Test show Alina",
+        "eventName2": "взрослый",
+        "eventLocation": "Республиканский театр белорусской драматургии",
+        "eventDateTime": "СРЕДА 01.01.2020  Время 19:00",
+        "infoText1": "взрослый",
+        "infoText2": "взрослый",
+        "infoText3": "Полный билет, все хорошо",
+        "infoText4": "взрослый",
+        "infoText5": "взрослый",
+        "infoTextPdf": "код на скидку на VIP-билет в Аквапарк: AQUA",
+        "section1": "Партер",
+        "section2": "Партер",
+        "row1": "РЯД 8",
+        "row2": "8",
+        "seat1": "МЕСТО 6",
+        "seat2": "6",
+        "priceGroup1": "Взрослый билет",
+        "priceGroup2": "В",
+        "ticketPrice": "2.00 Бел.руб.",
+        "serviceFee": "",
+        "extraFee": "0.00 Бел.руб.",
+        "totalText": "Всего",
+        "totalPrice": "2.00 Бел.руб.",
+        "imageTop": "http:\/\/images.piletilevi.ee\/tickets\/top_1516006122_600x55.jpg",
+        "imageLeft": "http:\/\/images.piletilevi.ee\/tickets\/left_1516006098_150x245.jpg",
+        "imageBottom": "http:\/\/images.piletilevi.ee\/tickets\/bottom_1516006139_600x40.jpg",
+        "saleDateTime": "23.04.2018 21:50"
+      },
+      {
+        "ticketId": "159749924",
+        "ticketBarCode": "43270101924685",
+        "eventName1": "Test show Alina",
+        "eventName2": "взрослый",
+        "eventLocation": "Республиканский театр белорусской драматургии",
+        "eventDateTime": "СРЕДА 01.01.2020  Время 19:00",
+        "infoText1": "взрослый",
+        "infoText2": "взрослый",
+        "infoText3": "Полный билет, все хорошо",
+        "infoText4": "взрослый",
+        "infoText5": "взрослый",
+        "infoTextPdf": "код на скидку на VIP-билет в Аквапарк: AQUA",
+        "section1": "Партер",
+        "section2": "Партер",
+        "row1": "РЯД 8",
+        "row2": "8",
+        "seat1": "МЕСТО 7",
+        "seat2": "7",
+        "priceGroup1": "Взрослый билет",
+        "priceGroup2": "В",
+        "ticketPrice": "2.00 Бел.руб.",
+        "serviceFee": "",
+        "extraFee": "0.00 Бел.руб.",
+        "totalText": "Всего",
+        "totalPrice": "2.00 Бел.руб.",
+        "imageTop": "http:\/\/images.piletilevi.ee\/tickets\/top_1516006122_600x55.jpg",
+        "imageLeft": "http:\/\/images.piletilevi.ee\/tickets\/left_1516006098_150x245.jpg",
+        "imageBottom": "http:\/\/images.piletilevi.ee\/tickets\/bottom_1516006139_600x40.jpg",
+        "saleDateTime": "23.04.2018 21:50"
+      }
+    ]
+  },
+  "fiscalData": {
+    "operation": "sale",
+    "businessTransactionId": "16373970",
+    "cardPaymentUnitSettings": {
+      "cardPaymentUnit": "",
+      "cardPaymentUnitXml": "",
+      "cardPaymentUnitIp": "",
+      "cardPaymentUnitPort": ""
+    },
+    "printerData": {
+      "type": "fiscal",
+      "printerName": "ШТРИХ-ФР-К (B.2)",
+      "printerRegNumber": "123321",
+      "comPortNumber": 5,
+      "comPortBaudRate": 115200,
+      "readTimeout": 30,
+      "writeTimeout": 30,
+      "adminPw": "29000",
+      "cashierPw": "1000",
+      "certUserPw": "",
+      "sysAdminPw": "30000"
+    },
+    "payments": [
+      {
+        "type": "1",
+        "name": "Наличные деньги",
+        "cost": 4.0,
+        "components": [
+          {
+            "amount": 1,
+            "cost": 2.0,
+            "kkm": true,
+            "name": "Билет",
+            "ticketId": "159749923",
+            "type": "Билеты",
+            "vatGroup": "0"
+          },
+          {
+            "amount": 1,
+            "cost": 2.0,
+            "kkm": true,
+            "name": "Билет",
+            "ticketId": "159749924",
+            "type": "Билеты",
+            "vatGroup": "0"
+          }
+        ]
+      }
+    ]
+  }
+}
