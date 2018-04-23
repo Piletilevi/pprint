@@ -1,0 +1,33 @@
+# coding: utf-8
+
+---
+insertcash:
+  reply: "Наличные успешно внесены"
+  exactReply: "{:.2f} рублей успешно внесены"
+withdrawcash:
+  reply: "Наличные успешно изъяты"
+  exactReply: "{:.2f} рублей успешно изъяты"
+cut:
+  reply: "Кассовая лента отрезана"
+  exactReply: ""
+feed:
+  reply: "Протяжка осуществлена"
+  exactReply: ""
+startshift:
+  reply: "Смена начата"
+  exactReply: ""
+endshift:
+  reply: "Смена закончена"
+  exactReply: ""
+xreport:
+  reply: "Промежутончый отчет (X-отчет) распечатан"
+  exactReply: ""
+opencashreg:
+  reply: "Денежный ящик открыт"
+  exactReply: ""
+sale:
+  reply: "Продажа зафиксирована в фискальном регистраторе"
+  exactReply: "Продажа на {:.2f} рублей зафиксирована в фискальном регистраторе"
+refund:
+  reply: "Возврат зафиксирован в фискальном регистраторе"
+  exactReply: "Возврат на {:.2f} рублей зафиксирован в фискальном регистраторе"

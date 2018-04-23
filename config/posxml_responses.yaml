@@ -1,0 +1,66 @@
+# coding: utf-8
+
+---
+CancelAllOperationsRequest:
+  - CancelAllOperationsResponse
+ChangeLanguageRequest:
+  - ChangeLanguageResponse
+ClientCardRequest:
+  - ClientCardResponse
+  - ClientCardPINResponse
+DiscountTransactionRequest:
+  - DiscountTransactionResponse
+DisplayMessageRequest:
+  - DisplayMessageResponse
+DoBeepRequest:
+  - DoBeepResponse
+FallbackTransactionRequest:
+  - FallbackTransactionResponse
+FinishTransactionRequest:
+  - TransactionResponse
+GetLastTransactionDataRequest:
+  - GetLastTransactionDataResponse
+GetParametersRequest:
+  - GetParametersResponse
+GetTerminalStatusRequest:
+  - GetTerminalStatusResponse
+PrintCustomerReceiptRequest:
+  - PrintCustomerReceiptResponse
+PrintFormFeedRequest:
+  - PrintFormFeedResponse
+PrintImageFileRequest:
+  - PrintImageFileResponse
+PrintLineFeedRequest:
+  - PrintLineFeedResponse
+PrintLineRequest:
+  - PrintLineResponse
+PrintMerchantReceiptRequest:
+  - PrintMerchantReceiptResponse
+ReadCardRequest:
+  - ReadCardResponse
+ReadIDCardRequest:
+  - IDCardResponse
+RefundTransactionRequest:
+  - RefundTransactionResponse
+ReverseTransactionRequest:
+  - ReverseTransactionResponse
+SetClientPANRequest:
+  - SetClientPANResponse
+SetECRPANRequest:
+  - SetECRPANResponse
+SetParametersRequest:
+  - SetParametersResponse
+ShowInfoRequest:
+  - ShowInfoResponse
+TransactionCurrStatusRequest:
+  - TransactionCurrStatusResponse
+TransactionMagStripeRequest:
+  - TransactionMagStripeResponse
+TransactionRequest:
+  - TransactionResponse
+TransactionSendRequest:
+  - TransactionSendResponse
+TransactionSendStatusRequest:
+  - TransactionSendStatusResponse
+VoiceTransactionRequest:
+  - VoiceTransactionResponse

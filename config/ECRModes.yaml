@@ -1,0 +1,45 @@
+# coding: utf-8
+
+---
+ECRMode:
+- code: 0
+  name: "Printer in working mode"
+- code: 1
+  name: "Providing data"
+- code: 2
+  name: "Shift is opened for less than 24h"
+- code: 3
+  name: "Shift is opened for more than 24h"
+- code: 4
+  name: "Shift closed"
+- code: 5
+  name: "Blocked because of wrong password of tax inspector"
+- code: 6
+  name: "Waiting for confirmation of data input"
+- code: 7
+  name: "Permission for change of decimal position"
+- code: 8
+  name: "Document opened"
+  ECRMode8Status:
+  - code: 0
+    name: "Sales recipe opened"
+  - code: 1
+    name: "Buy recipe opened"
+  - code: 2
+    name: "Return of sales recipe opened"
+  - code: 3
+    name: "Return of buy recipe opened"
+- code: 9
+  name: "Mode permits zeroing process"
+- code: 10
+  name: "Test drive"
+- code: 11
+  name: "Printing of full fiscal report"
+- code: 12
+  name: "Printing of long EKLZ report"
+- code: 13
+  name: "Work with the fiscal backer document"
+- code: 14
+  name: "Print the slip paper"
+- code: 15
+  name: "Fiscal skid document formed"

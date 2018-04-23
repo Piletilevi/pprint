@@ -1,0 +1,67 @@
+{
+  "plpVersion": "2.0.0",
+  "feedbackToken": "kjhUlaaCdcakKynfQZlqhjlFlmllbiZQ",
+  "feedbackUrl": "http:\/\/bo.piletilevi-ru.test.helmes.ee\/cgi-bin\/wspd_cgi.sh\/WService=plevi\/proc\/myygikorv.p?ajax=feedback",
+  "operationToken": "",
+  "printingDriverVersion": "",
+  "printingDriverVersionUrl": "",
+  "salesPointText": "Пункт продажи:",
+  "salesPointCountry": "",
+  "salesPoint": "*Касса 1",
+  "transactionDateTime": "12.05.2017 12:15",
+  "fiscalData": {
+    "operation": "refund",
+    "businessTransactionId": "13782947",
+    "saleTransactionId": "13782946",
+    "cardPaymentUnitSettings": {
+      "cardPaymentUnit": ""
+    },
+    "printerData": {
+      "type": "fiscal",
+      "printerName": "ШТРИХ-ФР-К (B.3)",
+      "printerRegNumber": "123456",
+      "comPortNumber": 3,
+      "comPortBaudRate": 6,
+      "readTimeout": 100,
+      "writeTimeout": 100,
+      "adminPw": "29000",
+      "cashierPw": "1000",
+      "certUserPw": "",
+      "sysAdminPw": "30000"
+    },
+    "payments": [
+      {
+        "type": "1",
+        "name": "Наличные деньги",
+        "cost": 50.5,
+        "components": [
+          {
+            "amount": 1,
+            "cost": 49.0,
+            "kkm": true,
+            "name": "Билет",
+            "ticketId": "137123933",
+            "type": "Билеты",
+            "vatGroup": "0"
+          },
+          {
+            "amount": 1,
+            "cost": 1.0,
+            "kkm": true,
+            "name": "Tagastatav lisatasu",
+            "type": "Дополнительные оплаты",
+            "vatGroup": "0"
+          },
+          {
+            "amount": 1,
+            "cost": 0.5,
+            "kkm": true,
+            "name": "Mittetagastatav lisatasu RUS",
+            "type": "Дополнительные оплаты",
+            "vatGroup": "0"
+          }
+        ]
+      }
+    ]
+  }
+}
