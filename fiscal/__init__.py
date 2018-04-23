@@ -5,7 +5,7 @@ class fiscal():
     def __init__(self):
         print("INSIDE", __name__, ".__init__()")
 
-    @decorators.entry_exit
+    @decorators.profiler
     @decorators.logging
     def __call__():
         print("inside", __name__, ".__call__()")

@@ -1,10 +1,10 @@
-class entry_exit(object):
+class profiler(object):
 
     def __init__(self, f):
         self.f = f
         self.__name__ = f.__name__
         def wrapped():
-            print('EED:inside entry_exit.__init__() for', f.__name__)
+            print('EED:inside profiler.__init__() for', f.__name__)
         return wrapped()
 
     def __call__(self):
