@@ -1,6 +1,6 @@
-# import decorators
-#
-# @decorators.profiler
+import decorators
+
+@decorators.profiler
 def update(downloadURL):
 
     import os

@@ -1,18 +1,34 @@
+import time
+current_milli_time = lambda: int(round(time.time() * 1000))
+
 class profiler(object):
 
-    def __init__(self, f):
-        self.f = f
-        self.__name__ = f.__name__
-        def wrapped():
-            print('EED:inside profiler.__init__() for', f.__name__)
-        return wrapped()
+    def __init__(self, topic):
+        if isinstance(topic, str):
+            self.topic = topic
+        else:
+            raise ValueError('Profiler decorator requires a topic.')
 
-    def __call__(self):
-        def wrapped():
-            print('EED:entering', self.f.__name__)
-            self.f()
-            print('EED:exiting', self.f.__name__)
-        return wrapped()
+        self.decoration_time = current_milli_time()
+        print('PR:inside __init__ of', __name__, self.decoration_time)
+
+
+    def __call__(self, f):
+        """
+        If there are decorator arguments, __call__() is only called
+        once, as part of the decoration process! You can only give
+        it a single argument, which is the function object.
+        """
+        self.f = f
+        print('PR:inside __call__ of', __name__, current_milli_time() - self.decoration_time)
+        def wrapped_f(*args):
+            start_ms = current_milli_time()
+            print('PR:inside wrapped_f() of', __name__)
+            print('Begin', self.topic, current_milli_time() - self.decoration_time, 'ms after decoration')
+            self.f(*args)
+            print('Finish', self.topic, current_milli_time() - start_ms, 'ms after begin')
+            # print('After f(*args)', current_milli_time() - start_ms, 'ms')
+        return wrapped_f
 
 
 class logging(object):
