@@ -3,7 +3,7 @@
   "feedbackToken": "pqbismefnkDkalHYhBbcdltjlQKzALkj",
   "feedbackUrl": "https:\/\/shop.piletilevi.ee\/cgi-bin\/wspd_cgi.sh\/WService=plevi\/proc\/cashier_mod.p?ajax=feedback",
   "operationToken": "251861",
-  "printingDriverVersion": "1.0.0",
+  "printingDriverVersion": "3.0.0",,
   "printingDriverVersionUrl": "",
   "salesPointText": "Пункт продажи:",
   "salesPointCountry": "",
