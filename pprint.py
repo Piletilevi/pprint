@@ -26,10 +26,13 @@ with open(PLP_FILENAME, 'r', encoding='utf-8') as plp_data_file:
 # 0
 # Update
 # Make sure we are on required version
-if PLP_JSON_DATA.get('printingDriverVersion') != __version__:
-    from _update import update
-    print('updating from ' + __version__ + ' to ' + PLP_JSON_DATA.get('printingDriverVersion'))
-    update('https://github.com/Piletilevi/printsrv3/raw/8a19e3531a91d77dfa14f51425e6b9ed3bc98df5/plevi.zip')
+printingDriverVersion = PLP_JSON_DATA.get('printingDriverVersion')
+if printingDriverVersion and printingDriverVersion != __version__:
+    printingDriverVersionUrl = PLP_JSON_DATA.get('printingDriverVersionUrl')
+    if printingDriverVersionUrl:
+        from _update import update
+        print('updating from ' + __version__ + ' to ' + PLP_JSON_DATA.get('printingDriverVersion'))
+        update(printingDriverVersionUrl)
 
 
 
