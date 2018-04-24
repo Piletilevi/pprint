@@ -2,7 +2,7 @@
   "plpVersion": "2.0.0",
   "feedbackToken": "kScaLiUkiiXafnBFipIYfkjkhkVppjxk",
   "feedbackUrl": "https:\/\/shop.piletilevi.ee\/cgi-bin\/wspd_cgi.sh\/WService=plevi\/proc\/myygikorv.p?ajax=feedback",
-  "printingDriverVersion": "",
+  "printingDriverVersion": "1.0.0",
   "printingDriverVersionUrl": "",
   "salesPointText": "Пункт продажи:",
   "salesPointCountry": "Беларусь",
