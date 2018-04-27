@@ -16,7 +16,7 @@ def update(downloadURL):
         application_path = sys.path[0]
 
     download_path = os.path.join(application_path, 'downloading')
-    # print('download_path', download_path)
+    print('download_path', download_path)
     if not os.path.exists(download_path):
         os.mkdir(download_path)
 
@@ -26,40 +26,28 @@ def update(downloadURL):
 
     #  save package to download dir
     path_to_zip_file = os.path.join(download_path, 'download.zip')
-    # print('path_to_zip_file', path_to_zip_file)
+    print('path_to_zip_file', path_to_zip_file)
     with open(path_to_zip_file, 'wb') as fd:
         for chunk in r.iter_content(chunk_size=128):
             fd.write(chunk)
 
     #  unpack downloaded package
     zip_ref = zipfile.ZipFile(path_to_zip_file, 'r')
+    root_in_zip = zip_ref.namelist()[0]
     zip_ref.extractall(download_path)
     zip_ref.close()
     os.remove(path_to_zip_file)
+    # sys.exit(0)
 
 
-                #  update packaged files
-                # for root, subdirs, files in os.walk(download_path):
-                #     print('--\nroot = ' + root)
-                #     rel_path = os.path.relpath(root, download_path)
-                #     print('\nrelpath = ' + rel_path)
-                #     target_path = os.path.normpath(os.path.join(application_path, rel_path))
-                #     print('\ntargetpath = ' + target_path)
-                #
-                #     for filename in files:
-                #         source_file_path = os.path.join(root, filename)
-                #         target_file_path = os.path.join(target_path, filename)
-                #         # copy files and meta
-                #         shutil.copy2(source_file_path, target_file_path))
-
-    # print('Copy', download_path, application_path)
+    print('Copy', os.path.join(download_path, root_in_zip), application_path)
     try:
-        copytree(download_path, application_path)
+        copytree(os.path.join(download_path, root_in_zip), application_path)
     except ValueError as err:
         print(err.args)
         sys.exit(1)
 
-    # print('Removing', download_path)
+    print('Removing', download_path)
     shutil.rmtree(download_path, ignore_errors=False)
     print('\nRestarting after update...\n')
     python = sys.executable
@@ -79,7 +67,7 @@ def copytree(src, dst, symlinks=False, ignore=None):
         else:
             if not os.path.exists(d) or os.stat(s).st_mtime - os.stat(d).st_mtime > 1:
                 try:
-                    # print('copy2', s, '=>>', d)
+                    print('copy2', s, '=>>', d)
                     shutil.copy2(s, d)
                 except Exception as e:
                     errors += 1

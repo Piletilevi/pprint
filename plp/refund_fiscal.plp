@@ -3,7 +3,7 @@
   "feedbackToken": "ATepjldkLchbaPabicdlTjIkMclpCLGH",
   "feedbackUrl": "https:\/\/shop.piletilevi.ee\/cgi-bin\/wspd_cgi.sh\/WService=plevi\/proc\/myygikorv.p?ajax=feedback",
   "printingDriverVersion": "3.0.0",
-  "printingDriverVersionUrl": "http://0.0.0.0:8000/Archive.zip",
+  "printingDriverVersionUrl": "https://github.com/Piletilevi/pprint/archive/test.zip",
   "salesPointText": "Пункт продажи:",
   "salesPointCountry": "Беларусь",
   "salesPoint": "* Kvitki.by",
