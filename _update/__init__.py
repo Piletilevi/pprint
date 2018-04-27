@@ -1,4 +1,5 @@
 import decorators
+import shutil
 import os
 import sys
 
@@ -7,7 +8,6 @@ def update(downloadURL):
 
     import requests
     import zipfile
-    import shutil
 
     # determine if application is a script file or frozen exe
     if getattr(sys, 'frozen', False):
@@ -16,6 +16,7 @@ def update(downloadURL):
         application_path = sys.path[0]
 
     download_path = os.path.join(application_path, 'downloading')
+    # print('download_path', download_path)
     if not os.path.exists(download_path):
         os.mkdir(download_path)
 
@@ -25,6 +26,7 @@ def update(downloadURL):
 
     #  save package to download dir
     path_to_zip_file = os.path.join(download_path, 'download.zip')
+    # print('path_to_zip_file', path_to_zip_file)
     with open(path_to_zip_file, 'wb') as fd:
         for chunk in r.iter_content(chunk_size=128):
             fd.write(chunk)
@@ -33,6 +35,8 @@ def update(downloadURL):
     zip_ref = zipfile.ZipFile(path_to_zip_file, 'r')
     zip_ref.extractall(download_path)
     zip_ref.close()
+    os.remove(path_to_zip_file)
+
 
                 #  update packaged files
                 # for root, subdirs, files in os.walk(download_path):
@@ -48,15 +52,21 @@ def update(downloadURL):
                 #         # copy files and meta
                 #         shutil.copy2(source_file_path, target_file_path))
 
-    print('Copy', download_path, application_path)
-    copytree(download_path, application_path)
-    print('Removing', download_path)
+    # print('Copy', download_path, application_path)
+    try:
+        copytree(download_path, application_path)
+    except ValueError as err:
+        print(err.args)
+        sys.exit(1)
+
+    # print('Removing', download_path)
     shutil.rmtree(download_path, ignore_errors=False)
 
 
 def copytree(src, dst, symlinks=False, ignore=None):
     if not os.path.exists(dst):
         os.makedirs(dst)
+    errors = 0
     for item in os.listdir(src):
         s = os.path.join(src, item)
         d = os.path.join(dst, item)
@@ -65,10 +75,13 @@ def copytree(src, dst, symlinks=False, ignore=None):
         else:
             if not os.path.exists(d) or os.stat(s).st_mtime - os.stat(d).st_mtime > 1:
                 try:
+                    # print('copy2', s, '=>>', d)
                     shutil.copy2(s, d)
                 except Exception as e:
-                    print('cant overwrite %s', d)
-
+                    errors += 1
+                    print(e, 'cant overwrite %s', d)
+    if errors:
+        raise ValueError('Problem with moving files into place', errors)
 
 
 
