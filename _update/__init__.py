@@ -1,6 +1,6 @@
 import decorators
 
-@decorators.profiler
+@decorators.profiler('_update')
 def update(downloadURL):
 
     import os
@@ -13,7 +13,7 @@ def update(downloadURL):
     if getattr(sys, 'frozen', False):
         application_path = os.path.dirname(sys.executable)
     elif __file__:
-        application_path = os.path.dirname(__file__)
+        application_path = sys.path[0]
 
     download_path = os.path.join(application_path, 'downloading')
     if not os.path.exists(download_path):
@@ -33,7 +33,6 @@ def update(downloadURL):
     zip_ref = zipfile.ZipFile(path_to_zip_file, 'r')
     zip_ref.extractall(download_path)
     zip_ref.close()
-    os.remove(path_to_zip_file)
 
                 #  update packaged files
                 # for root, subdirs, files in os.walk(download_path):
@@ -49,8 +48,10 @@ def update(downloadURL):
                 #         # copy files and meta
                 #         shutil.copy2(source_file_path, target_file_path))
 
-    # copytree(download_path, application_path)
-    # shutil.rmtree(download_path, ignore_errors=False)
+    print('Copy', download_path, application_path)
+    copytree(download_path, application_path)
+    print('Removing', download_path)
+    shutil.rmtree(download_path, ignore_errors=False)
 
 
 def copytree(src, dst, symlinks=False, ignore=None):

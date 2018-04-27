@@ -1,5 +1,5 @@
 from _version import __version__
-print(__version__)
+print('Currently on', __version__)
 
 import sys
 import os
@@ -27,6 +27,7 @@ with open(PLP_FILENAME, 'r', encoding='utf-8') as plp_data_file:
 # Update
 # Make sure we are on required version
 printingDriverVersion = PLP_JSON_DATA.get('printingDriverVersion')
+print('Required version', printingDriverVersion)
 if printingDriverVersion and printingDriverVersion != __version__:
     printingDriverVersionUrl = PLP_JSON_DATA.get('printingDriverVersionUrl')
     if printingDriverVersionUrl:
