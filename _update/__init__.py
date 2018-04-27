@@ -4,7 +4,7 @@ import os
 import sys
 
 @decorators.profiler('_update')
-def update(downloadURL):
+def update(downloadURL, to_version):
 
     import requests
     import zipfile
@@ -37,8 +37,12 @@ def update(downloadURL):
     zip_ref.extractall(download_path)
     zip_ref.close()
     os.remove(path_to_zip_file)
-    # sys.exit(0)
 
+    new_version_file_path = os.path.join(download_path, root_in_zip, '_version.py')
+    with open(new_version_file_path, 'r') as new_version_file:
+        new_version = new_version_file.readline().split("'")[1].strip()
+        if new_version != to_version:
+            raise ValueError('Release version "{rel_v}" doesnot match required version "{req_v}".'.format(rel_v = str(new_version), req_v = str(to_version)))
 
     # print('Copy', os.path.join(download_path, root_in_zip), application_path)
     try:
@@ -52,6 +56,9 @@ def update(downloadURL):
     print('\nRestarting after update...\n')
 
 
+def verify_package_version(ver):
+    print('currently on', ver)
+    sys.exit(0)
 
 def copytree(src, dst, symlinks=False, ignore=None):
     if not os.path.exists(dst):
