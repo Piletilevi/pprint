@@ -25,7 +25,11 @@ class profiler(object):
             start_ms = current_milli_time()
             print('PR:inside wrapped_f() of', __name__)
             print('Begin', self.topic, current_milli_time() - self.decoration_time, 'ms after decoration')
-            self.f(*args)
+            try:
+                self.f(*args)
+            except Exception as e:
+                print('Failed', self.topic, (current_milli_time() - start_ms) / 1e3, 'sec after begin')
+                raise
             print('Finish', self.topic, (current_milli_time() - start_ms) / 1e3, 'sec after begin')
             # print('After f(*args)', current_milli_time() - start_ms, 'ms')
         return wrapped_f

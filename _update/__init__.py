@@ -42,14 +42,10 @@ def update(downloadURL, to_version):
     with open(new_version_file_path, 'r') as new_version_file:
         new_version = new_version_file.readline().split("'")[1].strip()
         if new_version != to_version:
-            raise ValueError('Release version "{rel_v}" doesnot match required version "{req_v}".'.format(rel_v = str(new_version), req_v = str(to_version)))
+            raise ValueError('Release version "{rel_v}" doesnot match required version "{req_v}".'.format(rel_v = new_version, req_v = to_version))
 
     # print('Copy', os.path.join(download_path, root_in_zip), application_path)
-    try:
-        copytree(os.path.join(download_path, root_in_zip), application_path)
-    except ValueError as err:
-        print(err.args)
-        sys.exit(1)
+    copytree(os.path.join(download_path, root_in_zip), application_path)
 
     print('Removing', download_path)
     shutil.rmtree(download_path, ignore_errors=False)
@@ -78,7 +74,7 @@ def copytree(src, dst, symlinks=False, ignore=None):
                     errors += 1
                     print(e, 'cant overwrite %s', d)
     if errors:
-        raise ValueError('Problem with moving files into place', errors)
+        raise ValueError('Problem with moving {errors} files into place'.format(errors = errors))
 
 
 
