@@ -1,10 +1,10 @@
 import decorators
+import os
+import sys
 
 @decorators.profiler('_update')
 def update(downloadURL):
 
-    import os
-    import sys
     import requests
     import zipfile
     import shutil
