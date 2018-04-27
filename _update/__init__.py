@@ -16,7 +16,7 @@ def update(downloadURL):
         application_path = sys.path[0]
 
     download_path = os.path.join(application_path, 'downloading')
-    print('download_path', download_path)
+    # print('download_path', download_path)
     if not os.path.exists(download_path):
         os.mkdir(download_path)
 
@@ -26,7 +26,7 @@ def update(downloadURL):
 
     #  save package to download dir
     path_to_zip_file = os.path.join(download_path, 'download.zip')
-    print('path_to_zip_file', path_to_zip_file)
+    # print('path_to_zip_file', path_to_zip_file)
     with open(path_to_zip_file, 'wb') as fd:
         for chunk in r.iter_content(chunk_size=128):
             fd.write(chunk)
@@ -40,7 +40,7 @@ def update(downloadURL):
     # sys.exit(0)
 
 
-    print('Copy', os.path.join(download_path, root_in_zip), application_path)
+    # print('Copy', os.path.join(download_path, root_in_zip), application_path)
     try:
         copytree(os.path.join(download_path, root_in_zip), application_path)
     except ValueError as err:
@@ -67,7 +67,7 @@ def copytree(src, dst, symlinks=False, ignore=None):
         else:
             if not os.path.exists(d) or os.stat(s).st_mtime - os.stat(d).st_mtime > 1:
                 try:
-                    print('copy2', s, '=>>', d)
+                    # print('copy2', s, '=>>', d)
                     shutil.copy2(s, d)
                 except Exception as e:
                     errors += 1
