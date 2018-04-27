@@ -50,8 +50,6 @@ def update(downloadURL):
     print('Removing', download_path)
     shutil.rmtree(download_path, ignore_errors=False)
     print('\nRestarting after update...\n')
-    python = sys.executable
-    os.execl(python, python, * sys.argv)
 
 
 

@@ -34,6 +34,8 @@ if printingDriverVersion and printingDriverVersion != __version__:
         from _update import update
         print('updating from ' + __version__ + ' to ' + PLP_JSON_DATA.get('printingDriverVersion'))
         update(printingDriverVersionUrl)
+        python = sys.executable
+        os.execl(python, python, * sys.argv)
 
 
 
