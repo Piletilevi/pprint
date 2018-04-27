@@ -26,7 +26,7 @@ class profiler(object):
             print('PR:inside wrapped_f() of', __name__)
             print('Begin', self.topic, current_milli_time() - self.decoration_time, 'ms after decoration')
             self.f(*args)
-            print('Finish', self.topic, current_milli_time() - start_ms, 'ms after begin')
+            print('Finish', self.topic, (current_milli_time() - start_ms) / 1e3, 'sec after begin')
             # print('After f(*args)', current_milli_time() - start_ms, 'ms')
         return wrapped_f
 
