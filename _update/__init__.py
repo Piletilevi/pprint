@@ -42,7 +42,7 @@ def update(downloadURL, to_version):
     with open(new_version_file_path, 'r') as new_version_file:
         new_version = new_version_file.readline().split("'")[1].strip()
         if new_version != to_version:
-            raise ValueError('Release version "{rel_v}" doesnot match required version "{req_v}".'.format(rel_v = new_version, req_v = to_version))
+            raise ValueError('Refusing to update.\nRelease version "{rel_v}" in provided package at "{rel_url}" doesnot match required version "{req_v}".'.format(rel_v = new_version, rel_url = downloadURL, req_v = to_version))
 
     # print('Copy', os.path.join(download_path, root_in_zip), application_path)
     copytree(os.path.join(download_path, root_in_zip), application_path)
