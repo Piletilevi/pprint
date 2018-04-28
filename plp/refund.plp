@@ -4,7 +4,7 @@
   "feedbackUrl": "http:\/\/bo.piletilevi-ru.test.helmes.ee\/cgi-bin\/wspd_cgi.sh\/WService=plevi\/proc\/myygikorv.p?ajax=feedback",
   "operationToken": "",
   "printingDriverVersion": "3.0.0",
-  "printingDriverVersionUrl": "https://www.colorado.edu/conflict/peace/download/peace.zip",
+  "printingDriverVersionUrl": "https://github.com/Piletilevi/pprint/archive/test.zip",
   "salesPointText": "Пункт продажи:",
   "salesPointCountry": "",
   "salesPoint": "*Касса 1",
