@@ -11,7 +11,7 @@ class profiler(object):
             raise ValueError('Profiler decorator requires a topic.')
 
         self.decoration_time = current_milli_time()
-        print('PR:inside __init__ of', __name__, self.decoration_time)
+        # print('PR:inside __init__ of', __name__, self.decoration_time)
 
 
     def __call__(self, f):
@@ -21,10 +21,10 @@ class profiler(object):
         it a single argument, which is the function object.
         """
         self.f = f
-        print('PR:inside __call__ of', __name__, current_milli_time() - self.decoration_time)
+        # print('PR:inside __call__ of', __name__, current_milli_time() - self.decoration_time)
         def wrapped_f(*args):
             start_ms = current_milli_time()
-            print('PR:inside wrapped_f() of', __name__)
+            # print('PR:inside wrapped_f() of', __name__)
             print('Begin', self.topic, current_milli_time() - self.decoration_time, 'ms after decoration')
             try:
                 self.f(*args)

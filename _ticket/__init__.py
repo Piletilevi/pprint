@@ -1,11 +1,5 @@
-class ticket():
-    print("inside", __name__)
-    import decorators
+import decorators
 
-    def __init__(self):
-        print("INSIDE", __name__, ".__init__()")
-
-    @decorators.profiler
-    @decorators.logging
-    def __call__():
-        print("inside", __name__, ".__call__()")
+@decorators.profiler('_ticket')
+def ticket(plpdata):
+    print("my PLP data", plpdata['printerData'])

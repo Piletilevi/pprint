@@ -4,7 +4,7 @@ import sys
 if sys.argv[-1] == '--after-update':
     print('Just updated to', __version__)
 else:
-    print('Currently on', __version__)
+    print('pprint version', __version__)
 
 import os
 
@@ -31,7 +31,6 @@ with open(PLP_FILENAME, 'r', encoding='utf-8') as plp_data_file:
 # Update
 # Make sure we are on required version
 requiredDriverVersion = PLP_JSON_DATA.get('printingDriverVersion')
-print('Required version', requiredDriverVersion)
 if requiredDriverVersion and requiredDriverVersion != __version__:
     requiredDriverVersionUrl = PLP_JSON_DATA.get('printingDriverVersionUrl')
     if sys.argv[-1] == '--after-update':
@@ -40,13 +39,18 @@ if requiredDriverVersion and requiredDriverVersion != __version__:
 
     if requiredDriverVersionUrl:
         from _update import update
-        to_version = requiredDriverVersion
-        print('updating from ' + __version__ + ' to ' + to_version)
-        update(requiredDriverVersionUrl, to_version)
+        print('Need to update from ' + __version__ + ' to ' + requiredDriverVersion)
+        update(requiredDriverVersionUrl, requiredDriverVersion)
         python = sys.executable
         sys.argv.append('--after-update')
         os.execl(python, python, * sys.argv)
 
+# print('Initialized', __version__)
 
 
-print('Initialized', __version__)
+# 2
+# Tickets
+#
+if PLP_JSON_DATA.get('ticketData'):
+    from _ticket import ticket
+    ticket(PLP_JSON_DATA.get('ticketData'))
