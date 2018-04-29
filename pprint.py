@@ -52,5 +52,6 @@ if requiredDriverVersion and requiredDriverVersion != __version__:
 # Tickets
 #
 if PLP_JSON_DATA.get('ticketData'):
-    from _ticket import ticket
-    ticket(PLP_JSON_DATA.get('ticketData'))
+    from _ticket import PSPrint
+    with PSPrint(PLP_JSON_DATA) as ps:
+        ps.printTickets()
