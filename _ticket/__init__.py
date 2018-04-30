@@ -16,7 +16,7 @@ import                                    sys
 import                                    math
 import                                    yaml
 from collections  import                  OrderedDict
-from os           import                  chdir
+# from os           import                  chdir
 from os           import path          as path
 from ctypes       import                  windll
 from code128image import code128_image as _c128image
@@ -28,6 +28,7 @@ from time         import                  sleep
 def ordered_load(stream, Loader=yaml.Loader, object_pairs_hook=OrderedDict):
     class OrderedLoader(Loader):
         pass
+
     def construct_mapping(loader, node):
         loader.flatten_mapping(node)
         return object_pairs_hook(loader.construct_pairs(node))
@@ -38,10 +39,11 @@ def ordered_load(stream, Loader=yaml.Loader, object_pairs_hook=OrderedDict):
 
 
 @decorators.profiler('_ticket')
+# @decorators.feedback
 class PSPrint:
-    def __init__(self, feedback, bye, plp_json_data):
-        self.feedback      = feedback
-        self.bye           = bye
+    def __init__(self, plp_json_data):
+        # self.feedback      = feedback
+        # self.bye           = bye
         self.PLP_JSON_DATA = plp_json_data
         self.BASEDIR = path.dirname(sys.executable) if hasattr(sys, "frozen") else path.dirname(__file__)
         # chdir(self.BASEDIR)
@@ -83,11 +85,9 @@ class PSPrint:
         with open(layout_fn, 'r', encoding='utf-8') as layout_file:
             self.PS_LAYOUT = ordered_load(layout_file, yaml.SafeLoader)
 
-
     def __enter__(self):
-        # print('Enter PSPrint')
+        print('Enter PSPrint')
         return self
-
 
     def _waitForSpooler(self, sleep_sec, message, title):
         printjobs = win32print.EnumJobs(self.hprinter, 0, 999)
@@ -100,17 +100,16 @@ class PSPrint:
                 windll.user32.MessageBoxW(0, message, title, 0)
                 printjobs = win32print.EnumJobs(self.hprinter, 0, 999)
 
-
     def __exit__(self, exc_type, exc_value, traceback):
         self._waitForSpooler(2, '- Включен ли принтер?\n- Подключен ли принтер к компьютеру?\n- Правильно ли вставлены билетные бланки в принтер?', 'Проверь принтер!')
-
 
     def _setFont(self, font_name, w=None, h=None, weight=None, orientation=0):
         if font_name is not None:
             _log_font = [font_name]
+
             def callback(font, tm, fonttype, _font):
                 if font.lfFaceName == _font[0]:
-                    _font[0]=font
+                    _font[0] = font
                 return True
             win32gui.EnumFontFamilies(self.DEVICE_CONTEXT_HANDLE, None, callback, _log_font)
             self.log_font = _log_font[0]
@@ -123,14 +122,11 @@ class PSPrint:
         font_handle = win32gui.CreateFontIndirect(self.log_font)
         win32gui.SelectObject(self.DEVICE_CONTEXT_HANDLE, font_handle)
 
-
     def _placeText(self, x, y, text):
         windll.gdi32.TextOutW(self.DEVICE_CONTEXT_HANDLE, x, y, text, len(text))
 
-
     def _indexedRotate(self, degrees):
         return math.floor((degrees % 360) / 90 + 0.5)
-
 
     def _rotatePicture(self, _picture, degrees):
         if degrees % 360 == 0:
@@ -141,7 +137,6 @@ class PSPrint:
         _picture.save(_temp_fn, 'png')
         _picture = Image.open(_temp_fn)
         return _picture
-
 
     def _placeImage(self, x, y, url, rotate):
         _picture_fn = '{0}_{1}.png'.format(path.join(self.BASEDIR, 'img', path.basename(url)), rotate)
@@ -176,7 +171,6 @@ class PSPrint:
         dib = ImageWin.Dib(_picture)
         dib.draw(self.DEVICE_CONTEXT_HANDLE, (x, y, x + _picture.size[0], y + _picture.size[1]))
 
-
     def _placeC128(self, text, x, y, width, height, thickness, rotate, quietzone):
         file1 = '{0}_1_{1}.png'.format(path.join(self.BASEDIR, 'img', 'tmp'), rotate)
         file2 = '{0}_2_{1}.png'.format(path.join(self.BASEDIR, 'img', 'tmp'), rotate)
@@ -184,7 +178,6 @@ class PSPrint:
         _picture = self._rotatePicture(Image.open(file1), rotate)
         dib = ImageWin.Dib(_picture)
         dib.draw(self.DEVICE_CONTEXT_HANDLE, (x, y, x + _picture.size[0], y + _picture.size[1]))
-
 
     def _startDocument(self):
         # print("DEVICE_CONTEXT.SetMapMode")
@@ -199,18 +192,15 @@ class PSPrint:
         self.DEVICE_CONTEXT.SelectObject(font)
         # print("DEVICE_CONTEXT.SelectObject DONE")
 
-
     def _printDocument(self):
         self.DEVICE_CONTEXT.EndPage()
         self.DEVICE_CONTEXT.EndDoc()
-
 
     def printTickets(self):
         for ticket in self.PLP_JSON_DATA['ticketData']['tickets']:
             self._startDocument()
             self.printTicket(ticket)
             self._printDocument()
-
 
     def _getInstanceProperty(self, key, instance, field, mandatory=False):
         if key in instance:
@@ -220,7 +210,6 @@ class PSPrint:
         # if mandatory:
         #     print('Text without {0} - {1}'.format(key, field))
         return None
-
 
     def printTicket(self, ticket):
         for layout_key in self.PS_LAYOUT.keys():

@@ -2,13 +2,14 @@
 
 from _version import __version__
 import sys
+import os
+import json
 
 if sys.argv[-1] == '--after-update':
     print('Just updated to', __version__)
 else:
     print('pprint version', __version__)
 
-import os
 
 if hasattr(sys, "frozen"):
     pass
@@ -22,8 +23,10 @@ BASEDIR = os.path.dirname(sys.executable) if hasattr(sys, "frozen")\
     else os.path.dirname(__file__)
 
 
-import json
 global PLP_JSON_DATA
+
+if not len(sys.argv) > 1:
+    raise ValueError('Missin\' plp file name.')
 
 PLP_FILENAME = sys.argv[1]
 with open(PLP_FILENAME, 'r', encoding='utf-8') as plp_data_file:
@@ -37,7 +40,7 @@ if requiredDriverVersion and requiredDriverVersion != __version__:
     requiredDriverVersionUrl = PLP_JSON_DATA.get('printingDriverVersionUrl')
     if sys.argv[-1] == '--after-update':
         raise ValueError('Required version "{rel_v}" doesnot match version "{req_v}" in "{rel_url}".'
-            .format(rel_v = requiredDriverVersion, req_v = __version__, rel_url = requiredDriverVersionUrl))
+            .format(rel_v=requiredDriverVersion, req_v=__version__, rel_url=requiredDriverVersionUrl))
 
     if requiredDriverVersionUrl:
         from _update import update
@@ -55,5 +58,6 @@ if requiredDriverVersion and requiredDriverVersion != __version__:
 #
 if PLP_JSON_DATA.get('ticketData'):
     from _ticket import PSPrint
+    print('imported')
     with PSPrint(PLP_JSON_DATA) as ps:
         ps.printTickets()
