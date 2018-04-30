@@ -1,3 +1,5 @@
+# This Python file uses the following encoding: utf-8
+
 from _version import __version__
 import sys
 

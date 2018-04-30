@@ -1,3 +1,5 @@
+# This Python file uses the following encoding: utf-8
+
 import decorators
 import shutil
 import os

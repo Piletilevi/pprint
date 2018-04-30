@@ -1,12 +1,11 @@
+# This Python file uses the following encoding: utf-8
+
 import decorators
 
 # @decorators.profiler('_ticket')
 # def ticket(plpdata):
 #     print("my PLP data", plpdata['printerData'])
 
-
-
-# This Python file uses the following encoding: utf-8
 
 # PSPrint module
 import                                    win32ui
