@@ -38,48 +38,45 @@ def ordered_load(stream, Loader=yaml.Loader, object_pairs_hook=OrderedDict):
     return yaml.load(stream, OrderedLoader)
 
 
-@decorators.profiler('_ticket')
 # @decorators.feedback
 class PSPrint:
+    @decorators.profiler('_ticket')
     def __init__(self, plp_json_data):
-        # self.feedback      = feedback
-        # self.bye           = bye
+        if getattr(sys, 'frozen', False):
+            self.BASEDIR = os.path.dirname(sys.executable)
+        else:
+            self.BASEDIR = sys.path[0]
+
         self.PLP_JSON_DATA = plp_json_data
-        self.BASEDIR = path.dirname(sys.executable) if hasattr(sys, "frozen") else path.dirname(__file__)
         # chdir(self.BASEDIR)
 
         printer = self.PLP_JSON_DATA['ticketData']['printerData']['printerName']
         try:
             self.hprinter = win32print.OpenPrinter(printer)
         except Exception as e:
-            # self.feedback({'code': '', 'message': e.__str__()}, False)
-            self.bye('Can not open "{0}"'.format(printer))
+            raise ValueError('Can not open "{printer}".'.format(printer = printer))
 
         try:
             devmode = win32print.GetPrinter(self.hprinter, 2)['pDevMode']
         except Exception as e:
-            # self.feedback({'code': '', 'message': e.__str__()}, False)
-            self.bye('Can not register "{0}"'.format(printer))
+            raise ValueError('Can not register "{printer}".'.format(printer = printer))
 
         try:
             devmode.Orientation = 2
         except Exception as e:
-            # self.feedback({'code': '', 'message': e.__str__()}, False)
-            self.bye('Can not set orientation for "{0}"'.format(printer))
+            raise ValueError('Can not set orientation for "{printer}".'.format(printer = printer))
 
         self._waitForSpooler(1, 'Printer has old jobs in queue', 'Проверь принтер!')
 
         try:
             self.DEVICE_CONTEXT_HANDLE = win32gui.CreateDC('WINSPOOL', printer, devmode)
         except Exception as e:
-            # self.feedback({'code': '', 'message': e.__str__()}, False)
-            self.bye('Failed DCH "{0}"'.format(printer))
+            raise ValueError('Failed DCH "{printer}".'.format(printer = printer))
 
         try:
             self.DEVICE_CONTEXT = win32ui.CreateDCFromHandle(self.DEVICE_CONTEXT_HANDLE)
         except Exception as e:
-            # self.feedback({'code': '', 'message': e.__str__()}, False)
-            self.bye('Failed DC "{0}"'.format(printer))
+            raise ValueError('Failed DC "{printer}".'.format(printer = printer))
 
         layout_fn = path.join(self.BASEDIR, 'config', 'layout.yaml')
         with open(layout_fn, 'r', encoding='utf-8') as layout_file:
@@ -88,6 +85,9 @@ class PSPrint:
     def __enter__(self):
         print('Enter PSPrint')
         return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self._waitForSpooler(2, '- Включен ли принтер?\n- Подключен ли принтер к компьютеру?\n- Правильно ли вставлены билетные бланки в принтер?', 'Проверь принтер!')
 
     def _waitForSpooler(self, sleep_sec, message, title):
         printjobs = win32print.EnumJobs(self.hprinter, 0, 999)
@@ -99,9 +99,6 @@ class PSPrint:
                 i -= 1
                 windll.user32.MessageBoxW(0, message, title, 0)
                 printjobs = win32print.EnumJobs(self.hprinter, 0, 999)
-
-    def __exit__(self, exc_type, exc_value, traceback):
-        self._waitForSpooler(2, '- Включен ли принтер?\n- Подключен ли принтер к компьютеру?\n- Правильно ли вставлены билетные бланки в принтер?', 'Проверь принтер!')
 
     def _setFont(self, font_name, w=None, h=None, weight=None, orientation=0):
         if font_name is not None:
@@ -196,6 +193,7 @@ class PSPrint:
         self.DEVICE_CONTEXT.EndPage()
         self.DEVICE_CONTEXT.EndDoc()
 
+    @decorators.profiler('_ticket.printTickets')
     def printTickets(self):
         for ticket in self.PLP_JSON_DATA['ticketData']['tickets']:
             self._startDocument()
