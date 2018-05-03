@@ -43,7 +43,8 @@
         "imageTop": "http:\/\/images.piletilevi.ee\/tickets\/top_1516006122_600x55.jpg",
         "imageLeft": "http:\/\/images.piletilevi.ee\/tickets\/left_1516006098_150x245.jpg",
         "imageBottom": "http:\/\/images.piletilevi.ee\/tickets\/bottom_1516006139_600x40.jpg",
-        "saleDateTime": "23.04.2018 21:51"
+        "saleDateTime": "23.04.2018 21:51",
+        "ticketLayout": "https://shop.piletilevi.ee/ticketlayouts/pl_regular.yaml"
       },
       {
         "ticketId": "159749924",
@@ -74,7 +75,8 @@
         "imageTop": "http:\/\/images.piletilevi.ee\/tickets\/top_1516006122_600x55.jpg",
         "imageLeft": "http:\/\/images.piletilevi.ee\/tickets\/left_1516006098_150x245.jpg",
         "imageBottom": "http:\/\/images.piletilevi.ee\/tickets\/bottom_1516006139_600x40.jpg",
-        "saleDateTime": "23.04.2018 21:51"
+        "saleDateTime": "23.04.2018 21:51",
+        "ticketLayout": "https://shop.piletilevi.ee/ticketlayouts/pl_regular2.yaml"
       }
     ]
   },
