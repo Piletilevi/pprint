@@ -7,9 +7,6 @@ import time
 
 current_milli_time = lambda: int(round(time.time() * 1000))
 
-BASEDIR = os.path.dirname(sys.executable) if hasattr(sys, "frozen")\
-    else os.path.dirname(__file__)
-
 
 class profiler(object):
 
@@ -29,6 +26,10 @@ class profiler(object):
         it a single argument, which is the function object.
         """
         self.f = f
+        # f.BASEDIR = os.path.dirname(sys.executable) if hasattr(sys, "frozen")\
+        #     else sys.path[0]
+        #     else os.path.dirname(__file__)
+
         # print('PR:inside __call__ of', __name__, current_milli_time() - self.decoration_time)
         def wrapped_f(*args):
             start_ms = current_milli_time()
@@ -43,83 +44,6 @@ class profiler(object):
             print('Finish', self.topic, (current_milli_time() - start_ms) / 1e3, 'sec after begin')
             # print('After f(*args)', current_milli_time() - start_ms, 'ms')
         return wrapped_f
-
-
-class feedback(object):
-
-    def __init__(self, f):
-        self.f = f
-
-    def __exit__(self, f):
-        print('Feedback __exit__()')
-
-    def __call__(self, *args):
-        for value in args:
-            PLP_JSON_DATA = args[0]
-            print('PLP: "{}"'.format(PLP_JSON_DATA))
-
-            fbtmpl_fn = os.path.join(BASEDIR, 'config', 'feedbackTemplate.json')
-            with open(fbtmpl_fn, 'r', encoding='utf-8') as feedback_template_file:
-                FEEDBACK_TEMPLATE = json.load(feedback_template_file)
-                FEEDBACK_TEMPLATE['feedbackToken'] = PLP_JSON_DATA.get('feedbackToken')
-                FEEDBACK_TEMPLATE['operationToken'] = PLP_JSON_DATA.get('operationToken')
-                FEEDBACK_TEMPLATE['businessTransactionId'] = PLP_JSON_DATA.get('fiscalData', {'businessTransactionId':''}).get('businessTransactionId', '')
-                FEEDBACK_TEMPLATE['operation'] = PLP_JSON_DATA.get('fiscalData').get('operation')
-
-
-        # fblog_fn = os.path.join(BASEDIR, 'feedback.log')
-
-        def bye_f(title=''):
-            # input("Press Enter to continue...")
-            if title:
-                import ctypes
-                (a, b, c) = sys.exc_info()
-                if b:
-                    ctypes.windll.user32.MessageBoxW(0, "{0}\n-----\n{1}".format(title, b), title, 0)
-                else:
-                    ctypes.windll.user32.MessageBoxW(0, "{0}\n-----\nExiting".format(title), title, 0)
-            kill(getpid(), signal.SIGTERM)
-
-        def fb2log(line):
-            with open(fblog_fn, 'a', encoding='utf-8') as feedback_log_file:
-                feedback_log_file.write(datetime.now().isoformat() + ' ' + str(line) + '\n')
-
-        def feedback_f(feedback, success=True, reverse=None):
-            FEEDBACK_TEMPLATE['status'] = success
-            FEEDBACK_TEMPLATE['feedBackMessage'] = feedback.get('message')
-
-            _fburl = f.PLP_JSON_DATA.get('feedbackUrl', f.PLP_JSON_DATA.get('feedBackurl'))
-            # print('Sending "{0}" to "{1}"'.format(dumpsJSON(FEEDBACK_TEMPLATE, indent=4), _fburl))
-            fb2log('Sending ' + feedback.get('message'))
-            headers = {'Content-type': 'application/json'}
-            r = requests.post(_fburl, allow_redirects=True, timeout=30, json=FEEDBACK_TEMPLATE, verify=False)
-            fb2log('\\_ sent ok.')
-
-            if r.status_code != requests.codes.ok:
-                fb2log('Not Ok - (' + r.status_code + ')')
-                if reverse:
-                    reverse()
-                bye_f('{0}; status_code={1}'.format(r.headers['content-type'], r.status_code))
-
-            try:
-                response_json = r.json()
-                # print('BO response: {0}'.format(dumpsJSON(response_json, indent=4)))
-            except Exception as e:
-                fb2log('Not Ok - Feedback failed, reversing operation')
-                import ctypes
-                ctypes.windll.user32.MessageBoxW(0, "Feedback failed", "Reversing operation", 0)
-                # print(e)
-                # print('BO response: {0}'.format(r.text))
-                if reverse:
-                    reverse()
-                bye_f()
-
-            fb2log('Ok')
-
-        # print(f.__dir__())
-        # print(f.args)
-        self.f.bye = bye_f
-        self.f.feedback = feedback_f
 
 
 class logging(object):

@@ -10,18 +10,14 @@ if sys.argv[-1] == '--after-update':
 else:
     print('pprint version', __version__)
 
-
 if hasattr(sys, "frozen"):
     pass
 else:
     import win_unicode_console
     win_unicode_console.enable()
 
-global BASEDIR
-
 BASEDIR = os.path.dirname(sys.executable) if hasattr(sys, "frozen")\
     else os.path.dirname(__file__)
-
 
 global PLP_JSON_DATA
 
@@ -57,7 +53,10 @@ if requiredDriverVersion and requiredDriverVersion != __version__:
 # Tickets
 #
 if PLP_JSON_DATA.get('ticketData'):
-    from _ticket import PSPrint
-    print('imported')
-    with PSPrint(PLP_JSON_DATA) as ps:
-        ps.printTickets()
+    # from _ticket import PSPrint
+    import _ticket
+    import inspect
+    ps = _ticket.PSPrint(PLP_JSON_DATA)
+    ps.printTickets()
+    # inspect(pp.printTickets())
+    # with PSPrint(PLP_JSON_DATA) as ps:

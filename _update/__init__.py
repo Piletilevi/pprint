@@ -14,7 +14,7 @@ def update(downloadURL, to_version):
     # determine if application is a script file or frozen exe
     if getattr(sys, 'frozen', False):
         application_path = os.path.dirname(sys.executable)
-    elif __file__:
+    else:
         application_path = sys.path[0]
 
     download_path = os.path.join(application_path, 'downloading')
