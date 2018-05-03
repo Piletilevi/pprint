@@ -1,7 +1,7 @@
 {
   "plpVersion": "2.0.0",
   "feedbackToken": "kScaLiUkiiXafnBFipIYfkjkhkVppjxk",
-  "feedbackUrl": "https:\/\/shop.piletilevi.ee\/cgi-bin\/wspd_cgi.sh\/WService=plevi\/proc\/myygikorv.p?ajax=feedback",
+  "feedbackUrl": "https://shop.piletilevi.ee/cgi-bin/wspd_cgi.sh/WService=plevi/proc/myygikorv.p?ajax=feedback",
   "printingDriverVersion": "3.0.0",
   "printingDriverVersionUrl": "https://github.com/Piletilevi/pprint/archive/test.zip",
   "salesPointText": "Пункт продажи:",
@@ -40,9 +40,9 @@
         "extraFee": "0.00 Бел.руб.",
         "totalText": "Всего",
         "totalPrice": "2.00 Бел.руб.",
-        "imageTop": "http:\/\/images.piletilevi.ee\/tickets\/top_1516006122_600x55.jpg",
-        "imageLeft": "http:\/\/images.piletilevi.ee\/tickets\/left_1516006098_150x245.jpg",
-        "imageBottom": "http:\/\/images.piletilevi.ee\/tickets\/bottom_1516006139_600x40.jpg",
+        "imageTop": "http://images.piletilevi.ee/tickets/top_1516006122_600x55.jpg",
+        "imageLeft": "http://images.piletilevi.ee/tickets/left_1516006098_150x245.jpg",
+        "imageBottom": "http://images.piletilevi.ee/tickets/bottom_1516006139_600x40.jpg",
         "saleDateTime": "23.04.2018 21:50",
         "ticketLayout": "https://shop.piletilevi.ee/ticketlayouts/pl_regular.yaml"
       },
@@ -72,9 +72,9 @@
         "extraFee": "0.00 Бел.руб.",
         "totalText": "Всего",
         "totalPrice": "2.00 Бел.руб.",
-        "imageTop": "http:\/\/images.piletilevi.ee\/tickets\/top_1516006122_600x55.jpg",
-        "imageLeft": "http:\/\/images.piletilevi.ee\/tickets\/left_1516006098_150x245.jpg",
-        "imageBottom": "http:\/\/images.piletilevi.ee\/tickets\/bottom_1516006139_600x40.jpg",
+        "imageTop": "http://images.piletilevi.ee/tickets/top_1516006122_600x55.jpg",
+        "imageLeft": "http://images.piletilevi.ee/tickets/left_1516006098_150x245.jpg",
+        "imageBottom": "http://images.piletilevi.ee/tickets/bottom_1516006139_600x40.jpg",
         "saleDateTime": "23.04.2018 21:50",
         "ticketLayout": "https://shop.piletilevi.ee/ticketlayouts/pl_regular2.yaml"
       }

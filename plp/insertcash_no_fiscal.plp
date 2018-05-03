@@ -1,7 +1,7 @@
 {
   "plpVersion": "2.0.0",
   "feedbackToken": "pqbismefnkDkalHYhBbcdltjlQKzALkj",
-  "feedbackUrl": "https:\/\/shop.piletilevi.ee\/cgi-bin\/wspd_cgi.sh\/WService=plevi\/proc\/cashier_mod.p?ajax=feedback",
+  "feedbackUrl": "https://shop.piletilevi.ee/cgi-bin/wspd_cgi.sh/WService=plevi/proc/cashier_mod.p?ajax=feedback",
   "operationToken": "251857",
   "printingDriverVersion": "3.0.0",
   "printingDriverVersionUrl": "https://github.com/Piletilevi/pprint/archive/test.zip",
