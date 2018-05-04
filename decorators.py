@@ -5,7 +5,14 @@ import os
 import sys
 import time
 
-current_milli_time = lambda: int(round(time.time() * 1000))
+
+def current_milli_time():
+    return int(round(time.time() * 1000))
+
+
+init_milli_time = current_milli_time()
+
+# current_milli_time = lambda: int(round(time.time() * 1000))
 
 
 class profiler(object):
@@ -17,7 +24,11 @@ class profiler(object):
             raise ValueError('Profiler decorator requires a topic.')
 
         self.decoration_time = current_milli_time()
-        # print('PR:inside __init__ of', __name__, self.decoration_time)
+
+        print('[{total:4d} {diff:4d} D:{name}]'.format(
+            total=current_milli_time() - init_milli_time,
+            diff=current_milli_time() - self.decoration_time,
+            name=self.topic))
 
     def __call__(self, f):
         """
@@ -26,29 +37,31 @@ class profiler(object):
         it a single argument, which is the function object.
         """
         self.f = f
-        # f.BASEDIR = os.path.dirname(sys.executable) if hasattr(sys, "frozen")\
-        #     else sys.path[0]
-        #     else os.path.dirname(__file__)
 
-        # print('PR:inside __call__ of', __name__, current_milli_time() - self.decoration_time)
         def wrapped_f(*args):
             start_ms = current_milli_time()
-            # print('PR:inside wrapped_f() of', __name__)
-            print('Begin', self.topic, current_milli_time() - self.decoration_time, 'ms after decoration')
+            print('[{total:4d} {diff:4d} Begin:{name}]'.format(
+                total=current_milli_time() - init_milli_time,
+                diff=current_milli_time() - self.decoration_time,
+                name=self.topic))
             try:
                 self.f(*args)
             except Exception as e:
                 print(e)
-                print('Failed', self.topic, (current_milli_time() - start_ms) / 1e3, 'sec after begin')
+                print('[{total:4d} {diff:4d} Fail:{name}]'.format(
+                    total=current_milli_time() - init_milli_time,
+                    diff=current_milli_time() - self.decoration_time,
+                    name=self.topic))
                 sys.exit(1)
-            print('Finish', self.topic, (current_milli_time() - start_ms) / 1e3, 'sec after begin')
-            # print('After f(*args)', current_milli_time() - start_ms, 'ms')
+            print('[{total:4d} {diff:4d} Finish:{name}]'.format(
+                total=current_milli_time() - init_milli_time,
+                diff=current_milli_time() - self.decoration_time,
+                name=self.topic))
         return wrapped_f
 
 
 class logging(object):
     def __init__(self, f):
-        # print(f.__dir__())
         self.logfilename = 'pprint.log'
         self.f = f
         self.__name__ = f.__qualname__
