@@ -2,30 +2,25 @@
 
 import decorators
 
-# @decorators.profiler('_ticket')
-# def ticket(plpdata):
-#     print("my PLP data", plpdata['printerData'])
+import os
+import sys
+import win32ui
+import win32gui
+import win32print
+import requests
+import math
+import yaml
 
+import collections
+import ctypes
+import time
 
-# PSPrint module
-import                                    win32ui
-import                                    win32gui
-import                                    win32print
-import                                    requests
-import                                    sys
-import                                    math
-import                                    yaml
-from collections  import                  OrderedDict
-# from os           import                  chdir
-from os           import path          as path
-from ctypes       import                  windll
 from code128image import code128_image as _c128image
-from PIL          import                  ImageWin
-from PIL          import                  Image
-from time         import                  sleep
+from PIL import ImageWin
+from PIL import Image
 
 
-def ordered_load(stream, Loader=yaml.Loader, object_pairs_hook=OrderedDict):
+def ordered_load(stream, Loader=yaml.Loader, object_pairs_hook=collections.OrderedDict):
     class OrderedLoader(Loader):
         pass
 
@@ -78,7 +73,7 @@ class PSPrint:
         except Exception as e:
             raise ValueError('Failed DC "{printer}".'.format(printer = printer))
 
-        layout_fn = path.join(self.BASEDIR, 'config', 'layout.yaml')
+        layout_fn = os.path.join(self.BASEDIR, 'config', 'layout.yaml')
         with open(layout_fn, 'r', encoding='utf-8') as layout_file:
             self.PS_LAYOUT = ordered_load(layout_file, yaml.SafeLoader)
 
@@ -92,12 +87,12 @@ class PSPrint:
     def _waitForSpooler(self, sleep_sec, message, title):
         printjobs = win32print.EnumJobs(self.hprinter, 0, 999)
         if len(printjobs) != 0:
-            sleep(sleep_sec)
+            time.sleep(sleep_sec)
             printjobs = win32print.EnumJobs(self.hprinter, 0, 999)
             i = 3
             while len(printjobs) != 0 and i > 0:
                 i -= 1
-                windll.user32.MessageBoxW(0, message, title, 0)
+                ctypes.windll.user32.MessageBoxW(0, message, title, 0)
                 printjobs = win32print.EnumJobs(self.hprinter, 0, 999)
 
     def _setFont(self, font_name, w=None, h=None, weight=None, orientation=0):
@@ -120,7 +115,7 @@ class PSPrint:
         win32gui.SelectObject(self.DEVICE_CONTEXT_HANDLE, font_handle)
 
     def _placeText(self, x, y, text):
-        windll.gdi32.TextOutW(self.DEVICE_CONTEXT_HANDLE, x, y, text, len(text))
+        ctypes.windll.gdi32.TextOutW(self.DEVICE_CONTEXT_HANDLE, x, y, text, len(text))
 
     def _indexedRotate(self, degrees):
         return math.floor((degrees % 360) / 90 + 0.5)
@@ -129,15 +124,15 @@ class PSPrint:
         if degrees % 360 == 0:
             return _picture
 
-        _temp_fn = '{0}_{1}.png'.format(path.join(self.BASEDIR, 'img', 'temprotate'), degrees)
+        _temp_fn = '{0}_{1}.png'.format(os.path.join(self.BASEDIR, 'img', 'temprotate'), degrees)
         _picture = _picture.transpose((self._indexedRotate(degrees) - 1) % 3 + 2)
         _picture.save(_temp_fn, 'png')
         _picture = Image.open(_temp_fn)
         return _picture
 
     def _placeImage(self, x, y, url, rotate):
-        _picture_fn = '{0}_{1}.png'.format(path.join(self.BASEDIR, 'img', path.basename(url)), rotate)
-        if not path.isfile(_picture_fn):
+        _picture_fn = '{0}_{1}.png'.format(os.path.join(self.BASEDIR, 'img', os.path.basename(url)), rotate)
+        if not os.path.isfile(_picture_fn):
             try:
                 r = requests.get(url, verify=False)
                 r.raise_for_status()
@@ -169,8 +164,8 @@ class PSPrint:
         dib.draw(self.DEVICE_CONTEXT_HANDLE, (x, y, x + _picture.size[0], y + _picture.size[1]))
 
     def _placeC128(self, text, x, y, width, height, thickness, rotate, quietzone):
-        file1 = '{0}_1_{1}.png'.format(path.join(self.BASEDIR, 'img', 'tmp'), rotate)
-        file2 = '{0}_2_{1}.png'.format(path.join(self.BASEDIR, 'img', 'tmp'), rotate)
+        file1 = '{0}_1_{1}.png'.format(os.path.join(self.BASEDIR, 'img', 'tmp'), rotate)
+        file2 = '{0}_2_{1}.png'.format(os.path.join(self.BASEDIR, 'img', 'tmp'), rotate)
         _c128image(text, int(width), int(height), quietzone).save(file1, 'JPEG')
         _picture = self._rotatePicture(Image.open(file1), rotate)
         dib = ImageWin.Dib(_picture)
