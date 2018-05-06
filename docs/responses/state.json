@@ -1,0 +1,18 @@
+// 20180506073406
+// http://169.254.186.173/cgi/state
+
+{
+  "model": "ТИТАН-А",
+  "name": "ТА0001839",
+  "serial": "ТА0001839",
+  "time": 1525581253,
+  "chkId": 0,
+  "JrnTime": 0,
+  "currZ": 0,
+  "IsWrk": 0,
+  "Fiscalization": 0,
+  "FskMode": 0,
+  "err": [
+
+  ]
+}
