@@ -1,0 +1,15 @@
+POST /cgi/tbl/Fsk
+[
+    {
+        "NumSKNO": "000041782",
+        "RegNum": "191295928",
+        "UNP": "191295928",
+        "NumPnt": "2",
+        "NumChk": "1"
+    }
+]
+
+[ { "NumSKNO": "000041782", "RegNum": "191295928", "UNP": "191295928", "NumPnt": "2" } ]
+
+
+curl --header "Content-Type: application/json" --digest --user service:751426 --request POST --data "{ \"NumSKNO\": \"000041782\", \"RegNum\": \"191295928\", \"UNP\": \"191295928\", \"NumPnt\": \"2\", \"NumChk\": \"1\" }" "http://169.254.186.173/cgi/tbl/Fsk"

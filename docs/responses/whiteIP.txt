@@ -1,0 +1,26 @@
+// 20180506074126
+// http://169.254.186.173/cgi/tbl/whiteIP
+// http://service:751426@169.254.186.173/cgi/tbl/whiteIP
+[
+  {"id":1,"IP":"169.254.87.132","Login":"1"},
+  {"id":2,"IP":"169.254.84.164","Login":"service"},
+  {"id":3,"IP":"0.0.0.0","Login":""},
+  {"id":4,"IP":"0.0.0.0","Login":""},
+  {"id":5,"IP":"0.0.0.0","Login":""}
+]
+
+// 20180506074219
+// http://169.254.186.173/cgi/proc/register
+// http://service:751426@169.254.186.173/cgi/proc/register
+{}
+
+>curl --digest -u service:751426 http://169.254.186.173/cgi/tbl/whiteIP
+[
+    {"id":1,"IP":"169.254.87.132","Login":"1"},
+    {"id":2,"IP":"169.254.84.164","Login":""},
+    {"id":3,"IP":"0.0.0.0","Login":""},
+    {"id":4,"IP":"0.0.0.0","Login":""},
+    {"id":5,"IP":"0.0.0.0","Login":""}
+]
+
+>curl --digest -u service:751426 http://169.254.186.173/cgi/proc/register
