@@ -1,3 +1,5 @@
+# This Python file uses the following encoding: utf-8
+
 # // 20180506102118
 # // http://169.254.186.173/cgi/tbl/Oper
 #
@@ -21,49 +23,77 @@
 # ]
 
 
+import sys
 import requests
+import json
+import datetime
 
 username = 'service'
 password = '751426'
 
+print('\n\n\n')
+
+
+def talk(url, method='GET', data={}):
+    print('\nU:"{}"'.format(url))
+    auth = requests.auth.HTTPDigestAuth(username, password)
+
+    if method == 'GET':
+        r = requests.get(url, auth=auth)
+    elif method == 'POST':
+        r = requests.post(url, auth=auth, json=data)
+    elif method == 'PATCH':
+        headers = {'X-HTTP-Method-Override': 'PATCH'}
+        print('D: {}'.format(data))
+        r = requests.post(url, auth=auth, json=data, headers=headers)
+
+    body = r.text.encode('utf-8')
+
+    # ro = json.loads(r.text, 'cp1251')
+    print('S:"{}"; R:"{}"; B:"{}"'.format(r.status_code, r.reason, body))
+    return body
+
 
 # Beep
 url = 'http://169.254.186.173/cgi/proc/sound?300&660'
-r = requests.get(url, auth=requests.auth.HTTPDigestAuth(username, password))
-
+talk(url)
 
 # State
 url = 'http://169.254.186.173/cgi/state'
-r = requests.get(url, auth=requests.auth.HTTPDigestAuth(username, password))
-print(r.status_code, r.reason)
-print(r.text.encode("utf-8"))
-
+body = talk(url)
+# print('Fiskal mode: ', body['FskMode'])
 
 # SetTime
-from datetime import datetime
-print(datetime.fromtimestamp(1463288494).isoformat())
+ISOdatetime = datetime.datetime.fromtimestamp(1463288494).isoformat()
+url = 'http://169.254.186.173/cgi/proc/setclock?{datetime}'.format(datetime=ISOdatetime)
+talk(url)
 
-url = 'http://169.254.186.173/cgi/proc/setclock?2018-04-28T22:06:00'
-r = requests.get(url, auth=requests.auth.HTTPDigestAuth(username, password))
-print(r.status_code, r.reason)
-print(r.text.encode("utf-8"))
+# # whiteIP
+url = 'http://169.254.186.173/cgi/proc/register?clear'
+talk(url)
+url = 'http://169.254.186.173/cgi/proc/register'
+talk(url)
+# talk(url)
+url = 'http://169.254.186.173/cgi/tbl/whiteIP'
+talk(url)
+#
+#
+# url = 'http://169.254.186.173/cgi/proc/fiscalization'
+# talk(url)
 
+
+# Flg feed 1
+# url = 'http://169.254.186.173/cgi/tbl/Flg'
+# talk(url)
+# data = {'Feed': 1}
+# talk(url, 'PATCH', data)
+# talk(url)
+
+
+# Oper
 url = 'http://169.254.186.173/cgi/tbl/Oper'
-r = requests.post(url, auth=requests.auth.HTTPDigestAuth(username, password),
-                  data={'id': 2, 'Name': 'OP2', 'Pswd': '123'})
-
-
-curl --header "Content-Type: application/json" --digest --user service:751426 ^
-     --request POST "http://169.254.186.173/cgi/tbl/Oper" ^
-     --data "{[ \"id\": \"2\", \"Name\": \"test2\", \"Pswd\": \"123\" ]}"
-
-curl --digest --user service:751426 ^
-     --request POST "http://169.254.186.173/cgi/tbl/Oper" ^
-     --data '{[ "id": 2, "Name": "test2", "Pswd": "123" ]}'
-
-curl --digest --user service:751426 ^
-     --request POST "http://169.254.186.173/cgi/tbl/Flg" ^
-     --data '{"Feed": 2, "Name": "test2", "Pswd": "123" ]}'
-
-
-/cgi/tbl/Flg
+talk(url)
+data = []
+data.append({'id': 1, 'Name': 'Jaanike', 'Pswd': 123})
+talk(url, 'PATCH', data)
+talk(url)
