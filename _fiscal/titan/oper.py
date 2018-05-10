@@ -49,20 +49,25 @@ def talk(url, method='GET', data={}):
 
     body = r.text.encode('utf-8')
 
-    # ro = json.loads(r.text, 'cp1251')
+    ro = {
+        'status_code': r.status_code,
+        'reason': r.reason,
+        'body': json.loads(r.text, 'cp1251')
+    }
     print('S:"{}"; R:"{}"; B:"{}"'.format(r.status_code, r.reason, body))
-    return body
+    return ro
 
 
 # Beep
 url = 'http://169.254.186.173/cgi/proc/sound?300&660'
-talk(url)
+# talk(url)
 
 # State
 url = 'http://169.254.186.173/cgi/state'
-body = talk(url)
-# print('Fiskal mode: ', body['FskMode'])
+r = talk(url)
+print('Fiskal Mode: {}'.format(r['body']['FskMode']))
 
+# sys.exit(0)
 # SetTime
 ISOdatetime = datetime.datetime.fromtimestamp(1463288494).isoformat()
 url = 'http://169.254.186.173/cgi/proc/setclock?{datetime}'.format(datetime=ISOdatetime)
