@@ -47,58 +47,69 @@ def talk(url, method='GET', data={}):
         print('D: {}'.format(data))
         r = requests.post(url, auth=auth, json=data, headers=headers)
 
-    body = r.text.encode('utf-8')
-
+    print('S:"{}"; R:"{}"'.format(r.status_code, r.reason))
+    print(r.text.encode('cp1251'))
     ro = {
         'status_code': r.status_code,
         'reason': r.reason,
         'body': json.loads(r.text, 'cp1251')
     }
-    print('S:"{}"; R:"{}"; B:"{}"'.format(r.status_code, r.reason, body))
+    # print('S:"{}"; R:"{}"; B:"{}"'.format(r.status_code, r.reason, body))
     return ro
 
 
 # Beep
-url = 'http://169.254.186.173/cgi/proc/sound?300&660'
-# talk(url)
+def beep(ms=300, f=660):
+    url = 'http://169.254.186.173/cgi/proc/sound?{ms}&{f}'.format(ms=ms, f=f)
+    talk(url)
+
 
 # State
-url = 'http://169.254.186.173/cgi/state'
-r = talk(url)
-print('Fiskal Mode: {}'.format(r['body']['FskMode']))
+def fiskalMode():
+    url = 'http://169.254.186.173/cgi/state'
+    r = talk(url)
+    return r['body']['FskMode']
 
-# sys.exit(0)
+
+# Flg feed 1
+def setFeed(lines):
+    url = 'http://169.254.186.173/cgi/tbl/Flg'
+    talk(url)
+    data = {'Feed': lines}
+    talk(url, 'PATCH', data)
+    talk(url)
+
+
+# Oper
+def setOperator(name, pswd):
+    url = 'http://169.254.186.173/cgi/tbl/Oper'
+    talk(url)
+    data = []
+    data.append({'id': 1, 'Name': name, 'Pswd': pswd})
+    talk(url, 'PATCH', data)
+    talk(url)
+
+
+# whiteIP
+def whiteIP():
+    url = 'http://169.254.186.173/cgi/proc/register?clear'
+    talk(url)
+    url = 'http://169.254.186.173/cgi/proc/register'
+    talk(url)
+    # talk(url)
+    url = 'http://169.254.186.173/cgi/tbl/whiteIP'
+    talk(url)
+
+
+beep(40, 2000)
+
+sys.exit(0)
 # SetTime
 ISOdatetime = datetime.datetime.fromtimestamp(1463288494).isoformat()
 url = 'http://169.254.186.173/cgi/proc/setclock?{datetime}'.format(datetime=ISOdatetime)
 talk(url)
 
-# # whiteIP
-url = 'http://169.254.186.173/cgi/proc/register?clear'
-talk(url)
-url = 'http://169.254.186.173/cgi/proc/register'
-talk(url)
-# talk(url)
-url = 'http://169.254.186.173/cgi/tbl/whiteIP'
-talk(url)
-#
+
 #
 # url = 'http://169.254.186.173/cgi/proc/fiscalization'
 # talk(url)
-
-
-# Flg feed 1
-# url = 'http://169.254.186.173/cgi/tbl/Flg'
-# talk(url)
-# data = {'Feed': 1}
-# talk(url, 'PATCH', data)
-# talk(url)
-
-
-# Oper
-url = 'http://169.254.186.173/cgi/tbl/Oper'
-talk(url)
-data = []
-data.append({'id': 1, 'Name': 'Jaanike', 'Pswd': 123})
-talk(url, 'PATCH', data)
-talk(url)
