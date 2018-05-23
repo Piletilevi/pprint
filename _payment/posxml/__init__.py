@@ -15,9 +15,7 @@ from time import sleep
 
 
 class PosXML:
-    def __init__(self, feedback, bye, options):
-        self.feedback = feedback
-        self.bye = bye
+    def __init__(self, options):
         self.OPTIONS = {'headers': {'content-type': "application/xml"}}
         for key, val in options.items():
             self.OPTIONS[key] = val
@@ -61,8 +59,7 @@ class PosXML:
                 data=payload_xml,
                 headers=self.OPTIONS['headers'])
         except requests.exceptions.RequestException as e:
-            self.feedback({'code': '', 'message': e.__str__()}, False)
-            self.bye()
+            raise ValueError(e.__str__())
 
         response = xmltodict.parse(http_response.content)['PosXML']
 
@@ -81,8 +78,7 @@ class PosXML:
                 .format(';'.join(self.PXRESPONSES[func])) \
                 + 'in returned response keys: "{0}".'\
                 .format(';'.join(response.keys()))
-            self.feedback({'code': '', 'message': message}, False)
-            self.bye()
+            raise ValueError(message)
 
         with open(self.log_fn, 'a') as f:
             f.write('---- {0}\n'.format(datetime.now().isoformat()))
@@ -113,10 +109,8 @@ class PosXML:
                 message = response[responseKey]['Reason']
             else:
                 message = response[responseKey]['ReturnCode']
-            self.feedback({
-                'code': response[responseKey]['ReturnCode'],
-                'message': message}, False)
-            self.bye()
+            ecode = response[responseKey]['ReturnCode']
+            raise ValueError('{0}: {1}'.format(ecode, message))
 
         return response[responseKey]
 

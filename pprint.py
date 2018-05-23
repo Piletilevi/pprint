@@ -55,6 +55,15 @@ if reqDrvrVer and reqDrvrVer != __version__:
 
 
 # 2
+# Payment
+#
+if PLP_JSON_DATA.get('fiscalData', {}).get('payments', False):
+    import _payment
+    if _payment.payment(PLP_JSON_DATA):
+        print('Payment succeeded')
+
+
+# 2
 # Tickets
 #
 if PLP_JSON_DATA.get('ticketData'):
