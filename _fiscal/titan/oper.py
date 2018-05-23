@@ -142,9 +142,14 @@ def setOperator(name, pswd):
     talk(url)
     data = []
     data.append({'id': 1, 'Name': name, 'Pswd': pswd})
-    talk(url, 'PATCH', data)
+    r = talk(url, 'PATCH', data)
     talk(url)
+    return r
 
+
+r = setOperator('toomas', 555)
+print(r.text)
+print(json.dumps(readTable('Oper'), indent=4))
 
 sys.exit(0)
 
