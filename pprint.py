@@ -4,6 +4,8 @@ from _version import __version__
 import sys
 import os
 import json
+# import inspect
+
 
 if sys.argv[-1] == '--after-update':
     print('Just updated to', __version__)
@@ -31,17 +33,20 @@ with open(PLP_FILENAME, 'r', encoding='utf-8') as plp_data_file:
 # 0
 # Update
 # Make sure we are on required version
-requiredDriverVersion = PLP_JSON_DATA.get('printingDriverVersion')
-if requiredDriverVersion and requiredDriverVersion != __version__:
-    requiredDriverVersionUrl = PLP_JSON_DATA.get('printingDriverVersionUrl')
+reqDrvrVer = PLP_JSON_DATA.get('printingDriverVersion')
+if reqDrvrVer and reqDrvrVer != __version__:
+    reqDrvrVerUrl = PLP_JSON_DATA.get('printingDriverVersionUrl')
     if sys.argv[-1] == '--after-update':
-        raise ValueError('Required version "{rel_v}" doesnot match version "{req_v}" in "{rel_url}".'
-            .format(rel_v=requiredDriverVersion, req_v=__version__, rel_url=requiredDriverVersionUrl))
+        raise ValueError(
+            '''Required version "{rel_v}" doesnot match version
+            {req_v}" in "{rel_url}".'''
+            .format(rel_v=reqDrvrVer, req_v=__version__,
+                    rel_url=reqDrvrVerUrl))
 
-    if requiredDriverVersionUrl:
+    if reqDrvrVerUrl:
         from _update import update
-        print('Need to update from ' + __version__ + ' to ' + requiredDriverVersion)
-        update(requiredDriverVersionUrl, requiredDriverVersion)
+        print('Need to update from ' + __version__ + ' to ' + reqDrvrVer)
+        update(reqDrvrVerUrl, reqDrvrVer)
         python = sys.executable
         sys.argv.append('--after-update')
         os.execl(python, python, * sys.argv)
@@ -55,7 +60,6 @@ if requiredDriverVersion and requiredDriverVersion != __version__:
 if PLP_JSON_DATA.get('ticketData'):
     # from _ticket import PSPrint
     import _ticket
-    import inspect
     ps = _ticket.PSPrint(PLP_JSON_DATA)
     ps.printTickets()
     # inspect(pp.printTickets())
