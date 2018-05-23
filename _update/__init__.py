@@ -5,6 +5,7 @@ import shutil
 import os
 import sys
 
+
 @decorators.profiler('_update')
 def update(downloadURL, to_version):
 
@@ -40,11 +41,16 @@ def update(downloadURL, to_version):
     zip_ref.close()
     os.remove(path_to_zip_file)
 
-    new_version_file_path = os.path.join(download_path, root_in_zip, '_version.py')
+    new_version_file_path = \
+        os.path.join(download_path, root_in_zip, '_version.py')
     with open(new_version_file_path, 'r') as new_version_file:
         new_version = new_version_file.readline().split("'")[1].strip()
         if new_version != to_version:
-            raise ValueError('Refusing to update.\nRelease version "{rel_v}" in provided package at "{rel_url}" doesnot match required version "{req_v}".'.format(rel_v = new_version, rel_url = downloadURL, req_v = to_version))
+            raise ValueError('''
+                Refusing to update.\nRelease version "{rel_v}" in provided
+                package at "{rel_url}" doesnot match required version "{req_v}"
+                .'''.format(rel_v=new_version, rel_url=downloadURL,
+                            req_v=to_version))
 
     # print('Copy', os.path.join(download_path, root_in_zip), application_path)
     copytree(os.path.join(download_path, root_in_zip), application_path)
@@ -58,6 +64,7 @@ def verify_package_version(ver):
     print('currently on', ver)
     sys.exit(0)
 
+
 def copytree(src, dst, symlinks=False, ignore=None):
     if not os.path.exists(dst):
         os.makedirs(dst)
@@ -68,7 +75,8 @@ def copytree(src, dst, symlinks=False, ignore=None):
         if os.path.isdir(s):
             copytree(s, d, symlinks, ignore)
         else:
-            if not os.path.exists(d) or os.stat(s).st_mtime - os.stat(d).st_mtime > 1:
+            if not os.path.exists(d) or \
+               os.stat(s).st_mtime - os.stat(d).st_mtime > 1:
                 try:
                     # print('copy2', s, '=>>', d)
                     shutil.copy2(s, d)
@@ -76,9 +84,9 @@ def copytree(src, dst, symlinks=False, ignore=None):
                     errors += 1
                     print(e, 'cant overwrite %s', d)
     if errors:
-        raise ValueError('Problem with moving {errors} files into place'.format(errors = errors))
-
-
+        raise ValueError(
+            'Problem with moving {errors} files into place'.format(
+                errors=errors))
 
 
 # requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
