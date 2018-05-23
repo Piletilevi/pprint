@@ -2,8 +2,9 @@
 
 import decorators
 
+
 @decorators.profiler('_fiscal')
-def fiscal(fiscaldata):
+def fiscal(fiscalData):
     if fiscalData['printerData']['printerName'] == 'ШТРИХ-ФР-К (B.2)':
         from shtrihm import ShtrihM as cMachine
     else:
