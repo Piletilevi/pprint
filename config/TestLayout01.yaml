@@ -296,7 +296,7 @@ ticketBarCode:
   type: code128
   common:
     thickness: 10
-    width: 530
+    width: 330
     height: 75
     orientation: 270
     quietzone: true
