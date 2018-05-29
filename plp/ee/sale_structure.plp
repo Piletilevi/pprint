@@ -42,9 +42,11 @@
         "totalText": "Всего",
         "totalPrice": "50.50 РУБ",
         "imageTop": "",
-        "imageLeft": "https://avatars1.githubusercontent.com/u/873710",
+        "imageLeft": "http:\/\/images.piletilevi.ee\/tickets\/left_1526629442_.jpg",
         "imageBottom": "",
-        "saleDateTime": "12.05.2017 12:14"
+        "saleDateTime": "12.05.2017 12:14",
+        "ticketLayout": "TestLayout01",
+        "ticketLayoutUrl": ""
       }
     ]
   },
