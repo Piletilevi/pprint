@@ -3,11 +3,15 @@
 block_cipher = None
 
 
+added_files = [
+    ('README.md', '.'),
+    ('config/layout.yaml', 'config'),
+    ('img', 'img')
+    ]
 a = Analysis(['pprint.py'],
              pathex=['c:\\github\\pprint'],
              binaries=[],
-             datas=[ ('README.md', '.'),
-                     ('config/layout.yaml', './config') ],
+             datas = added_files,
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],
