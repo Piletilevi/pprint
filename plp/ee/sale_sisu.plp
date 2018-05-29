@@ -46,7 +46,7 @@
         "imageBottom": "",
         "saleDateTime": "12.05.2017 12:14",
         "ticketLayoutName": "TestLayout01",
-        "ticketLayoutUrl": ""
+        "ticketLayoutUrl": "https://raw.githubusercontent.com/Piletilevi/pprint/master/config/TestLayout01.yaml"
       }
     ]
   },
