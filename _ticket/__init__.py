@@ -151,32 +151,18 @@ class PSPrint:
         _picture_fn = '{0}_{1}.png'.format(
             os.path.join(self.BASEDIR, 'img', os.path.basename(url)), rotate)
         if not os.path.isfile(_picture_fn):
-            try:
-                cert_path = os.path.abspath(os.path.join(application_path, 'certifi', 'cacert.pem'))
-                r = requests.get(url, verify=cert_path)
-                r.raise_for_status()
-            except requests.exceptions.HTTPError as err:
-                # print('1', err)
-                return
-            except requests.exceptions.Timeout as err:
-                # print('2', err)
-                return
-            except requests.exceptions.TooManyRedirects as err:
-                # print('3', err)
-                return
-            except requests.exceptions.RequestException as err:
-                # catastrophic error. bail.
-                # print('4', err)
-                return
+            cert_path = os.path.abspath(os.path.join(application_path, 'certifi', 'cacert.pem'))
+            r = requests.get(url, verify=cert_path)
+            r.raise_for_status()
 
-            with open(_picture_fn, 'wb') as fd:
-                # print('with ', _picture_fn)
-                for chunk in r.iter_content(chunk_size=128):
-                    fd.write(chunk)
-            _pic = self._rotatePicture(Image.open(_picture_fn), rotate)
+        with open(_picture_fn, 'wb') as fd:
+            # print('with ', _picture_fn)
+            for chunk in r.iter_content(chunk_size=128):
+                fd.write(chunk)
+        _pic = self._rotatePicture(Image.open(_picture_fn), rotate)
 
-            # print('save')
-            _pic.save(_picture_fn, 'PNG')
+        # print('save')
+        _pic.save(_picture_fn, 'PNG')
 
         _pic = Image.open(_picture_fn)
         dib = ImageWin.Dib(_pic)
@@ -228,9 +214,26 @@ class PSPrint:
         return None
 
     def printTicket(self, ticket):
-        for layout_key in self.PS_LAYOUT.keys():
+        # Load ticket layout file
+        default_lo_url = 'https://raw.githubusercontent.com/Piletilevi/pprint/master/config/layout.yaml'
+        layout_url = ticket.get('ticketLayoutUrl', default_lo_url)
+        layout_fn = os.path.join(self.BASEDIR, 'config',
+                                 os.path.basename(layout_url))
+        if not os.path.isfile(layout_fn):
+            cert_path = os.path.abspath(os.path.join(application_path, 'certifi', 'cacert.pem'))
+            r = requests.get(layout_url, verify=cert_path)
+            r.raise_for_status()
+
+        with open(layout_fn, 'wb') as fd:
+            for chunk in r.iter_content(chunk_size=128):
+                fd.write(chunk)
+
+        with open(layout_fn, 'r', encoding='utf-8') as layout_file:
+            ps_layout = ordered_load(layout_file, yaml.SafeLoader)
+
+        for layout_key in ps_layout.keys():
             # print('layout_key : {0}'.format(layout_key))
-            field = self.PS_LAYOUT[layout_key]
+            field = ps_layout[layout_key]
             value = ticket.get(
                 layout_key, self.PLP_JSON_DATA.get(layout_key, ''))
             if value == '':
