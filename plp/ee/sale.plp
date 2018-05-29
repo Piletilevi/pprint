@@ -5,6 +5,8 @@
   "operationToken": "",
   "printingDriverVersion": "",
   "printingDriverVersionUrl": "",
+  "ticketLayout": "",
+  "ticketLayoutUrl": "",
   "salesPointText": "Пункт продажи:",
   "salesPointCountry": "",
   "salesPoint": "*Касса 1",
