@@ -295,7 +295,7 @@ infoText5:
 ticketBarCode:
   type: code128
   common:
-    thickness: 10
+    thickness: 5
     width: 330
     height: 75
     orientation: 270
