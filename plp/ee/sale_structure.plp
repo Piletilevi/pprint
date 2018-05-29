@@ -45,7 +45,7 @@
         "imageLeft": "http:\/\/images.piletilevi.ee\/tickets\/left_1526629442_.jpg",
         "imageBottom": "",
         "saleDateTime": "12.05.2017 12:14",
-        "ticketLayout": "TestLayout01",
+        "ticketLayoutName": "TestLayout01",
         "ticketLayoutUrl": ""
       }
     ]
