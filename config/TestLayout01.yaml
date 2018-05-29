@@ -1,7 +1,9 @@
 # coding: utf-8
 
 ---
-ticketLayoutName: TestLayout01
+
+# ticketLayoutName: TestLayout01
+
 transactionDateTime:
   type: text
   instances:
@@ -295,9 +297,9 @@ infoText5:
 ticketBarCode:
   type: code128
   common:
-    thickness: 10
+    thickness: 5
     width: 330
-    height: 75
+    height: 55
     orientation: 270
     quietzone: true
   instances:
