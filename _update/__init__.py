@@ -24,7 +24,7 @@ def update(downloadURL, to_version):
         os.mkdir(download_path)
 
     #  download the distributed package
-    cert_path = os.path.abspath(os.path.join(application_path, 'cacert.pem'))
+    cert_path = os.path.abspath(os.path.join(application_path, 'certifi', 'cacert.pem'))
     r = requests.get(downloadURL, verify=cert_path)
 
     #  save package to download dir

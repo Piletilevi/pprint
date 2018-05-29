@@ -19,6 +19,12 @@ from code128image import code128_image as _c128image
 from PIL import ImageWin
 from PIL import Image
 
+# determine if application is a script file or frozen exe
+if getattr(sys, 'frozen', False):
+    application_path = os.path.dirname(sys.executable)
+else:
+    application_path = sys.path[0]
+
 
 def ordered_load(stream, Loader=yaml.Loader,
                  object_pairs_hook=collections.OrderedDict):
@@ -146,7 +152,8 @@ class PSPrint:
             os.path.join(self.BASEDIR, 'img', os.path.basename(url)), rotate)
         if not os.path.isfile(_picture_fn):
             try:
-                r = requests.get(url, verify=False)
+                cert_path = os.path.abspath(os.path.join(application_path, 'certifi', 'cacert.pem'))
+                r = requests.get(url, verify=cert_path)
                 r.raise_for_status()
             except requests.exceptions.HTTPError as err:
                 # print('1', err)
