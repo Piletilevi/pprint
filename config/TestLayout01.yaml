@@ -2,6 +2,7 @@
 
 ---
 ticketLayoutName: TestLayout01
+
 transactionDateTime:
   type: text
   instances:
