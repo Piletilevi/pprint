@@ -1,0 +1,47 @@
+{
+  "plpVersion": "2.0.0",
+  "feedbackToken": "kjhUlaaCdcakKynfQZlqhjlFlmllbiZQ",
+  "feedbackUrl": "http://bo.piletilevi-ru.test.helmes.ee/cgi-bin/wspd_cgi.sh/WService=plevi/proc/myygikorv.p?ajax=feedback",
+  "operationToken": "",
+  "printingDriverVersion": "",
+  "printingDriverVersionUrl": "",
+  "salesPointText": "Пункт продажи:",
+  "salesPointCountry": "",
+  "salesPoint": "*Касса 1",
+  "transactionDateTime": "12.05.2017 12:14",
+  "cardData": {
+    "printerData": {
+      "type": "card",
+      "printerName": "Kaardiprinter"
+    },
+    "cards": [
+      {
+        "cardId": "35",
+        "forename": "Jaan",
+        "surname": "Leppik",
+        "company": "Piletilevi",
+        "backroundImage": "http://images.piletilevi.ee/cards/backgrounds/meeskond_s.png",
+        "faceImage": "http://images.piletilevi.ee/cards/faces/35.png",
+        "code": "12345678"
+      },
+      {
+        "cardId": "206",
+        "forename": "Saale",
+        "surname": "Saalung",
+        "company": "Zetod",
+        "backroundImage": "http://images.piletilevi.ee/cards/backgrounds/esineja.png",
+        "faceImage": "http://images.piletilevi.ee/cards/faces/206.png",
+        "code": "22334455"
+      },
+      {
+        "cardId": "37",
+        "forename": "Maali",
+        "surname": "Meelas",
+        "company": "Postimees",
+        "backroundImage": "http://images.piletilevi.ee/cards/backgrounds/press.png",
+        "faceImage": "http://images.piletilevi.ee/cards/faces/37.png",
+        "code": "33115599"
+      },
+    ]
+  }
+}
