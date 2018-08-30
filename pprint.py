@@ -73,3 +73,13 @@ if PLP_JSON_DATA.get('ticketData'):
     ps.printTickets()
     # inspect(pp.printTickets())
     # with PSPrint(PLP_JSON_DATA) as ps:
+
+
+# 2
+# Cards
+#
+if PLP_JSON_DATA.get('cardData'):
+    # from _ticket import PSPrint
+    import _card
+    if _card.card(PLP_JSON_DATA):
+        print('Card print succeeded')

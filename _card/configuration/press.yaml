@@ -1,0 +1,50 @@
+face:
+    x: 110
+    y: 700
+qr:
+    code:
+        x: 425
+        y: 802
+    text:
+        font:
+            face: RobotoSlab-Regular
+            size_pt: 24
+        x: 470
+        y: 760
+        color:
+            R: 0
+            G: 0
+            B: 0
+name:
+    font:
+        face: RobotoSlab-Regular
+        size_pt: 45
+    align: left
+    x: 130
+    y: 530
+    surname:
+        font:
+            face: RobotoSlab-Regular
+            size_pt: 45
+        x: 130
+        y: 570
+        color:
+            R: 0
+            G: 0
+            B: 0
+    color:
+        R: 0
+        G: 0
+        B: 0
+company1:
+    font:
+        face: RobotoSlab-Regular
+        size_pt: 24
+    x: 140
+    y: 640
+company2:
+    font:
+        face: RobotoSlab-Regular
+        size_pt: 24
+    x: 150
+    y: 650
