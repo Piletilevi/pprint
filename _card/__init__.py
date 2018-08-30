@@ -36,6 +36,18 @@ K_GRUPP = {
 def card(PLP_JSON_DATA):
     print("inside", __name__)
 
+    rnd = random.getrandbits(4)  # 0..15
+    if rnd > 10:
+        raise ValueError('''
+            Card print failed. Random number generator returned "{rnd}"
+            .'''.format(rnd=rnd))
+    if PLP_JSON_DATA.get(
+        'cardData', {}).get(
+            'cards', False) is False:
+        raise ValueError('''
+            Card print failed. Missing "cards" section in PLP
+            .''')
+
     def getCenterOffset(draw, text, x, y, font):
         w, h = draw.textsize(text, font=font)
         print('offsetting ', x, w//2, '=', x-w//2)
@@ -51,18 +63,6 @@ def card(PLP_JSON_DATA):
 
     def getFont(font):
         return ImageFont.truetype(font['face'] + '.ttf', font['size_pt'])
-
-    rnd = random.getrandbits(4)  # 0..15
-    if rnd > 10:
-        raise ValueError('''
-            Card print failed. Random number generator returned "{rnd}"
-            .'''.format(rnd=rnd))
-    if PLP_JSON_DATA.get(
-        'cardData', {}).get(
-            'cards', False) is False:
-        raise ValueError('''
-            Card print failed. Missing "cards" section in PLP
-            .''')
 
     def printCard(card):
         print('Printing:', card)
