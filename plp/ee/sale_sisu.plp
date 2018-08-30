@@ -1,7 +1,7 @@
 {
   "plpVersion": "2.0.0",
   "feedbackToken": "kjhUlaaCdcakKynfQZlqhjlFlmllbiZQ",
-  "feedbackUrl": "http:\/\/bo.piletilevi-ru.test.helmes.ee\/cgi-bin\/wspd_cgi.sh\/WService=plevi\/proc\/myygikorv.p?ajax=feedback",
+  "feedbackUrl": "http://bo.piletilevi-ru.test.helmes.ee/cgi-bin/wspd_cgi.sh/WService=plevi/proc/myygikorv.p?ajax=feedback",
   "operationToken": "",
   "printingDriverVersion": "blt1",
   "printingDriverVersionUrl": "",
@@ -42,7 +42,7 @@
         "totalText": "Всего",
         "totalPrice": "50.50 РУБ",
         "imageTop": "",
-        "imageLeft": "http:\/\/images.piletilevi.ee\/tickets\/left_1526629442_.jpg",
+        "imageLeft": "http://images.piletilevi.ee/tickets/left_1526629442_.jpg",
         "imageBottom": "",
         "saleDateTime": "12.05.2017 12:14",
         "ticketLayoutName": "TestLayout01",
