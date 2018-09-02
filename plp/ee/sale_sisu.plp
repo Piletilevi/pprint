@@ -45,17 +45,14 @@
         "imageLeft": "http:\/\/images.piletilevi.ee\/tickets\/left_1516006098_150x245.jpg",
         "imageBottom": "http:\/\/images.piletilevi.ee\/tickets\/bottom_1516006139_600x40.jpg",
         "saleDateTime": "30.08.2018 15:55",
-
-!!!        "layout": {
-!!!          "name": "TestLayout01",
-!!!          "url": "",
-!!!        },
-
-!!!        "printerData": {
-!!!          "type": "tickets",
-!!!          "printerName": "Kvitki"
-!!!        }
-
+        "layout": {
+          "name": "TestLayout01",
+          "url": "",
+        },
+        "printerData": {
+          "type": "tickets",
+          "printerName": "Kvitki"
+        }
       }
     ]
   },
