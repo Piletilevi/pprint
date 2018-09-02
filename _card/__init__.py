@@ -167,19 +167,11 @@ def card(PLP_JSON_DATA):
     tmp_code_fn = os.path.join(exedir, 'code.png')
 
     # Main
-    with open(sys.argv[1], newline='', encoding='utf-8') as csvfile:
-        csvreader = csv.reader(csvfile, delimiter=',', quotechar='"')
-        firstrow = True
-        labels = 'foo'
-        for row in csvreader:
-            if firstrow:
-                labels = list(map(str.strip, row))
-                firstrow = False
-            else:
-                values = list(map(str.strip, row))
-                card = dict(zip(labels, values))
-                printCard(card)
+    for card in PLP_JSON_DATA['cardData']['cards']:
+        # print(card)
+        printCard(card)
 
     # Cleanup
     # os.rename(datafile_fn, os.path.join(outdir, datafile_bn))
-    os.remove(tmp_code_fn)
+    if os.path.isfile(tmp_code_fn):
+        os.remove(tmp_code_fn)
