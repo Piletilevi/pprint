@@ -1,103 +1,101 @@
 {
-  "plpVersion": "2.0.0",
-  "feedbackToken": "kjhUlaaCdcakKynfQZlqhjlFlmllbiZQ",
-  "feedbackUrl": "http://bo.piletilevi-ru.test.helmes.ee/cgi-bin/wspd_cgi.sh/WService=plevi/proc/myygikorv.p?ajax=feedback",
-  "operationToken": "",
+  "plpVersion": "2.1.0",
+  "feedbackToken": "jvcibddcbiFPfjbazvFUrjhvYjblddkI",
+  "feedbackUrl": "https:\/\/shop.piletilevi.ee\/cgi-bin\/wspd_cgi.sh\/WService=plevi\/proc\/myygikorv.p?ajax=feedback",
+
+!!!  "operationToken": "",
+
   "printingDriverVersion": "",
   "printingDriverVersionUrl": "",
   "salesPointText": "Пункт продажи:",
   "salesPointCountry": "",
-  "salesPoint": "*Касса 1",
-  "transactionDateTime": "12.05.2017 12:14",
+  "salesPoint": "Kvitki TEST Salespoint",
+  "transactionDateTime": "30.08.2018 15:55",
   "ticketData": {
     "printerData": {
-      "type": "ticket",
-      "printerName": "Godex DT4x"
+      "type": "tickets",
+      "printerName": "Kvitki"
     },
     "tickets": [
       {
-        "ticketId": "137123933",
-        "ticketBarCode": "34450204933205",
-        "eventName1": "БИ-2",
+        "ticketId": "159749925",
+        "ticketBarCode": "99270101925466",
+        "eventName1": "Test show Alina",
         "eventName2": "",
-        "eventLocation": "МКСК Минск-Арена",
-        "eventDateTime": "ПЯТНИЦА 02.06.17  Время 19:00",
-        "infoText1": "г. Минск, проспект Победителей, 111",
+        "eventLocation": "Республиканский театр белорусской драматургии",
+        "eventDateTime": "СРЕДА 01.01.2020  Время 19:00",
+        "infoText1": "",
         "infoText2": "",
-        "infoText3": "Телефон bileti.by: +375 29 650 9999",
-        "infoText4": "Организатор: ООО Артист ПРО",
-        "infoText5": "г. Минск, ул. Интернациональная 16, 301 каб",
-        "infoTextPdf": "",
-        "section1": "Трибуна В. Сектор М",
-        "section2": "Трибуна В. Сект",
-        "row1": "РЯД 4",
-        "row2": "РЯД 4",
-        "seat1": "МЕСТО 7",
-        "seat2": "МЕСТО 7",
+        "infoText3": "",
+        "infoText4": "",
+        "infoText5": "",
+        "infoTextPdf": "код на скидку на VIP-билет в Аквапарк: AQUA",
+        "section1": "Партер",
+        "section2": "Партер",
+        "row1": "РЯД 8",
+        "row2": "8",
+        "seat1": "МЕСТО 8",
+        "seat2": "8",
         "priceGroup1": "цена",
         "priceGroup2": "ц",
-        "ticketPrice": "49.00 РУБ",
-        "serviceFee": "0.00 РУБ",
-        "extraFee": "Дополнительные услуги 1.50 РУБ",
+        "ticketPrice": "2.00 Бел.руб.",
+        "serviceFee": "",
+        "extraFee": "0.00 Бел.руб.",
         "totalText": "Всего",
-        "totalPrice": "50.50 РУБ",
-        "imageTop": "",
-        "imageLeft": "http://images.piletilevi.ee/tickets/left_1526629442_.jpg",
-        "imageBottom": "",
-        "saleDateTime": "12.05.2017 12:14",
-        "ticketLayoutName": "TestLayout01",
-        "ticketLayoutUrl": ""
+        "totalPrice": "2.00 Бел.руб.",
+        "imageTop": "http:\/\/images.piletilevi.ee\/tickets\/top_1516006122_600x55.jpg",
+        "imageLeft": "http:\/\/images.piletilevi.ee\/tickets\/left_1516006098_150x245.jpg",
+        "imageBottom": "http:\/\/images.piletilevi.ee\/tickets\/bottom_1516006139_600x40.jpg",
+        "saleDateTime": "30.08.2018 15:55",
+
+!!!        "layout": {
+!!!          "name": "TestLayout01",
+!!!          "url": "",
+!!!        },
+
+!!!        "printerData": {
+!!!          "type": "tickets",
+!!!          "printerName": "Kvitki"
+!!!        }
+
       }
     ]
   },
   "fiscalData": {
     "operation": "sale",
-    "businessTransactionId": "13782946",
+    "businessTransactionId": "17035055",
     "cardPaymentUnitSettings": {
-      "cardPaymentUnit": ""
+      "cardPaymentUnit": "",
+      "cardPaymentUnitXml": "",
+      "cardPaymentUnitIp": "",
+      "cardPaymentUnitPort": ""
     },
     "printerData": {
-      "type": "fiscal",
-      "printerName": "ШТРИХ-ФР-К (B.3)",
-      "printerRegNumber": "123456",
-      "comPortNumber": 5,
-      "comPortBaudRate": 6,
-      "readTimeout": 100,
-      "writeTimeout": 100,
-      "adminPw": "29000",
-      "cashierPw": "1000",
+      "type": "",
+      "printerName": "",
+      "printerRegNumber": "",
+      "comPortNumber": 0,
+      "comPortBaudRate": 0,
+      "readTimeout": 0,
+      "writeTimeout": 0,
+      "adminPw": "",
+      "cashierPw": "",
       "certUserPw": "",
-      "sysAdminPw": "30000"
+      "sysAdminPw": ""
     },
     "payments": [
       {
         "type": "1",
         "name": "Наличные деньги",
-        "cost": 50.5,
+        "cost": 2.0,
         "components": [
           {
             "amount": 1,
-            "cost": 49.0,
+            "cost": 2.0,
             "kkm": true,
             "name": "Билет",
-            "ticketId": "137123933",
+            "ticketId": "159749925",
             "type": "Билеты",
-            "vatGroup": "0"
-          },
-          {
-            "amount": 1,
-            "cost": 1.0,
-            "kkm": true,
-            "name": "Tagastatav lisatasu",
-            "type": "Дополнительные оплаты",
-            "vatGroup": "0"
-          },
-          {
-            "amount": 1,
-            "cost": 0.5,
-            "kkm": true,
-            "name": "Mittetagastatav lisatasu RUS",
-            "type": "Дополнительные оплаты",
             "vatGroup": "0"
           }
         ]
