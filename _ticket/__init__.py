@@ -52,6 +52,7 @@ class PSPrint:
         self.PLP_JSON_DATA = plp_json_data
         # chdir(self.BASEDIR)
 
+        self.g_printerdata = self.PLP_JSON_DATA['ticketData']['printerData']
         prnt = self.PLP_JSON_DATA['ticketData']['printerData']['printerName']
         try:
             self.hprinter = win32print.OpenPrinter(prnt)
@@ -151,7 +152,8 @@ class PSPrint:
         _picture_fn = '{0}_{1}.png'.format(
             os.path.join(self.BASEDIR, 'img', os.path.basename(url)), rotate)
         if not os.path.isfile(_picture_fn):
-            cert_path = os.path.abspath(os.path.join(application_path, 'certifi', 'cacert.pem'))
+            cert_path = os.path.abspath(
+                os.path.join(application_path, 'certifi', 'cacert.pem'))
             r = requests.get(url, verify=cert_path)
             r.raise_for_status()
 
@@ -215,12 +217,12 @@ class PSPrint:
 
     def printTicket(self, ticket):
         # Load ticket layout file
-        default_lo_url = 'https://raw.githubusercontent.com/Piletilevi/pprint/master/config/layout.yaml'
-        layout_url = ticket.get('ticketLayoutUrl', default_lo_url)
+        layout_url = ticket.get('ticketLayoutUrl', 'layout.yaml')
         layout_fn = os.path.join(self.BASEDIR, 'config',
                                  os.path.basename(layout_url))
         if not os.path.isfile(layout_fn):
-            cert_path = os.path.abspath(os.path.join(application_path, 'certifi', 'cacert.pem'))
+            cert_path = os.path.abspath(
+                os.path.join(application_path, 'certifi', 'cacert.pem'))
             r = requests.get(layout_url, verify=cert_path)
             r.raise_for_status()
 
@@ -242,39 +244,60 @@ class PSPrint:
 
             if field['type'] == 'text':
                 for instance in field['instances']:
-                    font_name   = self._getInstanceProperty('font_name', instance, field)
-                    font_height = self._getInstanceProperty('font_height', instance, field)
-                    font_width  = self._getInstanceProperty('font_width', instance, field)
-                    font_weight = self._getInstanceProperty('font_weight', instance, field)
-                    x           = self._getInstanceProperty('x', instance, field)
-                    y           = self._getInstanceProperty('y', instance, field)
-                    if not (font_height and font_width and font_weight and x and y):
+                    font_name = self._getInstanceProperty(
+                        'font_name', instance, field)
+                    font_height = self._getInstanceProperty(
+                        'font_height', instance, field)
+                    font_width = self._getInstanceProperty(
+                        'font_width', instance, field)
+                    font_weight = self._getInstanceProperty(
+                        'font_weight', instance, field)
+                    x = self._getInstanceProperty('x', instance, field)
+                    y = self._getInstanceProperty('y', instance, field)
+                    if not (font_height and font_width and
+                            font_weight and x and y):
                         continue
-                    orientation = self._getInstanceProperty('orientation', instance, field)     or 0
-                    prefix      = self._getInstanceProperty('prefix', instance, field) or ''
-                    suffix      = self._getInstanceProperty('suffix', instance, field) or ''
-                    self._setFont(font_name, font_width, font_height, font_weight, orientation)
-                    self._placeText(int(x), int(y), '{0}{1}{2}'.format(prefix, value, suffix))
+                    orientation = self._getInstanceProperty(
+                        'orientation', instance, field) or 0
+                    prefix = self._getInstanceProperty(
+                        'prefix', instance, field) or ''
+                    suffix = self._getInstanceProperty(
+                        'suffix', instance, field) or ''
+                    self._setFont(font_name, font_width, font_height,
+                                  font_weight, orientation)
+                    self._placeText(int(x), int(y),
+                                    '{0}{1}{2}'.format(prefix, value, suffix))
                 continue
 
             elif field['type'] == 'image':
                 for instance in field['instances']:
-                    x           = self._getInstanceProperty('x', instance, field)
-                    y           = self._getInstanceProperty('y', instance, field)
-                    orientation = self._getInstanceProperty('orientation', instance, field)     or 0
+                    x = self._getInstanceProperty('x', instance, field)
+                    y = self._getInstanceProperty('y', instance, field)
+                    orientation = self._getInstanceProperty(
+                        'orientation', instance, field) or 0
                     self._placeImage(int(x), int(y), value, orientation)
                 continue
 
             elif field['type'] == 'code128':
                 for instance in field['instances']:
-                    thickness   = self._getInstanceProperty('thickness', instance, field)       or 10
-                    width       = self._getInstanceProperty('width', instance, field)           or 560
-                    height      = self._getInstanceProperty('height', instance, field)          or 100
-                    x           = instance.get('x', field.get('common', {'x': False}).get('x', False))
-                    y           = instance.get('y', field.get('common', {'y': False}).get('y', False))
-                    orientation = self._getInstanceProperty('orientation', instance, field)     or 0
-                    quietzone   = self._getInstanceProperty('quietzone', instance, field)       or False
+                    thickness = self._getInstanceProperty(
+                        'thickness', instance, field) or 10
+                    width = self._getInstanceProperty(
+                        'width', instance, field) or 560
+                    height = self._getInstanceProperty(
+                        'height', instance, field) or 100
+                    x = instance.get(
+                        'x', field.get('common', {'x': False})
+                                  .get('x', False))
+                    y = instance.get(
+                        'y', field.get('common', {'y': False})
+                                  .get('y', False))
+                    orientation = self._getInstanceProperty(
+                        'orientation', instance, field) or 0
+                    quietzone = self._getInstanceProperty(
+                        'quietzone', instance, field) or False
                     if not (x and y):
                         continue
-                    self._placeC128(value, int(x), int(y), width, height, thickness, orientation, quietzone)
+                    self._placeC128(value, int(x), int(y), width, height,
+                                    thickness, orientation, quietzone)
                 continue
