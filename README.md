@@ -10,7 +10,7 @@ pip install pyyaml
 pprint:
 - update
 - ticket:
-  - postscript - moving in
+  - postscript
   - bitmap - to move in
   - PDF - todo
 - payment - to move in
@@ -20,18 +20,18 @@ pprint:
 
 ## PLP faili struktuur
 
-PLP fail on viis, kuidas edastada BOst pileteid müüvasse arvutisse piletite infot ja fiskaalinfot. 
-Pileti müümine BOs tähendab PLP faili genereerimist ja selle allalaadimise protseduuri käivitamist. 
+PLP fail on viis, kuidas edastada BOst pileteid müüvasse arvutisse piletite infot ja fiskaalinfot.
+Pileti müümine BOs tähendab PLP faili genereerimist ja selle allalaadimise protseduuri käivitamist.
 
 ### Struktuur
 
 - ‘Üldinfo’
   - PLP versioon e info struktuuri versioon (semantiline versioneerimine)
   - Feedbacki info: token, url ja operation token
-  - Printimise Draiveri enda ja tema update’i info: draiveri versiooni nimi ja allalaadimise url. 
+  - Printimise Draiveri enda ja tema update’i info: draiveri versiooni nimi ja allalaadimise url.
   - Tehingu info: müügipunkti info ja tehingu aeg.
 - Piletite info
-  - Piletiprinteri info juhuks, kui printerit pole kirjeldatud iga pileti juures eraldi. 
+  - Piletiprinteri info juhuks, kui printerit pole kirjeldatud iga pileti juures eraldi.
   - Piletid
     - Pilet 1
       - Layout
