@@ -69,8 +69,9 @@ if PLP_JSON_DATA.get('fiscalData', {}).get('payments', False):
 if PLP_JSON_DATA.get('ticketData'):
     # from _ticket import PSPrint
     import _ticket
-    ps = _ticket.PSPrint(PLP_JSON_DATA)
-    ps.printTickets()
+    if _ticket.ticket(PLP_JSON_DATA):
+        print('Ticket(s) succeeded')
+    # ps.printTickets()
     # inspect(pp.printTickets())
     # with PSPrint(PLP_JSON_DATA) as ps:
 

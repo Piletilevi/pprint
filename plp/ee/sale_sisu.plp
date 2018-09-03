@@ -47,7 +47,7 @@
         "saleDateTime": "30.08.2018 15:55",
         "layout": {
           "name": "TestLayout01",
-          "url": "",
+          "url": ""
         },
         "printerData": {
           "type": "tickets",

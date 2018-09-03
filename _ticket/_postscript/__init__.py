@@ -19,12 +19,6 @@ from code128image import code128_image as _c128image
 from PIL import ImageWin
 from PIL import Image
 
-# determine if application is a script file or frozen exe
-if getattr(sys, 'frozen', False):
-    application_path = os.path.dirname(sys.executable)
-else:
-    application_path = sys.path[0]
-
 
 def ordered_load(stream, Loader=yaml.Loader,
                  object_pairs_hook=collections.OrderedDict):
@@ -40,19 +34,20 @@ def ordered_load(stream, Loader=yaml.Loader,
     return yaml.load(stream, OrderedLoader)
 
 
-# @decorators.profiler('_ticket')
+# @decorators.profiler('_postscript')
 class PSPrint:
-    @decorators.profiler('_ticket')
-    def __init__(self, plp_json_data):
+    @decorators.profiler('_postscript')
+    def __init__(self, ticket):
         if getattr(sys, 'frozen', False):
             self.BASEDIR = os.path.dirname(sys.executable)
         else:
             self.BASEDIR = sys.path[0]
 
-        self.PLP_JSON_DATA = plp_json_data
+        self.TICKET = ticket
+        # self.PLP_JSON_DATA = plp_json_data
         # chdir(self.BASEDIR)
 
-        prnt = self.PLP_JSON_DATA['ticketData']['printerData']['printerName']
+        prnt = self.TICKET['printerData']['printerName']
         try:
             self.hprinter = win32print.OpenPrinter(prnt)
         except Exception as e:
@@ -151,7 +146,7 @@ class PSPrint:
         _picture_fn = '{0}_{1}.png'.format(
             os.path.join(self.BASEDIR, 'img', os.path.basename(url)), rotate)
         if not os.path.isfile(_picture_fn):
-            cert_path = os.path.abspath(os.path.join(application_path, 'certifi', 'cacert.pem'))
+            cert_path = os.path.abspath(os.path.join(self.BASEDIR, 'certifi', 'cacert.pem'))
             r = requests.get(url, verify=cert_path)
             r.raise_for_status()
 
@@ -197,13 +192,6 @@ class PSPrint:
         self.DEVICE_CONTEXT.EndPage()
         self.DEVICE_CONTEXT.EndDoc()
 
-    @decorators.profiler('_ticket.printTickets')
-    def printTickets(self):
-        for ticket in self.PLP_JSON_DATA['ticketData']['tickets']:
-            self._startDocument()
-            self.printTicket(ticket)
-            self._printDocument()
-
     def _getInstanceProperty(self, key, instance, field, mandatory=False):
         if key in instance:
             return instance.get(key)
@@ -213,22 +201,31 @@ class PSPrint:
         #     print('Text without {0} - {1}'.format(key, field))
         return None
 
+    @decorators.profiler('_ticket.printTicket')
     def printTicket(self, ticket):
+        self._startDocument()
         # Load ticket layout file
-        default_lo_url = 'https://raw.githubusercontent.com/Piletilevi/pprint/master/config/layout.yaml'
-        layout_url = ticket.get('ticketLayoutUrl', default_lo_url)
-        layout_fn = os.path.join(self.BASEDIR, 'config',
-                                 os.path.basename(layout_url))
-        if not os.path.isfile(layout_fn):
-            cert_path = os.path.abspath(os.path.join(application_path, 'certifi', 'cacert.pem'))
-            r = requests.get(layout_url, verify=cert_path)
-            r.raise_for_status()
+        default_lo_fn = 'layout.yaml'
+        layout_url = ticket.get('layout', {}).get('url', '')
+        layout_fn = ticket.get('layout', {}).get('name', '')
+        layout_fn = layout_fn or os.path.basename(layout_url) or default_lo_fn
+        layout_file_path = os.path.join(self.BASEDIR, 'config', layout_fn)
 
-        with open(layout_fn, 'wb') as fd:
-            for chunk in r.iter_content(chunk_size=128):
-                fd.write(chunk)
+        if not os.path.isfile(layout_file_path):
+            if layout_url:
+                cert_path = os.path.abspath(
+                    os.path.join(self.BASEDIR, 'certifi', 'cacert.pem'))
+                r = requests.get(layout_url, verify=cert_path)
 
-        with open(layout_fn, 'r', encoding='utf-8') as layout_file:
+                if r.status_code == requests.codes.ok:
+                    with open(layout_file_path, 'wb') as fd:
+                        for chunk in r.iter_content(chunk_size=128):
+                            fd.write(chunk)
+                else:
+                    layout_file_path = os.path.join(
+                        self.BASEDIR, 'config', default_lo_fn)
+
+        with open(layout_file_path, 'r', encoding='utf-8') as layout_file:
             ps_layout = ordered_load(layout_file, yaml.SafeLoader)
 
         for layout_key in ps_layout.keys():
@@ -278,3 +275,5 @@ class PSPrint:
                         continue
                     self._placeC128(value, int(x), int(y), width, height, thickness, orientation, quietzone)
                 continue
+
+        self._printDocument()
