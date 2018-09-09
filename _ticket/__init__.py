@@ -44,6 +44,7 @@ def ticket(plp_json_data):
         if 'printerData' in ticket:
             printerData.update(ticket['printerData'])
         ticket['printerData'] = printerData
+        ticket['transactionData'] = plp_json_data['transactionData']
 
         method = printerData['type']
         if method in switcher:

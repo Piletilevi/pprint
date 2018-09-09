@@ -34,9 +34,9 @@ def ordered_load(stream, Loader=yaml.Loader,
     return yaml.load(stream, OrderedLoader)
 
 
-# @decorators.profiler('_postscript')
-class PSPrint:
-    @decorators.profiler('_postscript')
+# @decorators.profiler('_bitmap')
+class BMPPrint:
+    @decorators.profiler('_bitmap')
     def __init__(self, ticket):
         if getattr(sys, 'frozen', False):
             self.BASEDIR = os.path.dirname(sys.executable)
@@ -44,61 +44,13 @@ class PSPrint:
             self.BASEDIR = sys.path[0]
 
         self.TICKET = ticket
-        # self.PLP_JSON_DATA = plp_json_data
-        # chdir(self.BASEDIR)
-
-        prnt = self.TICKET['printerData']['printerName']
-        try:
-            self.hprinter = win32print.OpenPrinter(prnt)
-        except Exception as e:
-            raise ValueError('Can not open "{prnt}".'.format(prnt=prnt))
-
-        try:
-            devmode = win32print.GetPrinter(self.hprinter, 2)['pDevMode']
-        except Exception as e:
-            raise ValueError('Can not register "{prnt}".'.format(prnt=prnt))
-
-        try:
-            devmode.Orientation = 2
-        except Exception as e:
-            raise ValueError('Can not set orientation for "{prnt}".'
-                             .format(prnt=prnt))
-
-        self._waitForSpooler(1, 'Printer has queued jobs', 'Проверь принтер!')
-
-        try:
-            self.DEVICE_CONTEXT_HANDLE = win32gui.CreateDC('WINSPOOL', prnt,
-                                                           devmode)
-        except Exception as e:
-            raise ValueError('Failed DCH "{prnt}".'.format(prnt=prnt))
-
-        try:
-            self.DEVICE_CONTEXT = win32ui.CreateDCFromHandle(
-                self.DEVICE_CONTEXT_HANDLE)
-        except Exception as e:
-            raise ValueError('Failed DC "{prnt}".'.format(prnt=prnt))
 
     def __enter__(self):
-        print('Enter PSPrint')
+        print('Enter BMPPrint')
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
-        self._waitForSpooler(2, '''
-            - Включен ли принтер?\n
-            - Подключен ли принтер к компьютеру?\n
-            - Правильно ли вставлены билетные бланки в принтер?''',
-                             'Проверь принтер!')
-
-    def _waitForSpooler(self, sleep_sec, message, title):
-        printjobs = win32print.EnumJobs(self.hprinter, 0, 999)
-        if len(printjobs) != 0:
-            time.sleep(sleep_sec)
-            printjobs = win32print.EnumJobs(self.hprinter, 0, 999)
-            i = 3
-            while len(printjobs) != 0 and i > 0:
-                i -= 1
-                ctypes.windll.user32.MessageBoxW(0, message, title, 0)
-                printjobs = win32print.EnumJobs(self.hprinter, 0, 999)
+        None
 
     def _setFont(self, font_name, w=None, h=None, weight=None, orientation=0):
         if font_name is not None:
@@ -146,14 +98,14 @@ class PSPrint:
             r = requests.get(url, verify=cert_path)
             r.raise_for_status()
 
-            with open(_picture_fn, 'wb') as fd:
-                # print('with ', _picture_fn)
-                for chunk in r.iter_content(chunk_size=128):
-                    fd.write(chunk)
-            _pic = self._rotatePicture(Image.open(_picture_fn), rotate)
+        with open(_picture_fn, 'wb') as fd:
+            # print('with ', _picture_fn)
+            for chunk in r.iter_content(chunk_size=128):
+                fd.write(chunk)
+        _pic = self._rotatePicture(Image.open(_picture_fn), rotate)
 
-            # print('save')
-            _pic.save(_picture_fn, 'PNG')
+        # print('save')
+        _pic.save(_picture_fn, 'PNG')
 
         _pic = Image.open(_picture_fn)
         dib = ImageWin.Dib(_pic)
@@ -198,14 +150,12 @@ class PSPrint:
         return None
 
     @decorators.profiler('_ticket.printTicket')
-    def printTicket(self):
+    def printTicket(self, ticket):
         self._startDocument()
         # Load ticket layout file
         default_lo_fn = 'layout.yaml'
-        layout_url = self.TICKET.get('layout', {}).get('url', '')
-        layout_fn = self.TICKET.get('layout', {}).get('name', '')
-        if layout_fn:
-            layout_fn = layout_fn + '.yaml'
+        layout_url = ticket.get('layout', {}).get('url', '')
+        layout_fn = ticket.get('layout', {}).get('name', '')
         layout_fn = layout_fn or os.path.basename(layout_url) or default_lo_fn
         layout_file_path = os.path.join(self.BASEDIR, 'config', layout_fn)
 
@@ -229,12 +179,10 @@ class PSPrint:
         for layout_key in ps_layout.keys():
             # print('layout_key : {0}'.format(layout_key))
             field = ps_layout[layout_key]
-            value = self.TICKET.get(
-                layout_key,
-                self.TICKET.get('transactionData', {}).get(layout_key, '')
-            )
+            value = ticket.get(
+                layout_key, self.PLP_JSON_DATA.get(layout_key, ''))
             if value == '':
-                print('skip layout_key {0}'.format(layout_key))
+                # print('skip layout_key {0}'.format(layout_key))
                 continue
 
             if field['type'] == 'text':

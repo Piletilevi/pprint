@@ -29,7 +29,13 @@ if not len(sys.argv) > 1:
 PLP_FILENAME = sys.argv[1]
 with open(PLP_FILENAME, 'r', encoding='utf-8') as plp_data_file:
     PLP_JSON_DATA = json.load(plp_data_file)
-
+    transactionData = {
+        'salesPointText': PLP_JSON_DATA['salesPointText'],
+        'salesPointCountry': PLP_JSON_DATA['salesPointCountry'],
+        'salesPoint': PLP_JSON_DATA['salesPoint'],
+        'transactionDateTime': PLP_JSON_DATA['transactionDateTime']
+    }
+    PLP_JSON_DATA['transactionData'] = transactionData
 # 0
 # Update
 # Make sure we are on required version
