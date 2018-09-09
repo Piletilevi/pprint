@@ -15,8 +15,12 @@ def print2pdf(ticket):
 
 
 def print2bitmap(ticket):
-    raise Exception('print2bitmap')
-    return None
+    from _ticket._bitmap import BMPPrint
+    bmp = BMPPrint(ticket)
+    bmp.printTicket()
+
+    # raise Exception('print2bitmap')
+    # return None
 
 
 def cantPrint(method):

@@ -124,17 +124,7 @@ class BMPPrint:
                  (x, y, x + _pic.size[0], y + _pic.size[1]))
 
     def _startDocument(self):
-        # print("DEVICE_CONTEXT.SetMapMode")
-        self.DEVICE_CONTEXT.SetMapMode(1)
-        # print("DEVICE_CONTEXT.StartDoc")
-        self.DEVICE_CONTEXT.StartDoc("ticket.txt")
-        # print("DEVICE_CONTEXT.StartPage")
-        self.DEVICE_CONTEXT.StartPage()
-        # print("win32ui.CreateFont");
-        font = win32ui.CreateFont({"name": "Arial", "height": 16})
-        # print("DEVICE_CONTEXT.SelectObject")
-        self.DEVICE_CONTEXT.SelectObject(font)
-        # print("DEVICE_CONTEXT.SelectObject DONE")
+        None
 
     def _printDocument(self):
         self.DEVICE_CONTEXT.EndPage()
@@ -150,12 +140,14 @@ class BMPPrint:
         return None
 
     @decorators.profiler('_ticket.printTicket')
-    def printTicket(self, ticket):
+    def printTicket(self):
         self._startDocument()
         # Load ticket layout file
         default_lo_fn = 'layout.yaml'
-        layout_url = ticket.get('layout', {}).get('url', '')
-        layout_fn = ticket.get('layout', {}).get('name', '')
+        layout_url = self.TICKET.get('layout', {}).get('url', '')
+        layout_fn = self.TICKET.get('layout', {}).get('name', '')
+        if layout_fn:
+            layout_fn = layout_fn + '.yaml'
         layout_fn = layout_fn or os.path.basename(layout_url) or default_lo_fn
         layout_file_path = os.path.join(self.BASEDIR, 'config', layout_fn)
 
@@ -179,10 +171,12 @@ class BMPPrint:
         for layout_key in ps_layout.keys():
             # print('layout_key : {0}'.format(layout_key))
             field = ps_layout[layout_key]
-            value = ticket.get(
-                layout_key, self.PLP_JSON_DATA.get(layout_key, ''))
+            value = self.TICKET.get(
+                layout_key,
+                self.TICKET.get('transactionData', {}).get(layout_key, '')
+            )
             if value == '':
-                # print('skip layout_key {0}'.format(layout_key))
+                print('skip layout_key {0}'.format(layout_key))
                 continue
 
             if field['type'] == 'text':
