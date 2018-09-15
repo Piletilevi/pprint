@@ -59,9 +59,9 @@ class BMPPrint:
     def _placeText(self, font_name, font_size, x, y, text, rotate=0):
         print(font_name, font_size)
         font = ImageFont.truetype(font_name+'.ttf', font_size)
-        img_txt = Image.new('RGB', font.getsize(text))
+        img_txt = Image.new('RGBA', font.getsize(text))
         img_drw = ImageDraw.Draw(img_txt)
-        img_drw.text((0, 0), text,  font=font, fill="#fff")
+        img_drw.text((0, 0), text,  font=font, fill="#000")
         rotated_txt = img_txt.rotate(rotate, expand=1)
         self.image.paste(rotated_txt, (x, y))
 
@@ -110,9 +110,9 @@ class BMPPrint:
 
     def _startDocument(self, page_settings):
         self.image = Image.new(
-            'RGB',
+            'RGBA',
             (page_settings['width']['px'], page_settings['height']['px']),
-            color='#fff')
+            color=(255,0,0,0))
         self.draw = ImageDraw.Draw(self.image)
 
     def _printDocument(self, out_fn):

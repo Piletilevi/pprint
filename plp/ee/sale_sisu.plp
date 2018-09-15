@@ -50,7 +50,7 @@
           "url": ""
         },
         "printerData": {
-          "type": "tickets",
+          "type": "tickets_bitmap",
           "printerName": "Godest"
         }
       }
