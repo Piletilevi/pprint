@@ -2,21 +2,21 @@
 
 ---
 Page:
-    # Hard ticets are measuring 152*70 mm,
-    # GoDEX resolution is 203 ppi
+    # Hard ticets are measuring 152*70 mm
+    # GoDEX resolution is 203 dpi
     # width: 152mm; 1216px
     # height: 70mm; 560px
     width: 152mm
     height: 560px
-    # resolution: pixels per inch (ppi) or pixels per centimeter (ppc)
-    # 203ppi; 80ppc
-    resolution: 80ppc
+    # resolution: dots per inch (dpi) or dots per centimeter (dpc)
+    # 203dpi = 80dpc (80*2.54 = 203.2)
+    resolution: 203dpi
 
-Elements:
+Layout:
     transactionDateTime:
       type: text
       instances:
-      - font_name: Arial
+      - font_name: arial
         font_height: 20
         font_width: 8
         font_weight: 500
@@ -27,7 +27,7 @@ Elements:
     salesPointText:
       type: text
       instances:
-      - font_name: Arial
+      - font_name: arial
         font_height: 20
         font_width: 8
         font_weight: 500
@@ -37,7 +37,7 @@ Elements:
     salesPoint:
       type: text
       instances:
-      - font_name: Arial
+      - font_name: arial
         font_height: 20
         font_width: 8
         font_weight: 500
@@ -64,13 +64,13 @@ Elements:
     eventName1:
       type: text
       instances:
-      - font_name: Arial
+      - font_name: arial
         font_height: 34
         font_width: 14
         font_weight: 1000
         x: 200
         y: 150
-      - font_name: Arial
+      - font_name: arial
         font_height: 30
         font_width: 12
         font_weight: 1000
@@ -80,13 +80,13 @@ Elements:
     eventName2:
       type: text
       instances:
-      - font_name: Arial
+      - font_name: arial
         font_height: 34
         font_width: 14
         font_weight: 1000
         x: 200
         y: 185
-      - font_name: Arial
+      - font_name: arial
         font_height: 30
         font_width: 12
         font_weight: 1000
@@ -96,7 +96,7 @@ Elements:
     eventLocation:
       type: text
       instances:
-      - font_name: Arial
+      - font_name: arial
         font_height: 30
         font_width: 12
         font_weight: 1000
@@ -105,7 +105,7 @@ Elements:
     eventDateTime:
       type: text
       instances:
-      - font_name: Arial
+      - font_name: arial
         font_height: 30
         font_width: 12
         font_weight: 1000
@@ -114,7 +114,7 @@ Elements:
     section1:
       type: text
       instances:
-      - font_name: Arial
+      - font_name: arial
         font_height: 30
         font_width: 12
         font_weight: 1000
@@ -123,7 +123,7 @@ Elements:
     row1:
       type: text
       instances:
-      - font_name: Arial
+      - font_name: arial
         font_height: 30
         font_width: 12
         font_weight: 1000
@@ -132,7 +132,7 @@ Elements:
     seat1:
       type: text
       instances:
-      - font_name: Arial
+      - font_name: arial
         font_height: 30
         font_width: 12
         font_weight: 1000
@@ -141,7 +141,7 @@ Elements:
     priceGroup1:
       type: text
       instances:
-      - font_name: Arial
+      - font_name: arial
         font_height: 30
         font_width: 13
         font_weight: 800
@@ -150,7 +150,7 @@ Elements:
     section2:
       type: text
       instances:
-      - font_name: Arial
+      - font_name: arial
         font_height: 25
         font_width: 10
         font_weight: 500
@@ -159,7 +159,7 @@ Elements:
     row2:
       type: text
       instances:
-      - font_name: Arial
+      - font_name: arial
         font_height: 25
         font_width: 10
         font_weight: 500
@@ -168,7 +168,7 @@ Elements:
     seat2:
       type: text
       instances:
-      - font_name: Arial
+      - font_name: arial
         font_height: 25
         font_width: 10
         font_weight: 500
@@ -177,7 +177,7 @@ Elements:
     priceGroup2:
       type: text
       instances:
-      - font_name: Arial
+      - font_name: arial
         font_height: 25
         font_width: 10
         font_weight: 500
@@ -186,7 +186,7 @@ Elements:
     ticketPrice:
       type: text
       instances:
-      - font_name: Arial
+      - font_name: arial
         font_height: 30
         font_width: 12
         font_weight: 1000
@@ -194,7 +194,7 @@ Elements:
         #suffix: " руб"
         x: 200
         y: 455
-      - font_name: Arial
+      - font_name: arial
         font_height: 25
         font_width: 10
         font_weight: 500
@@ -203,7 +203,7 @@ Elements:
     serviceFee:
       type: text
       instances:
-      - font_name: Arial
+      - font_name: arial
         font_height: 22
         font_width: 8
         font_weight: 500
@@ -213,7 +213,7 @@ Elements:
     extraFee:
       type: text
       instances:
-      - font_name: Arial
+      - font_name: arial
         font_height: 22
         font_width: 8
         font_weight: 500
@@ -224,7 +224,7 @@ Elements:
     totalText:
       type: text
       instances:
-      - font_name: Arial
+      - font_name: arial
         font_height: 30
         font_width: 12
         font_weight: 1000
@@ -234,7 +234,7 @@ Elements:
     totalPrice:
       type: text
       instances:
-      - font_name: Arial
+      - font_name: arial
         font_height: 34
         font_width: 14
         font_weight: 1000
@@ -245,7 +245,7 @@ Elements:
       type: text
       common:
         prefix: 'ID: '
-        font_name: Arial
+        font_name: arial
         font_height: 25
         font_width: 10
         font_weight: 500
@@ -261,7 +261,7 @@ Elements:
     infoText1:
       type: text
       instances:
-      - font_name: Arial
+      - font_name: arial
         font_height: 25
         font_width: 10
         font_weight: 500
@@ -270,7 +270,7 @@ Elements:
     infoText2:
       type: text
       instances:
-      - font_name: Arial
+      - font_name: arial
         font_height: 25
         font_width: 10
         font_weight: 500
@@ -279,7 +279,7 @@ Elements:
     infoText3:
       type: text
       instances:
-      - font_name: Arial
+      - font_name: arial
         font_height: 25
         font_width: 10
         font_weight: 500
@@ -288,7 +288,7 @@ Elements:
     infoText4:
       type: text
       instances:
-      - font_name: Arial
+      - font_name: arial
         font_height: 25
         font_width: 10
         font_weight: 500
@@ -297,7 +297,7 @@ Elements:
     infoText5:
       type: text
       instances:
-      - font_name: Arial
+      - font_name: arial
         font_height: 25
         font_width: 10
         font_weight: 500

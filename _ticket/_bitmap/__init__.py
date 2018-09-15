@@ -16,8 +16,9 @@ import ctypes
 import time
 
 from code128image import code128_image as _c128image
-from PIL import ImageWin
 from PIL import Image
+from PIL import ImageFont
+from PIL import ImageDraw
 
 
 def ordered_load(stream, Loader=yaml.Loader,
@@ -52,29 +53,17 @@ class BMPPrint:
     def __exit__(self, exc_type, exc_value, traceback):
         None
 
-    def _setFont(self, font_name, w=None, h=None, weight=None, orientation=0):
-        if font_name is not None:
-            _log_font = [font_name]
+    def _setFont(self, font_name):
+        None
 
-            def callback(font, tm, fonttype, _font):
-                if font.lfFaceName == _font[0]:
-                    _font[0] = font
-                return True
-            win32gui.EnumFontFamilies(self.DEVICE_CONTEXT_HANDLE, None,
-                                      callback, _log_font)
-            self.log_font = _log_font[0]
-
-        self.log_font.lfWidth = int(w)
-        self.log_font.lfHeight = int(h)
-        self.log_font.lfWeight = int(weight)
-        self.log_font.lfOrientation = int(orientation) * 10
-        self.log_font.lfEscapement = int(orientation) * 10
-        font_handle = win32gui.CreateFontIndirect(self.log_font)
-        win32gui.SelectObject(self.DEVICE_CONTEXT_HANDLE, font_handle)
-
-    def _placeText(self, x, y, text):
-        ctypes.windll.gdi32.TextOutW(self.DEVICE_CONTEXT_HANDLE, x, y,
-                                     text, len(text))
+    def _placeText(self, font_name, font_size, x, y, text, rotate=0):
+        print(font_name, font_size)
+        font = ImageFont.truetype(font_name+'.ttf', font_size)
+        img_txt = Image.new('RGB', font.getsize(text))
+        img_drw = ImageDraw.Draw(img_txt)
+        img_drw.text((0, 0), text,  font=font, fill="#fff")
+        rotated_txt = img_txt.rotate(rotate, expand=1)
+        self.image.paste(rotated_txt, (x, y))
 
     def _indexedRotate(self, degrees):
         return math.floor((degrees % 360) / 90 + 0.5)
@@ -98,19 +87,17 @@ class BMPPrint:
             r = requests.get(url, verify=cert_path)
             r.raise_for_status()
 
-        with open(_picture_fn, 'wb') as fd:
-            # print('with ', _picture_fn)
-            for chunk in r.iter_content(chunk_size=128):
-                fd.write(chunk)
-        _pic = self._rotatePicture(Image.open(_picture_fn), rotate)
+            with open(_picture_fn, 'wb') as fd:
+                # print('with ', _picture_fn)
+                for chunk in r.iter_content(chunk_size=128):
+                    fd.write(chunk)
+            _pic = self._rotatePicture(Image.open(_picture_fn), rotate)
 
-        # print('save')
-        _pic.save(_picture_fn, 'PNG')
+            # print('save')
+            _pic.save(_picture_fn, 'PNG')
 
         _pic = Image.open(_picture_fn)
-        dib = ImageWin.Dib(_pic)
-        dib.draw(self.DEVICE_CONTEXT_HANDLE,
-                 (x, y, x + _pic.size[0], y + _pic.size[1]))
+        self.image.paste(_pic, (x, y))
 
     def _placeC128(self, text, x, y,
                    width, height, thickness, rotate, quietzone):
@@ -119,16 +106,17 @@ class BMPPrint:
         _c128image(
             text, int(width), int(height), quietzone).save(file1, 'JPEG')
         _pic = self._rotatePicture(Image.open(file1), rotate)
-        dib = ImageWin.Dib(_pic)
-        dib.draw(self.DEVICE_CONTEXT_HANDLE,
-                 (x, y, x + _pic.size[0], y + _pic.size[1]))
+        self.image.paste(_pic, (x, y))
 
-    def _startDocument(self):
-        None
+    def _startDocument(self, page_settings):
+        self.image = Image.new(
+            'RGB',
+            (page_settings['width']['px'], page_settings['height']['px']),
+            color='#fff')
+        self.draw = ImageDraw.Draw(self.image)
 
-    def _printDocument(self):
-        self.DEVICE_CONTEXT.EndPage()
-        self.DEVICE_CONTEXT.EndDoc()
+    def _printDocument(self, out_fn):
+        self.image.save(out_fn)
 
     def _getInstanceProperty(self, key, instance, field, mandatory=False):
         if key in instance:
@@ -139,9 +127,26 @@ class BMPPrint:
         #     print('Text without {0} - {1}'.format(key, field))
         return None
 
+    def _page_setup(self, page):
+        res = (page.get('resolution')[0:-3], page.get('resolution')[-3:])
+        resolution = float(res[0])  # d/cm
+        if res[1] == 'dpi':
+            resolution = float(res[0]) / 2.54  # d/cm
+
+        w = (float(page.get('width')[0:-2]), page.get('width')[-2:])
+        width = {'mm': w[0]/resolution*10, 'px': int(w[0])}
+        if w[1] == 'mm':
+            width = {'px': int(w[0]/10*resolution), 'mm': w[0]}
+
+        h = (float(page.get('height')[0:-2]), page.get('height')[-2:])
+        height = {'mm': h[0]/resolution*10, 'px': int(h[0])}
+        if h[1] == 'mm':
+            height = {'px': int(h[0]/10*resolution), 'mm': h[0]}
+
+        return {'resolution': resolution, 'width': width, 'height': height}
+
     @decorators.profiler('_ticket.printTicket')
     def printTicket(self):
-        self._startDocument()
         # Load ticket layout file
         default_lo_fn = 'layout.yaml'
         layout_url = self.TICKET.get('layout', {}).get('url', '')
@@ -150,6 +155,7 @@ class BMPPrint:
             layout_fn = layout_fn + '.yaml'
         layout_fn = layout_fn or os.path.basename(layout_url) or default_lo_fn
         layout_file_path = os.path.join(self.BASEDIR, 'config', layout_fn)
+        out_fn = os.path.join(self.BASEDIR, 'out', self.TICKET['ticketId']+'.png')
 
         if not os.path.isfile(layout_file_path):
             if layout_url:
@@ -168,9 +174,14 @@ class BMPPrint:
         with open(layout_file_path, 'r', encoding='utf-8') as layout_file:
             ps_layout = ordered_load(layout_file, yaml.SafeLoader)
 
-        for layout_key in ps_layout.keys():
+        page_settings = self._page_setup(ps_layout.get('Page'))
+        print('page_settings', page_settings)
+
+        self._startDocument(page_settings)
+
+        for layout_key in ps_layout.get('Layout').keys():
             # print('layout_key : {0}'.format(layout_key))
-            field = ps_layout[layout_key]
+            field = ps_layout.get('Layout').get(layout_key)
             value = self.TICKET.get(
                 layout_key,
                 self.TICKET.get('transactionData', {}).get(layout_key, '')
@@ -192,8 +203,10 @@ class BMPPrint:
                     orientation = self._getInstanceProperty('orientation', instance, field)     or 0
                     prefix      = self._getInstanceProperty('prefix', instance, field) or ''
                     suffix      = self._getInstanceProperty('suffix', instance, field) or ''
-                    self._setFont(font_name, font_width, font_height, font_weight, orientation)
-                    self._placeText(int(x), int(y), '{0}{1}{2}'.format(prefix, value, suffix))
+                    # self._setFont(font_name, font_width, font_height, font_weight, orientation)
+                    self._placeText(font_name, font_height, int(x), int(y),
+                                    '{0}{1}{2}'.format(prefix, value, suffix),
+                                    orientation)
                 continue
 
             elif field['type'] == 'image':
@@ -218,4 +231,4 @@ class BMPPrint:
                     self._placeC128(value, int(x), int(y), width, height, thickness, orientation, quietzone)
                 continue
 
-        self._printDocument()
+        self._printDocument(out_fn)

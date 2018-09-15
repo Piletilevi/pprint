@@ -46,11 +46,11 @@
         "imageBottom": "http:\/\/images.piletilevi.ee\/tickets\/bottom_1516006139_600x40.jpg",
         "saleDateTime": "30.08.2018 15:55",
         "layout": {
-          "name": "TestLayout01",
+          "name": "Layout",
           "url": ""
         },
         "printerData": {
-          "type": "tickets_bitmap",
+          "type": "tickets",
           "printerName": "Godest"
         }
       }
