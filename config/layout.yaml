@@ -49,18 +49,18 @@ Layout:
       common:
         orientation: 0
       instances:
-      - x: 20
-        y: 120
+      - x: 80
+        y: 130
     imageTop:
       type: image
       instances:
-      - x: 200
-        y: 56
+      - x: 305
+        y: 40
     imageBottom:
       type: image
       instances:
-      - x: 200
-        y: 550
+      - x: 305
+        y: 501
     eventName1:
       type: text
       instances:
