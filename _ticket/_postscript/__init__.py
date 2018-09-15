@@ -102,6 +102,7 @@ class PSPrint:
 
     def _setFont(self, font_name, w=None, h=None, weight=None, orientation=0):
         if font_name is not None:
+            print (font_name)
             _log_font = [font_name]
 
             def callback(font, tm, fonttype, _font):
@@ -226,9 +227,9 @@ class PSPrint:
         with open(layout_file_path, 'r', encoding='utf-8') as layout_file:
             ps_layout = ordered_load(layout_file, yaml.SafeLoader)
 
-        for layout_key in ps_layout.keys():
+        for layout_key in ps_layout.get('Layout').keys():
             # print('layout_key : {0}'.format(layout_key))
-            field = ps_layout[layout_key]
+            field = ps_layout.get('Layout')[layout_key]
             value = self.TICKET.get(
                 layout_key,
                 self.TICKET.get('transactionData', {}).get(layout_key, '')

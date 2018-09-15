@@ -16,7 +16,7 @@ Layout:
     transactionDateTime:
       type: text
       instances:
-      - font_name: arial
+      - font_name: Arial
         font_height: 20
         font_width: 8
         font_weight: 500
@@ -27,7 +27,7 @@ Layout:
     salesPointText:
       type: text
       instances:
-      - font_name: arial
+      - font_name: Arial
         font_height: 20
         font_width: 8
         font_weight: 500
@@ -37,7 +37,7 @@ Layout:
     salesPoint:
       type: text
       instances:
-      - font_name: arial
+      - font_name: Arial
         font_height: 20
         font_width: 8
         font_weight: 500
@@ -64,13 +64,13 @@ Layout:
     eventName1:
       type: text
       instances:
-      - font_name: arial
+      - font_name: Arial
         font_height: 34
         font_width: 14
         font_weight: 1000
         x: 200
         y: 150
-      - font_name: arial
+      - font_name: Arial
         font_height: 30
         font_width: 12
         font_weight: 1000
@@ -80,13 +80,13 @@ Layout:
     eventName2:
       type: text
       instances:
-      - font_name: arial
+      - font_name: Arial
         font_height: 34
         font_width: 14
         font_weight: 1000
         x: 200
         y: 185
-      - font_name: arial
+      - font_name: Arial
         font_height: 30
         font_width: 12
         font_weight: 1000
@@ -96,7 +96,7 @@ Layout:
     eventLocation:
       type: text
       instances:
-      - font_name: arial
+      - font_name: Arial
         font_height: 30
         font_width: 12
         font_weight: 1000
@@ -105,7 +105,7 @@ Layout:
     eventDateTime:
       type: text
       instances:
-      - font_name: arial
+      - font_name: Arial
         font_height: 30
         font_width: 12
         font_weight: 1000
@@ -114,7 +114,7 @@ Layout:
     section1:
       type: text
       instances:
-      - font_name: arial
+      - font_name: Arial
         font_height: 30
         font_width: 12
         font_weight: 1000
@@ -123,7 +123,7 @@ Layout:
     row1:
       type: text
       instances:
-      - font_name: arial
+      - font_name: Arial
         font_height: 30
         font_width: 12
         font_weight: 1000
@@ -132,7 +132,7 @@ Layout:
     seat1:
       type: text
       instances:
-      - font_name: arial
+      - font_name: Arial
         font_height: 30
         font_width: 12
         font_weight: 1000
@@ -141,7 +141,7 @@ Layout:
     priceGroup1:
       type: text
       instances:
-      - font_name: arial
+      - font_name: Arial
         font_height: 30
         font_width: 13
         font_weight: 800
@@ -150,7 +150,7 @@ Layout:
     section2:
       type: text
       instances:
-      - font_name: arial
+      - font_name: Arial
         font_height: 25
         font_width: 10
         font_weight: 500
@@ -159,7 +159,7 @@ Layout:
     row2:
       type: text
       instances:
-      - font_name: arial
+      - font_name: Arial
         font_height: 25
         font_width: 10
         font_weight: 500
@@ -168,7 +168,7 @@ Layout:
     seat2:
       type: text
       instances:
-      - font_name: arial
+      - font_name: Arial
         font_height: 25
         font_width: 10
         font_weight: 500
@@ -177,7 +177,7 @@ Layout:
     priceGroup2:
       type: text
       instances:
-      - font_name: arial
+      - font_name: Arial
         font_height: 25
         font_width: 10
         font_weight: 500
@@ -186,7 +186,7 @@ Layout:
     ticketPrice:
       type: text
       instances:
-      - font_name: arial
+      - font_name: Arial
         font_height: 30
         font_width: 12
         font_weight: 1000
@@ -194,7 +194,7 @@ Layout:
         #suffix: " руб"
         x: 200
         y: 455
-      - font_name: arial
+      - font_name: Arial
         font_height: 25
         font_width: 10
         font_weight: 500
@@ -203,7 +203,7 @@ Layout:
     serviceFee:
       type: text
       instances:
-      - font_name: arial
+      - font_name: Arial
         font_height: 22
         font_width: 8
         font_weight: 500
@@ -213,7 +213,7 @@ Layout:
     extraFee:
       type: text
       instances:
-      - font_name: arial
+      - font_name: Arial
         font_height: 22
         font_width: 8
         font_weight: 500
@@ -224,7 +224,7 @@ Layout:
     totalText:
       type: text
       instances:
-      - font_name: arial
+      - font_name: Arial
         font_height: 30
         font_width: 12
         font_weight: 1000
@@ -234,7 +234,7 @@ Layout:
     totalPrice:
       type: text
       instances:
-      - font_name: arial
+      - font_name: Arial
         font_height: 34
         font_width: 14
         font_weight: 1000
@@ -245,7 +245,7 @@ Layout:
       type: text
       common:
         prefix: 'ID: '
-        font_name: arial
+        font_name: Arial
         font_height: 25
         font_width: 10
         font_weight: 500
@@ -261,7 +261,7 @@ Layout:
     infoText1:
       type: text
       instances:
-      - font_name: arial
+      - font_name: Arial
         font_height: 25
         font_width: 10
         font_weight: 500
@@ -270,7 +270,7 @@ Layout:
     infoText2:
       type: text
       instances:
-      - font_name: arial
+      - font_name: Arial
         font_height: 25
         font_width: 10
         font_weight: 500
@@ -279,7 +279,7 @@ Layout:
     infoText3:
       type: text
       instances:
-      - font_name: arial
+      - font_name: Arial
         font_height: 25
         font_width: 10
         font_weight: 500
@@ -288,7 +288,7 @@ Layout:
     infoText4:
       type: text
       instances:
-      - font_name: arial
+      - font_name: Arial
         font_height: 25
         font_width: 10
         font_weight: 500
@@ -297,7 +297,7 @@ Layout:
     infoText5:
       type: text
       instances:
-      - font_name: arial
+      - font_name: Arial
         font_height: 25
         font_width: 10
         font_weight: 500
