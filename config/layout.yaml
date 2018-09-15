@@ -312,5 +312,5 @@ Layout:
         orientation: 270
         quietzone: true
       instances:
-      - x: 860
-        y: 60
+      - x: 1000
+        y: 85
