@@ -47,6 +47,7 @@ class BMPPrint:
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
+        print('bye')
         None
 
     def _setFont(self, font_name):
@@ -56,9 +57,9 @@ class BMPPrint:
         font_fn = os.path.join(self.BASEDIR, 'ttf', font_name+'.ttf')
         print(font_fn, font_size)
         font = ImageFont.truetype(font_fn, font_size)
-        img_txt = Image.new('RGBA', font.getsize(text))
+        img_txt = Image.new('RGBA', font.getsize(text), color=(255, 255, 255, 255))
         img_drw = ImageDraw.Draw(img_txt)
-        img_drw.text((0, 0), text,  font=font, fill="#000")
+        img_drw.text((0, 0), text,  font=font, fill=(150,0,0,255))
         rotated_txt = img_txt.rotate(rotate, expand=1)
         self.image.paste(rotated_txt, (x, y))
 
@@ -109,11 +110,11 @@ class BMPPrint:
         self.image = Image.new(
             'RGBA',
             (page_settings['width']['px'], page_settings['height']['px']),
-            color=(255,0,0,0))
+            color=(255, 255, 255, 255))
         self.draw = ImageDraw.Draw(self.image)
 
-    def _printDocument(self, out_fn):
-        self.image.save(out_fn)
+    def _printDocument(self):
+        self.image.save(self.out_fn)
 
     def _getInstanceProperty(self, key, instance, field, mandatory=False):
         if key in instance:
@@ -152,7 +153,8 @@ class BMPPrint:
             layout_fn = layout_fn + '.yaml'
         layout_fn = layout_fn or os.path.basename(layout_url) or default_lo_fn
         layout_file_path = os.path.join(self.BASEDIR, 'config', layout_fn)
-        out_fn = os.path.join(self.BASEDIR, 'out', self.TICKET['ticketId']+'.png')
+        self.out_fn = os.path.join(self.BASEDIR, 'img',
+                                   self.TICKET['ticketId']+'.png')
 
         if not os.path.isfile(layout_file_path):
             if layout_url:
@@ -228,4 +230,5 @@ class BMPPrint:
                     self._placeC128(value, int(x), int(y), width, height, thickness, orientation, quietzone)
                 continue
 
-        self._printDocument(out_fn)
+        self._printDocument()
+        print('outfn', self.out_fn)

@@ -18,6 +18,10 @@ def print2bitmap(ticket):
     from _ticket._bitmap import BMPPrint
     bmp = BMPPrint(ticket)
     bmp.printTicket()
+    print('Printed', bmp.out_fn)
+    from _ticket._postscript import PSPrint
+    ps = PSPrint(ticket)
+    ps.printTicket(bmp.out_fn)
 
     # raise Exception('print2bitmap')
     # return None

@@ -102,7 +102,7 @@ class PSPrint:
 
     def _setFont(self, font_name, w=None, h=None, weight=None, orientation=0):
         if font_name is not None:
-            print (font_name)
+            print(font_name)
             _log_font = [font_name]
 
             def callback(font, tm, fonttype, _font):
@@ -142,6 +142,7 @@ class PSPrint:
     def _placeImage(self, x, y, url, rotate):
         _picture_fn = '{0}_{1}.png'.format(
             os.path.join(self.BASEDIR, 'img', os.path.basename(url)), rotate)
+        print('place image from', _picture_fn)
         if not os.path.isfile(_picture_fn):
             cert_path = os.path.abspath(os.path.join(self.BASEDIR, 'certifi', 'cacert.pem'))
             r = requests.get(url, verify=cert_path)
@@ -199,8 +200,15 @@ class PSPrint:
         return None
 
     @decorators.profiler('_ticket.printTicket')
-    def printTicket(self):
+    def printTicket(self, bmp_fn=None):
         self._startDocument()
+        print('bitmap filename is', bmp_fn)
+        if bmp_fn is not None:
+            print('Printing from bitmap', bmp_fn)
+            self._placeImage(0, 0, bmp_fn, 0)
+            self._printDocument()
+            return
+
         # Load ticket layout file
         default_lo_fn = 'layout.yaml'
         layout_url = self.TICKET.get('layout', {}).get('url', '')
