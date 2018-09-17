@@ -4,15 +4,11 @@ import decorators
 
 import os
 import sys
-import win32ui
-import win32gui
-import win32print
 import requests
 import math
 import yaml
 
 import collections
-import ctypes
 import time
 
 from code128image import code128_image as _c128image
@@ -57,8 +53,9 @@ class BMPPrint:
         None
 
     def _placeText(self, font_name, font_size, x, y, text, rotate=0):
-        print(font_name, font_size)
-        font = ImageFont.truetype(font_name+'.ttf', font_size)
+        font_fn = os.path.join(self.BASEDIR, 'ttf', font_name+'.ttf')
+        print(font_fn, font_size)
+        font = ImageFont.truetype(font_fn, font_size)
         img_txt = Image.new('RGBA', font.getsize(text))
         img_drw = ImageDraw.Draw(img_txt)
         img_drw.text((0, 0), text,  font=font, fill="#000")
