@@ -64,18 +64,18 @@ Layout:
     eventName1:
       type: text
       instances:
-      - font_name: Arial
+      - font_name: RobotoSlab-Thin
         font_height: 34
         font_width: 14
         font_weight: 1000
         x: 200
         y: 150
-      - font_name: Arial
-        font_height: 30
+      - font_name: FREESCPT
+        font_height: 60
         font_width: 12
         font_weight: 1000
         x: 950
-        y: 550
+        y: 80
         orientation: 90
     eventName2:
       type: text

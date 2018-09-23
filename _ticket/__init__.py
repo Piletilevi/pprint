@@ -4,9 +4,14 @@ import decorators
 
 
 def print2postscript(ticket):
+    bmp_fn = print2bitmap(ticket)
     from _ticket._postscript import PSPrint
-    ps = PSPrint(ticket)
-    ps.printTicket()
+    ps = PSPrint(ticket['printerData'])
+    ps.printTicket(bmp_fn)
+
+    # from _ticket._postscript import PSPrint
+    # ps = PSPrint(ticket)
+    # ps.printTicket()
 
 
 def print2pdf(ticket):
@@ -19,9 +24,7 @@ def print2bitmap(ticket):
     bmp = BMPPrint(ticket)
     bmp.printTicket()
     print('Printed', bmp.out_fn)
-    from _ticket._postscript import PSPrint
-    ps = PSPrint(ticket)
-    ps.printTicket(bmp.out_fn)
+    return bmp.out_fn
 
     # raise Exception('print2bitmap')
     # return None

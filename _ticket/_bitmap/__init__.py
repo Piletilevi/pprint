@@ -57,11 +57,25 @@ class BMPPrint:
         font_fn = os.path.join(self.BASEDIR, 'ttf', font_name+'.ttf')
         print(font_fn, font_size)
         font = ImageFont.truetype(font_fn, font_size)
-        img_txt = Image.new('RGBA', font.getsize(text), color=(255, 255, 255, 255))
+        img_txt = Image.new('RGBA', font.getsize(text),
+                            color=(255, 255, 255, 255))
         img_drw = ImageDraw.Draw(img_txt)
-        img_drw.text((0, 0), text,  font=font, fill=(150,0,0,255))
-        rotated_txt = img_txt.rotate(rotate, expand=1)
-        self.image.paste(rotated_txt, (x, y))
+        img_drw.text((0, 0), text,  font=font, fill=(0, 0, 0, 255))
+
+        if rotate % 360 == 0:
+            self.image.paste(img_txt, (x, y))
+        else:
+            rotated_txt = img_txt.rotate(rotate, expand=1)
+            img_txt.save('pre-rotate.png', 'PNG')
+            rotated_txt.save('post-rotate.png', 'PNG')
+            _pic = Image.open('post-rotate.png')
+            self.image.paste(_pic, (x, y))
+
+            # _pic = self._rotatePicture(Image.open(_picture_fn), rotate)
+            # _pic.save(_picture_fn, 'PNG')
+            # _pic = Image.open(_picture_fn)
+            # self.image.paste(_pic, (x, y))
+
 
     def _indexedRotate(self, degrees):
         return math.floor((degrees % 360) / 90 + 0.5)
