@@ -4,6 +4,7 @@ from _version import __version__
 import sys
 import os
 import json
+import shutil
 # import inspect
 
 
@@ -20,6 +21,9 @@ else:
 
 BASEDIR = os.path.dirname(sys.executable) if hasattr(sys, "frozen")\
     else os.path.dirname(__file__)
+
+os.makedirs(os.path.join(BASEDIR, 'img'), exist_ok=True)
+os.makedirs(os.path.join(BASEDIR, 'tmp'), exist_ok=True)
 
 global PLP_JSON_DATA
 
@@ -90,3 +94,6 @@ if PLP_JSON_DATA.get('cardData'):
     import _card
     if _card.card(PLP_JSON_DATA):
         print('Card print succeeded')
+
+print('\n\n----\ncleanup')
+shutil.rmtree(os.path.join(BASEDIR, 'tmp'))
