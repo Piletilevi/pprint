@@ -22,13 +22,11 @@
 #    copyright notice and this permission notice appear in all copies.
 #
 
-try: from PIL import Image, ImageDraw
-except ImportError:
-    try: import Image, ImageDraw
-    except ImportError:
-        Image = ImageDraw = None
+from PIL import Image
+from PIL import ImageDraw
 
 from code128format import code128_format as _format
+
 
 def code128_image(data, width=560, height=100, quiet_zone=True):
     thickness = 10
@@ -45,7 +43,7 @@ def code128_image(data, width=560, height=100, quiet_zone=True):
         x = 10 * thickness
 
     # Monochrome Image
-    img  = Image.new('1', (_width, height), 1)
+    img = Image.new('1', (_width, height), 1)
     draw = ImageDraw.Draw(img)
     draw_bar = True
     for _width in barcode_widths:
@@ -53,8 +51,5 @@ def code128_image(data, width=560, height=100, quiet_zone=True):
             draw.rectangle(((x, 0), (x + _width - 1, height)), fill=0)
         draw_bar = not draw_bar
         x += _width
-
-    # print(img)
-    # print('dimensions: {0}'.format((img.size[0], img.size[1], width, height)))
 
     return img.resize((width, height), Image.ANTIALIAS)
