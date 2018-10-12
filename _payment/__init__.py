@@ -8,11 +8,11 @@ import random
 def payment(PLP_JSON_DATA):
     print("inside", __name__)
 
-    rnd = random.getrandbits(4)  # 0..15
-    if rnd > 10:
-        raise ValueError('''
-            Payment failed. Random number generator returned "{rnd}"
-            .'''.format(rnd=rnd))
+    # rnd = random.getrandbits(4)  # 0..15
+    # if rnd > 10:
+    #     raise ValueError('''
+    #         Payment failed. Random number generator returned "{rnd}"
+    #         .'''.format(rnd=rnd))
 
     if PLP_JSON_DATA.get(
         'fiscalData', {}).get(

@@ -9,10 +9,6 @@ def print2postscript(ticket):
     ps = PSPrint(ticket['printerData'])
     ps.printTicket(bmp_fn)
 
-    # from _ticket._postscript import PSPrint
-    # ps = PSPrint(ticket)
-    # ps.printTicket()
-
 
 def print2pdf(ticket):
     raise Exception('print2pdf')
@@ -25,9 +21,6 @@ def print2bitmap(ticket):
     bmp.printTicket()
     print('Printed', bmp.out_fn)
     return bmp.out_fn
-
-    # raise Exception('print2bitmap')
-    # return None
 
 
 def cantPrint(method):
