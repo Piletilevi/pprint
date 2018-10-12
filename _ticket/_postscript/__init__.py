@@ -7,7 +7,6 @@ import sys
 import win32ui
 import win32gui
 import win32print
-import requests
 
 import ctypes
 import time

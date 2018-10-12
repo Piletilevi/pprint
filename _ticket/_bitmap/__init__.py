@@ -53,40 +53,37 @@ class BMPPrint:
     def _setFont(self, font_name):
         None
 
+    def _imgPath(self, url, rotate):
+        return '{0}_{1}.png'.format(
+            os.path.join(self.BASEDIR, 'img', os.path.basename(url)), rotate)
+
     def _placeText(self, font_name, font_size, x, y, text, rotate=0):
         font_fn = os.path.join(self.BASEDIR, 'ttf', font_name+'.ttf')
         print(font_fn, font_size)
         font = ImageFont.truetype(font_fn, font_size)
         img_txt = Image.new('RGBA', font.getsize(text),
                             color=(255, 255, 255, 255))
+        img_txt.filename = text
         img_drw = ImageDraw.Draw(img_txt)
         img_drw.text((0, 0), text,  font=font, fill=(0, 0, 0, 255))
 
-        if rotate % 360 == 0:
-            self.image.paste(img_txt, (x, y))
-        else:
-            rotated_txt = img_txt.rotate(rotate, expand=1)
-            img_txt.save('pre-rotate.png', 'PNG')
-            rotated_txt.save('post-rotate.png', 'PNG')
-            _pic = Image.open('post-rotate.png')
-            self.image.paste(_pic, (x, y))
-
-            # _pic = self._rotatePicture(Image.open(_picture_fn), rotate)
-            # _pic.save(_picture_fn, 'PNG')
-            # _pic = Image.open(_picture_fn)
-            # self.image.paste(_pic, (x, y))
-
+        img_txt = self._rotatePicture(img_txt, rotate)
+        self.image.paste(img_txt, (x, y))
 
     def _indexedRotate(self, degrees):
-        return math.floor((degrees % 360) / 90 + 0.5)
+        rix = {0: 0,
+               1: Image.ROTATE_90,
+               2: Image.ROTATE_180,
+               3: Image.ROTATE_270}
+        return rix[math.floor((degrees % 360) / 90 + 0.5)]
 
     def _rotatePicture(self, _pic, degrees):
-        if degrees % 360 == 0:
+        rotate = self._indexedRotate(degrees)
+        if rotate == 0:
             return _pic
 
-        _temp_fn = '{0}_{1}.png'.format(os.path.join(self.BASEDIR, 'img',
-                                                     'temprotate'), degrees)
-        _pic = _pic.transpose((self._indexedRotate(degrees) - 1) % 3 + 2)
+        _temp_fn = self._imgPath('tmp_' + _pic.filename, rotate)
+        _pic = _pic.transpose(rotate)
         _pic.save(_temp_fn, 'png')
         _pic = Image.open(_temp_fn)
         return _pic
@@ -103,21 +100,18 @@ class BMPPrint:
                 # print('with ', _picture_fn)
                 for chunk in r.iter_content(chunk_size=128):
                     fd.write(chunk)
-            _pic = self._rotatePicture(Image.open(_picture_fn), rotate)
 
-            # print('save')
-            _pic.save(_picture_fn, 'PNG')
+        _pic = self._rotatePicture(Image.open(_picture_fn), rotate)
 
-        _pic = Image.open(_picture_fn)
         self.image.paste(_pic, (x, y))
 
     def _placeC128(self, text, x, y,
                    width, height, thickness, rotate, quietzone):
-        file1 = '{0}_1_{1}.png'.format(
+        file1_fn = '{0}_1_{1}.png'.format(
             os.path.join(self.BASEDIR, 'img', 'tmp'), rotate)
         _c128image(
-            text, int(width), int(height), quietzone).save(file1, 'JPEG')
-        _pic = self._rotatePicture(Image.open(file1), rotate)
+            text, int(width), int(height), quietzone).save(file1_fn, 'JPEG')
+        _pic = self._rotatePicture(Image.open(file1_fn), rotate)
         self.image.paste(_pic, (x, y))
 
     def _startDocument(self, page_settings):
