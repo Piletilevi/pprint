@@ -9,7 +9,6 @@ import math
 import yaml
 
 import collections
-import time
 
 from code128image import code128_image as _c128image
 from PIL import Image
@@ -55,7 +54,7 @@ class BMPPrint:
 
     def _imgPath(self, url, rotate):
         return '{0}_{1}.png'.format(
-            os.path.join(self.BASEDIR, 'img', os.path.basename(url)), rotate)
+            os.path.join(self.BASEDIR, 'tmp', os.path.basename(url)), rotate)
 
     def _placeText(self, font_name, font_size, x, y, text, rotate=0):
         font_fn = os.path.join(self.BASEDIR, 'ttf', font_name+'.ttf')
@@ -107,11 +106,9 @@ class BMPPrint:
 
     def _placeC128(self, text, x, y,
                    width, height, thickness, rotate, quietzone):
-        file1_fn = '{0}_1_{1}.png'.format(
-            os.path.join(self.BASEDIR, 'img', 'tmp'), rotate)
-        _c128image(
-            text, int(width), int(height), quietzone).save(file1_fn, 'JPEG')
-        _pic = self._rotatePicture(Image.open(file1_fn), rotate)
+        _pic = _c128image(text, int(width), int(height), quietzone)
+        _pic.filename = 'c128'
+        _pic = self._rotatePicture(_pic, rotate)
         self.image.paste(_pic, (x, y))
 
     def _startDocument(self, page_settings):
