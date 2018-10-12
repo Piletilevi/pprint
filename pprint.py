@@ -95,5 +95,7 @@ if PLP_JSON_DATA.get('cardData'):
     if _card.card(PLP_JSON_DATA):
         print('Card print succeeded')
 
+# Cleanup
 print('\n\n----\ncleanup')
+os.unlink(PLP_FILENAME)
 shutil.rmtree(os.path.join(BASEDIR, 'tmp'))
