@@ -5,53 +5,54 @@
   "operationToken": "",
   "printingDriverVersion": "",
   "printingDriverVersionUrl": "",
-  "salesPointText": "Пункт продажи:",
-  "salesPointCountry": "",
-  "salesPoint": "Kvitki TEST Salespoint",
-  "transactionDateTime": "30.08.2018 15:55",
+  "salesPointText": "Salespoint:",
+  "salesPointCountry": "Estonia",
+  "salesPoint": "Balti Jaama Selver",
+  "transactionDateTime": "27.01.2019 12:57:05",
   "ticketData": {
     "printerData": {
       "type": "tickets_bitmap",
-      "printerName": "Kvitki"
+      "printerName": "Godex DT4x"
     },
     "tickets": [
       {
         "ticketId": "159749925",
         "ticketBarCode": "99270101925466",
-        "eventName1": "Test show Alina",
-        "eventName2": "",
+        "eventName1": "Ürituse nimi: Laulu- ja Tantsupidu",
+        "eventName2": "'MINU ARM'",
         "eventLocation": "Республиканский театр белорусской драматургии",
         "eventDateTime": "СРЕДА 01.01.2020  Время 19:00",
-        "infoText1": "",
-        "infoText2": "",
-        "infoText3": "",
-        "infoText4": "",
-        "infoText5": "",
+        "infoText1": "Lisatext1 e infoText1 Lisatext1 e infoText1",
+        "infoText2": "Lisatext2 e infoText2 Lisatext2 e infoText2",
+        "infoText3": "Lisatext3 e infoText3 Lisatext3 e infoText3",
+        "infoText4": "Lisatext4 e infoText4 Lisatext4 e infoText4",
+        "infoText5": "Lisatext5 e infoText5 Lisatext5 e infoText5",
         "infoTextPdf": "код на скидку на VIP-билет в Аквапарк: AQUA",
         "section1": "Партер",
-        "section2": "Партер",
+        "section2": "Parter",
         "row1": "РЯД 8",
-        "row2": "8",
+        "row2": "R 8",
         "seat1": "МЕСТО 8",
-        "seat2": "8",
+        "seat2": "K 8",
         "priceGroup1": "цена",
-        "priceGroup2": "ц",
-        "ticketPrice": "2.00 Бел.руб.",
-        "serviceFee": "",
-        "extraFee": "0.00 Бел.руб.",
+        "priceGroup2": "C",
+        "ticketPrice": "10.00 Бел.руб.",
+        "serviceFee": "2.00 Бел.руб.",
+        "extraFee": "3.00 Бел.руб.",
         "totalText": "Всего",
-        "totalPrice": "2.00 Бел.руб.",
+        "totalPrice": "15.00 Бел.руб.",
         "imageTop": "http:\/\/images.piletilevi.ee\/tickets\/top_1516006122_600x55.jpg",
         "imageLeft": "http:\/\/images.piletilevi.ee\/tickets\/left_1516006098_150x245.jpg",
         "imageBottom": "http:\/\/images.piletilevi.ee\/tickets\/bottom_1516006139_600x40.jpg",
-        "saleDateTime": "30.08.2018 15:55",
+        "imageBg": "http:\/\/images.piletilevi.ee\/tickets\/box_bg_1214x560px.jpg",
+        "saleDateTime": "27.01.2019 12:57:05",
         "layout": {
           "name": "Layout",
           "url": ""
         },
         "printerData": {
           "type": "tickets_bitmap",
-          "printerName": "Godest"
+          "printerName": "Godex DT4x"
         }
       }
     ]

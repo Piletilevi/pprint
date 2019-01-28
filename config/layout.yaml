@@ -44,13 +44,20 @@ Layout:
         orientation: 0
         x: 460
         y: 525
+    imageBg:
+      type: image
+      common:
+        orientation: 0
+      instances:
+      - x: 0
+        y: 0
     imageLeft:
       type: image
       common:
         orientation: 0
       instances:
-      - x: 80
-        y: 130
+      - x: 10
+        y: 10
     imageTop:
       type: image
       instances:
