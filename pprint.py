@@ -31,15 +31,21 @@ if not len(sys.argv) > 1:
     raise ValueError('Missin\' plp file name.')
 
 PLP_FILENAME = sys.argv[1]
-with open(PLP_FILENAME, 'r', encoding='utf-8') as plp_data_file:
-    PLP_JSON_DATA = json.load(plp_data_file)
-    transactionData = {
-        'salesPointText': PLP_JSON_DATA.setdefault('salesPointText'),
-        'salesPointCountry': PLP_JSON_DATA.setdefault('salesPointCountry'),
-        'salesPoint': PLP_JSON_DATA.setdefault('salesPoint'),
-        'transactionDateTime': PLP_JSON_DATA.setdefault('transactionDateTime')
-    }
-    PLP_JSON_DATA['transactionData'] = transactionData
+try:
+    with open(PLP_FILENAME, 'r', encoding='utf-8') as plp_data_file:
+        PLP_JSON_DATA = json.load(plp_data_file)
+except Exception as e:
+    from plp_txt2json import main as plpT2J
+    PLPJSON_FILENAME = PLP_FILENAME[:-4] + '.json' + PLP_FILENAME[-4:]
+    PLP_JSON_DATA = plpT2J(PLP_FILENAME, PLPJSON_FILENAME)
+
+transactionData = {
+    'salesPointText': PLP_JSON_DATA.setdefault('salesPointText'),
+    'salesPointCountry': PLP_JSON_DATA.setdefault('salesPointCountry'),
+    'salesPoint': PLP_JSON_DATA.setdefault('salesPoint'),
+    'transactionDateTime': PLP_JSON_DATA.setdefault('transactionDateTime')
+}
+PLP_JSON_DATA['transactionData'] = transactionData
 # 0
 # Update
 # Make sure we are on required version
@@ -97,5 +103,5 @@ if PLP_JSON_DATA.get('cardData'):
 
 # Cleanup
 print('\n\n----\ncleanup')
-os.unlink(PLP_FILENAME)
+# os.unlink(PLP_FILENAME)
 shutil.rmtree(os.path.join(BASEDIR, 'tmp'))
