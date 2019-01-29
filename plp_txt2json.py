@@ -25,6 +25,8 @@ def main(PLPTXT_FN, PLPJSON_FN):
         MAPPINGS = m.setdefault('mappings', {})
         PLP_DATA = m.setdefault('defaults', {})
         PREFIXES = m.setdefault('prefixes', {})
+        RULES = m.setdefault('overwrites', {})
+        OVERWRITES = []
         print('converting', PLPTXT_FN, 'to', PLPJSON_FN)
         with open(PLPTXT_FN, 'r', encoding='utf-8') as plptxt_file:
             plptxt = [line.rstrip('\n \t') for line in plptxt_file]
@@ -46,6 +48,10 @@ def main(PLPTXT_FN, PLPJSON_FN):
                     continue
                 (k, v) = line.split('=')
                 # print(k, v)
+                if k in RULES:
+                    for rule in RULES[k]:
+                        if rule.contains in v:
+                            OVERWRITES.append(rule.target)
                 if MAPPINGS[k] == 'deprecated':
                     PLP_DATA.setdefault('deprecated', []).append(k)
                 else:
@@ -63,9 +69,14 @@ def main(PLPTXT_FN, PLPJSON_FN):
                     # print('PLP_DATA:', PLP_DATA)
                     continue
                 (k, v) = line.split('=')
-                # print('k:', k)
-                # print({'MAPPINGS_k': MAPPINGS[k]})
-                # print('v:', v)
+                if k in RULES:
+                    for rule in RULES[k]:
+                        if rule['contains'] in v:
+                            # print(OVERWRITES)
+                            # print('\n --- \n')
+                            # print(rule['target'])
+                            # print('\n --- \n')
+                            OVERWRITES.extend(rule['target'])
                 if MAPPINGS[k] == 'deprecated':
                     PLP_DATA.setdefault('deprecated', []).append(k)
                 else:
@@ -74,6 +85,9 @@ def main(PLPTXT_FN, PLPJSON_FN):
                                MAPPINGS[k].split('.'),
                                v)
 
+        for overwrite in OVERWRITES:
+            print(overwrite)
+            nested_set(PLP_DATA, overwrite['key'].split('.'), overwrite['value'])
         return PLP_DATA
 
 

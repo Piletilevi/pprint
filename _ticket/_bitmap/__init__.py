@@ -118,9 +118,6 @@ class BMPPrint:
             color=(255, 255, 255, 255))
         self.draw = ImageDraw.Draw(self.image)
 
-    def _printDocument(self):
-        self.image.save(self.out_fn)
-
     def _getInstanceProperty(self, key, instance, field, mandatory=False):
         if key in instance:
             return instance.get(key)
@@ -162,7 +159,7 @@ class BMPPrint:
         # return {'resolution': resolution, 'width': width, 'height': height, 'offset': {'width': width, 'height': height}}
 
     @decorators.profiler('_ticket.printTicket')
-    def printTicket(self):
+    def printTicket(self, job_no):
         # Load ticket layout file
         default_lo_fn = 'layout.yaml'
         layout_url = self.TICKET.get('layout', {}).get('url', '')
@@ -171,8 +168,6 @@ class BMPPrint:
             layout_fn = layout_fn + '.yaml'
         layout_fn = layout_fn or os.path.basename(layout_url) or default_lo_fn
         layout_file_path = os.path.join(self.BASEDIR, 'config', layout_fn)
-        self.out_fn = os.path.join(self.BASEDIR, 'img',
-                                   self.TICKET['ticketId']+'.png')
 
         if not os.path.isfile(layout_file_path):
             if layout_url:
@@ -196,59 +191,73 @@ class BMPPrint:
 
         self._startDocument(page_settings)
 
-        for layout_key in ps_layout.get('Layout').keys():
-            # print('layout_key : {0}'.format(layout_key))
-            field = ps_layout.get('Layout').get(layout_key)
-            value = self.TICKET.get(
-                layout_key,
-                self.TICKET.get('transactionData', {}).get(layout_key, '')
-            )
-            if value == '':
-                value = field.get('default')
-            if value == '':
-                print('skip layout_key {0}'.format(layout_key))
-                continue
+        if isinstance(ps_layout.get('Layout'), list):
+            print('layout is list')
+            layouts = ps_layout['Layout']
+        else:
+            print('layout is NOT list')
+            layouts = [ps_layout['Layout']]
 
-            if field['type'] == 'text':
-                for instance in field['instances']:
-                    font_name   = self._getInstanceProperty('font_name', instance, field)
-                    font_height = self._getInstanceProperty('font_height', instance, field)
-                    font_width  = self._getInstanceProperty('font_width', instance, field)
-                    font_weight = self._getInstanceProperty('font_weight', instance, field)
-                    x           = self._getInstanceProperty('x', instance, field)
-                    y           = self._getInstanceProperty('y', instance, field)
-                    if not (font_height and font_width and font_weight and x and y):
-                        continue
-                    orientation = self._getInstanceProperty('orientation', instance, field)     or 0
-                    prefix      = self._getInstanceProperty('prefix', instance, field) or ''
-                    suffix      = self._getInstanceProperty('suffix', instance, field) or ''
-                    # self._setFont(font_name, font_width, font_height, font_weight, orientation)
-                    self._placeText(font_name, font_height, int(x), int(y),
-                                    '{0}{1}{2}'.format(prefix, value, suffix),
-                                    orientation)
-                continue
+        lo_page_no = 0
+        self.out_fn = []
+        for layout in layouts:
+            lo_page_no += 1
+            for layout_key in layout.keys():
+                # print('layout_key : {0}'.format(layout_key))
+                field = layout.get(layout_key)
+                value = self.TICKET.get(
+                    layout_key,
+                    self.TICKET.get('transactionData', {}).get(layout_key, '')
+                )
+                if value == '':
+                    value = field.get('default')
+                if value == '':
+                    print('skip layout_key {0}'.format(layout_key))
+                    continue
 
-            elif field['type'] == 'image':
-                for instance in field['instances']:
-                    x           = self._getInstanceProperty('x', instance, field)
-                    y           = self._getInstanceProperty('y', instance, field)
-                    orientation = self._getInstanceProperty('orientation', instance, field)     or 0
-                    self._placeImage(int(x), int(y), value, orientation)
-                continue
+                if field['type'] == 'text':
+                    for instance in field['instances']:
+                        font_name   = self._getInstanceProperty('font_name', instance, field)
+                        font_height = self._getInstanceProperty('font_height', instance, field)
+                        font_width  = self._getInstanceProperty('font_width', instance, field)
+                        font_weight = self._getInstanceProperty('font_weight', instance, field)
+                        x           = self._getInstanceProperty('x', instance, field)
+                        y           = self._getInstanceProperty('y', instance, field)
+                        if not (font_height and font_width and font_weight and x and y):
+                            continue
+                        orientation = self._getInstanceProperty('orientation', instance, field)     or 0
+                        prefix      = self._getInstanceProperty('prefix', instance, field) or ''
+                        suffix      = self._getInstanceProperty('suffix', instance, field) or ''
+                        # self._setFont(font_name, font_width, font_height, font_weight, orientation)
+                        self._placeText(font_name, font_height, int(x), int(y),
+                                        '{0}{1}{2}'.format(prefix, value, suffix),
+                                        orientation)
+                    continue
 
-            elif field['type'] == 'code128':
-                for instance in field['instances']:
-                    thickness   = self._getInstanceProperty('thickness', instance, field)       or 10
-                    width       = self._getInstanceProperty('width', instance, field)           or 560
-                    height      = self._getInstanceProperty('height', instance, field)          or 100
-                    x           = instance.get('x', field.get('common', {'x': False}).get('x', False))
-                    y           = instance.get('y', field.get('common', {'y': False}).get('y', False))
-                    orientation = self._getInstanceProperty('orientation', instance, field)     or 0
-                    quietzone   = self._getInstanceProperty('quietzone', instance, field)       or False
-                    if not (x and y):
-                        continue
-                    self._placeC128(value, int(x), int(y), width, height, thickness, orientation, quietzone)
-                continue
+                elif field['type'] == 'image':
+                    for instance in field['instances']:
+                        x           = self._getInstanceProperty('x', instance, field)
+                        y           = self._getInstanceProperty('y', instance, field)
+                        orientation = self._getInstanceProperty('orientation', instance, field)     or 0
+                        self._placeImage(int(x), int(y), value, orientation)
+                    continue
 
-        self._printDocument()
+                elif field['type'] == 'code128':
+                    for instance in field['instances']:
+                        thickness   = self._getInstanceProperty('thickness', instance, field)       or 10
+                        width       = self._getInstanceProperty('width', instance, field)           or 560
+                        height      = self._getInstanceProperty('height', instance, field)          or 100
+                        x           = instance.get('x', field.get('common', {'x': False}).get('x', False))
+                        y           = instance.get('y', field.get('common', {'y': False}).get('y', False))
+                        orientation = self._getInstanceProperty('orientation', instance, field)     or 0
+                        quietzone   = self._getInstanceProperty('quietzone', instance, field)       or False
+                        if not (x and y):
+                            continue
+                        self._placeC128(value, int(x), int(y), width, height, thickness, orientation, quietzone)
+                    continue
+
+            out_fn = os.path.join(self.BASEDIR, 'img',
+                                  self.TICKET['ticketId']+'_'+str(lo_page_no)+'.png')
+            self.image.save(out_fn)
+            self.out_fn.append(out_fn)
         # print('outfn', self.out_fn)

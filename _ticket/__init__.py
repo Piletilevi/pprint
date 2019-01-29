@@ -3,22 +3,23 @@
 import decorators
 
 
-def print2postscript(ticket):
-    bmp_fn = print2bitmap(ticket)
+def print2postscript(ticket, job_no):
+    bmp_fns = print2bitmap(ticket, job_no)
     from _ticket._postscript import PSPrint
     ps = PSPrint(ticket['printerData'])
-    ps.printTicket(bmp_fn)
+    for bmp_fn in bmp_fns:
+        ps.printTicket(bmp_fn)
 
 
-def print2pdf(ticket):
+def print2pdf(ticket, job_no):
     raise Exception('print2pdf')
     return None
 
 
-def print2bitmap(ticket):
+def print2bitmap(ticket, job_no):
     from _ticket._bitmap import BMPPrint
     bmp = BMPPrint(ticket)
-    bmp.printTicket()
+    bmp.printTicket(job_no)
     print('Printed', bmp.out_fn)
     return bmp.out_fn
 
@@ -41,18 +42,24 @@ def ticket(plp_json_data):
     g_printerdata = dict()
     if 'printerData' in plp_json_data['ticketData']:
         g_printerdata.update(plp_json_data['ticketData']['printerData'])
+    if 'layout' in plp_json_data['ticketData']:
+        g_layout = plp_json_data['ticketData']['layout']
 
+    job_no = 0
     for ticket in plp_json_data['ticketData']['tickets']:
+        job_no += 1
         printerData = dict()
         printerData.update(g_printerdata)
         if 'printerData' in ticket:
             printerData.update(ticket['printerData'])
         ticket['printerData'] = printerData
         ticket['transactionData'] = plp_json_data['transactionData']
+        ticket.setdefault('layout', {'name': g_layout})
 
         method = printerData['type']
+        print('printing method:', method)
         if method in switcher:
             func = switcher.get(method)
-            func(ticket)
+            func(ticket, job_no)
         else:
             cantPrint(method)
