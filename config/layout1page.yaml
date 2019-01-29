@@ -1,0 +1,327 @@
+# coding: utf-8
+
+---
+Page:
+    # Hard ticets are measuring 152*70 mm
+    # GoDEX resolution is 203 dpi
+    # width: 152mm; 1216px
+    # height: 70mm; 560px
+    width: 152mm
+    height: 560px
+    # resolution: dots per inch (dpi) or dots per centimeter (dpc)
+    # 203dpi = 80dpc (80*2.54 = 203.2)
+    resolution: 203dpi
+    offset:
+        width: 15px
+        height: 5px
+
+Layout:
+    transactionDateTime:
+        type: text
+        instances:
+        -   font_name: Arial
+            font_height: 20
+            font_width: 8
+            font_weight: 500
+            orientation: 0
+            prefix: 'Время продажи:  '
+            x: 20
+            y: 525
+    salesPointText:
+        type: text
+        instances:
+        -   font_name: Arial
+            font_height: 20
+            font_width: 8
+            font_weight: 500
+            orientation: 0
+            x: 330
+            y: 525
+    salesPoint:
+        type: text
+        instances:
+        -   font_name: Arial
+            font_height: 20
+            font_width: 8
+            font_weight: 500
+            orientation: 0
+            x: 460
+            y: 525
+    imageBg:
+        type: image
+        default: box_bg_1214x560px.jpg
+        common:
+            orientation: 0
+        instances:
+        -   x: 0
+            y: 0
+    imageLeft:
+        type: image
+        common:
+            orientation: 0
+        instances:
+        -   x: 10
+            y: 10
+    imageTop:
+        type: image
+        instances:
+        -   x: 305
+            y: 40
+    imageBottom:
+        type: image
+        instances:
+        -   x: 305
+            y: 501
+    eventName1:
+        type: text
+        instances:
+        -   font_name: Arial
+            font_height: 34
+            font_width: 14
+            font_weight: 1000
+            x: 200
+            y: 150
+        -   font_name: FREESCPT
+            font_height: 60
+            font_width: 12
+            font_weight: 1000
+            x: 950
+            y: 80
+            orientation: 90
+    eventName2:
+        type: text
+        instances:
+        -   font_name: Arial
+            font_height: 34
+            font_width: 14
+            font_weight: 1000
+            x: 200
+            y: 185
+        -   font_name: Arial
+            font_height: 30
+            font_width: 12
+            font_weight: 1000
+            x: 980
+            y: 550
+            orientation: 90
+    eventLocation:
+        type: text
+        instances:
+        -   font_name: Arial
+            font_height: 30
+            font_width: 12
+            font_weight: 1000
+            x: 200
+            y: 220
+    eventDateTime:
+        type: text
+        instances:
+        -   font_name: Arial
+            font_height: 30
+            font_width: 12
+            font_weight: 1000
+            x: 200
+            y: 252
+    section1:
+        type: text
+        instances:
+        -   font_name: Arial
+            font_height: 30
+            font_width: 12
+            font_weight: 1000
+            x: 20
+            y: 395
+    row1:
+        type: text
+        instances:
+        -   font_name: Arial
+            font_height: 30
+            font_width: 12
+            font_weight: 1000
+            x: 20
+            y: 425
+    seat1:
+        type: text
+        instances:
+        -   font_name: Arial
+            font_height: 30
+            font_width: 12
+            font_weight: 1000
+            x: 20
+            y: 455
+    priceGroup1:
+        type: text
+        instances:
+        -   font_name: Arial
+            font_height: 30
+            font_width: 13
+            font_weight: 800
+            x: 200
+            y: 425
+    section2:
+        type: text
+        instances:
+        -   font_name: Arial
+            font_height: 25
+            font_width: 10
+            font_weight: 500
+            x: 1025
+            y: 236
+    row2:
+        type: text
+        instances:
+        -   font_name: Arial
+            font_height: 25
+            font_width: 10
+            font_weight: 500
+            x: 1025
+            y: 261
+    seat2:
+        type: text
+        instances:
+        -   font_name: Arial
+            font_height: 25
+            font_width: 10
+            font_weight: 500
+            x: 1025
+            y: 286
+    priceGroup2:
+        type: text
+        instances:
+        -   font_name: Arial
+            font_height: 25
+            font_width: 10
+            font_weight: 500
+            x: 1025
+            y: 311
+    ticketPrice:
+        type: text
+        instances:
+        -   font_name: Arial
+            font_height: 30
+            font_width: 12
+            font_weight: 1000
+            #prefix: 'Цена билета: '
+            #suffix: " руб"
+            x: 200
+            y: 455
+        -   font_name: Arial
+            font_height: 25
+            font_width: 10
+            font_weight: 500
+            x: 1025
+            y: 336
+    serviceFee:
+        type: text
+        instances:
+        -   font_name: Arial
+            font_height: 22
+            font_width: 8
+            font_weight: 500
+            #suffix: " руб"
+            x: 200
+            y: 483
+    extraFee:
+        type: text
+        instances:
+        -   font_name: Arial
+            font_height: 22
+            font_width: 8
+            font_weight: 500
+            #prefix: 'Плата за обслуживание в зале '
+            #suffix: " руб"
+            x: 200
+            y: 503
+    totalText:
+        type: text
+        instances:
+        -   font_name: Arial
+            font_height: 30
+            font_width: 12
+            font_weight: 1000
+            suffix: ":"
+            x: 700
+            y: 455
+    totalPrice:
+        type: text
+        instances:
+        -   font_name: Arial
+            font_height: 34
+            font_width: 14
+            font_weight: 1000
+            #suffix: " руб"
+            x: 700
+            y: 495
+    ticketId:
+        type: text
+        common:
+            prefix: 'ID: '
+            font_name: Arial
+            font_height: 25
+            font_width: 10
+            font_weight: 500
+        instances:
+        -   x: 20
+            y: 55
+        -   x: 1000
+            y: 55
+        -   x: 20
+            y: 560
+        -   x: 1000
+            y: 560
+    infoText1:
+        type: text
+        instances:
+        -   font_name: Arial
+            font_height: 25
+            font_width: 10
+            font_weight: 500
+            x: 200
+            y: 120
+    infoText2:
+        type: text
+        instances:
+        -   font_name: Arial
+            font_height: 25
+            font_width: 10
+            font_weight: 500
+            x: 200
+            y: 285
+    infoText3:
+        type: text
+        instances:
+        -   font_name: Arial
+            font_height: 25
+            font_width: 10
+            font_weight: 500
+            x: 200
+            y: 310
+    infoText4:
+        type: text
+        instances:
+        -   font_name: Arial
+            font_height: 25
+            font_width: 10
+            font_weight: 500
+            x: 200
+            y: 335
+    infoText5:
+        type: text
+        instances:
+        -   font_name: Arial
+            font_height: 25
+            font_width: 10
+            font_weight: 500
+            x: 200
+            y: 360
+    ticketBarCode:
+        type: code128
+        common:
+            thickness: 10
+            width: 530
+            height: 75
+            orientation: 270
+            quietzone: true
+        instances:
+        -   x: 1000
+            y: 85
