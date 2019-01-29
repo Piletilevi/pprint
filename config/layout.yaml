@@ -49,6 +49,7 @@ Layout:
         y: 525
     imageBg:
       type: image
+      default: box_bg_1214x560px.jpg
       common:
         orientation: 0
       instances:

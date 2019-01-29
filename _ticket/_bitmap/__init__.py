@@ -204,6 +204,8 @@ class BMPPrint:
                 self.TICKET.get('transactionData', {}).get(layout_key, '')
             )
             if value == '':
+                value = field.get('default')
+            if value == '':
                 print('skip layout_key {0}'.format(layout_key))
                 continue
 
