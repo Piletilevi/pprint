@@ -88,10 +88,10 @@ class BMPPrint:
         return _pic
 
     def _placeImage(self, x, y, url, rotate):
-        _picture_fn = '{0}_{1}.png'.format(
-            os.path.join(self.BASEDIR, 'img', os.path.basename(url)), rotate)
+        _picture_fn = os.path.join(self.BASEDIR, 'img', os.path.basename(url))
         if not os.path.isfile(_picture_fn):
-            cert_path = os.path.abspath(os.path.join(self.BASEDIR, 'certifi', 'cacert.pem'))
+            cert_path = os.path.abspath(
+                os.path.join(self.BASEDIR, 'certifi', 'cacert.pem'))
             r = requests.get(url, verify=cert_path)
             r.raise_for_status()
 

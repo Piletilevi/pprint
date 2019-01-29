@@ -1,0 +1,53 @@
+prefixes:
+    pilttop: http://images.piletilevi.ee/tickets/
+    piltleft: http://images.piletilevi.ee/tickets/
+    piltbot: http://images.piletilevi.ee/tickets/
+
+defaults:
+    salesPointText: Müügipunkt
+    salesPointCountry: Estonia
+    salesPoint: "Salespoint:"
+    transactionDateTime:
+    ticketData:
+        printerData:
+            type: tickets_bitmap
+            printerName: Godex DT4x
+
+mappings:
+    setup: deprecated
+    tk: deprecated
+    piletid2: deprecated
+    lisatunnus: deprecated
+    teenustext: deprecated
+    totale: deprecated
+
+    versioon: plpVersion
+
+    piletid1: ticketId
+    triipid: ticketBarCode
+    yritus1: eventName1
+    yritus2: eventName2
+    toimkoht: eventLocation
+    aeg: eventDateTime
+    lisatext1: infoText1
+    lisatext2: infoText2
+    lisatext3: infoText3
+    lisatext4: infoText4
+    lisatext5: infoText5
+    lisapdf: infoTextPdf
+    sektor1: section1
+    sektor2: section2
+    rida1: row1
+    rida2: row2
+    koht1: seat1
+    koht2: seat2
+    piletiliik1: priceGroup1
+    piletiliik2: priceGroup2
+    hind: ticketPrice
+    hinde: serviceFee
+    teenuse: extraFee
+    totaltext: totalText
+    total: totalPrice
+    pilttop: imageTop
+    piltleft: imageLeft
+    piltbot: imageBottom

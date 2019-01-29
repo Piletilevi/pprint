@@ -1,0 +1,37 @@
+tk=1
+versioon=1.00
+setup=c:/plevi/setup.frm
+BEGIN 1
+lisatext1=Lisatext 01 Lisatext 01 Lisatext 01
+toimkoht=Saku Suurhall
+aeg=Teisipäev 02.02.21  kell 18:15
+yritus1=Saku Suurhalli testyritus Bronn Marianne
+yritus2=Saku Suurhalli testyritus Marianne Bronn
+lisatext2=Lisatext 02 Lisatext 02 Lisatext 02
+lisatext3=Lisatext 03 Lisatext 03 Lisatext 03
+lisatext4=Lisatext 04 Lisatext 04 Lisatext 04
+lisatext5=Lisatext 05 Lisatext 05 Lisatext 05
+lisapdf=PDF pileti eriinfo
+piletid1=174124141
+piletid2=174124141
+triipid=43200202141787
+hind=0.01€
+lisatunnus=0202211815
+piletiliik1=Täispilet
+piletiliik2=T
+sektor1=Sektor 204
+sektor2=Sektor 204
+rida1=RIDA 2
+rida2=R 2
+koht1=KOHT 16
+koht2=K 16
+hinde=Müügipunkti teenustasu 0.50€
+teenuse=Saku Suurhalli teenustasu 0.90€
+teenustext=
+total=1.41€
+totaltext=Kokku:
+totale=
+piltleft=left_1516006098_150x245.jpg
+pilttop=top_1516006122_600x55.jpg
+piltbot=bottom_1516006139_600x40.jpg
+END 1
