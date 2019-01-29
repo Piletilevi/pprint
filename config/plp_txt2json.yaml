@@ -6,12 +6,33 @@ prefixes:
 defaults:
     salesPointText: Müügipunkt
     salesPointCountry: Estonia
-    salesPoint: "Salespoint:"
-    transactionDateTime:
+    salesPoint: "balti jaama müügipunkt"
     ticketData:
         printerData:
-            type: tickets_bitmap
+            type: tickets_postscript
             printerName: Godex DT4x
+        layout: layout2pages
+
+overwrites:
+    yritus1:
+      - contains: Saku
+        target:
+          - key: ticketData.layout
+            value: Layout
+          - key: printerData.printerName
+            value: Godex DT4x
+      - contains: Madonna
+        target:
+          - key: ticketData.layout
+            value: layout2pages
+          - key: printerData.printerName
+            value: Godex DT4x
+    sektor1:
+      - contains: 'Sektor 204'
+        target:
+          - key: ticketData.layout
+            value: layout2pages
+
 
 mappings:
     setup: deprecated
