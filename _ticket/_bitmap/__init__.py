@@ -147,6 +147,19 @@ class BMPPrint:
             height = {'px': int(h[0]/10*resolution), 'mm': h[0]}
 
         return {'resolution': resolution, 'width': width, 'height': height}
+        # o = page.get('offset')
+        #
+        # o_x = (float(o.get('width')[0:-2]), page.get('width')[-2:])
+        # offset_width = {'mm': o_x[0]/resolution*10, 'px': int(o_x[0])}
+        # if o_x[1] == 'mm':
+        #     offset_width = {'px': int(o_x[0]/10*resolution), 'mm': o_x[0]}
+        #
+        # o_y = (float(o.get('height')[0:-2]), page.get('height')[-2:])
+        # offset_height = {'mm': o_y[0]/resolution*10, 'px': int(o_y[0])}
+        # if o_y[1] == 'mm':
+        #     offset_height = {'px': int(o_y[0]/10*resolution), 'mm': o_y[0]}
+        #
+        # return {'resolution': resolution, 'width': width, 'height': height, 'offset': {'width': width, 'height': height}}
 
     @decorators.profiler('_ticket.printTicket')
     def printTicket(self):

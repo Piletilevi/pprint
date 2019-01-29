@@ -11,6 +11,9 @@ Page:
     # resolution: dots per inch (dpi) or dots per centimeter (dpc)
     # 203dpi = 80dpc (80*2.54 = 203.2)
     resolution: 203dpi
+    offset:
+        width: 15px
+        height: 5px
 
 Layout:
     transactionDateTime:
