@@ -58,7 +58,7 @@ class BMPPrint:
 
     def _placeText(self, font_name, font_size, x, y, text, rotate=0):
         font_fn = os.path.join(self.BASEDIR, 'ttf', font_name+'.ttf')
-        print(font_fn, font_size)
+        # print(font_fn, font_size)
         font = ImageFont.truetype(font_fn, font_size)
         img_txt = Image.new('RGBA', font.getsize(text),
                             color=(255, 255, 255, 255))
@@ -251,4 +251,4 @@ class BMPPrint:
                 continue
 
         self._printDocument()
-        print('outfn', self.out_fn)
+        # print('outfn', self.out_fn)
