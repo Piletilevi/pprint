@@ -36,7 +36,10 @@ class PSPrint:
             raise ValueError('Can not register "{prnt}".'.format(prnt=prnt))
 
         try:
-            devmode.Orientation = 2
+            if printerData['printOrientation'] == 'portrait':
+                devmode.Orientation = 1
+            elif printerData['printOrientation'] == 'landscape':
+                devmode.Orientation = 2
         except Exception as e:
             raise ValueError('Can not set orientation for "{prnt}".'
                              .format(prnt=prnt))

@@ -111,10 +111,11 @@ class BMPPrint:
         _pic = self._rotatePicture(_pic, rotate)
         self.image.paste(_pic, (x, y))
 
-    def _startDocument(self, page_settings):
+    def _startDocument(self):
         self.image = Image.new(
             'RGBA',
-            (page_settings['width']['px'], page_settings['height']['px']),
+            (self.page_settings['width']['px'],
+             self.page_settings['height']['px']),
             color=(255, 255, 255, 255))
         self.draw = ImageDraw.Draw(self.image)
 
@@ -143,7 +144,10 @@ class BMPPrint:
         if h[1] == 'mm':
             height = {'px': int(h[0]/10*resolution), 'mm': h[0]}
 
-        return {'resolution': resolution, 'width': width, 'height': height}
+        return {'resolution': resolution,
+                'width': width,
+                'height': height,
+                'printOrientation': page.get('printOrientation', None)}
         # o = page.get('offset')
         #
         # o_x = (float(o.get('width')[0:-2]), page.get('width')[-2:])
@@ -183,13 +187,14 @@ class BMPPrint:
                     layout_file_path = os.path.join(
                         self.BASEDIR, 'config', default_lo_fn)
 
+        print(layout_file_path)
         with open(layout_file_path, 'r', encoding='utf-8') as layout_file:
             ps_layout = ordered_load(layout_file, yaml.SafeLoader)
 
-        page_settings = self._page_setup(ps_layout.get('Page'))
-        print('page_settings', page_settings)
+        self.page_settings = self._page_setup(ps_layout.get('Page'))
+        print('page_settings', self.page_settings)
 
-        self._startDocument(page_settings)
+        self._startDocument()
 
         if isinstance(ps_layout.get('Layout'), list):
             print('layout is list')

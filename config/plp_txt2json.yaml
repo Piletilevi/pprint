@@ -9,9 +9,9 @@ defaults:
     salesPoint: "balti jaama müügipunkt"
     ticketData:
         printerData:
-            type: tickets_postscript
-            printerName: Godex DT4x
-        layout: layout2pages
+            type: tickets
+            printerName: DTC1250e Card Printer
+        layout: layout_cr80_bocelli
 
 overwrites:
     yritus1:
@@ -28,7 +28,7 @@ overwrites:
           - key: printerData.printerName
             value: Godex DT4x
     sektor1:
-      - contains: 'Sektor 204'
+      - contains: 'Sektor 201'
         target:
           - key: ticketData.layout
             value: layout2pages

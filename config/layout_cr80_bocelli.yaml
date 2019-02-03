@@ -1,0 +1,137 @@
+# coding: utf-8
+
+---
+Page:
+    # CR80 card measures 85.725x53.975mm
+    # Card printer resolution is 300 dpi and colour RGB
+    # width: 53.975 mm; 638 px
+    # height: 85.725 mm; 1013 px
+    width: 638px
+    height: 1013px
+    # resolution: dots per inch (dpi) or dots per centimeter (dpc)
+    # 203dpi = 80dpc (80*2.54 = 203.2)
+    resolution: 300dpi
+    # printOrientation: portrait
+    # offset is not implemented
+    # offset:
+    #    width: 0px
+    #    height: 0px
+    # Page orientation could be portrait or landscape
+
+Layout:
+    imageBg:
+        type: image
+        default: bocelli_638x663.png
+        common:
+            orientation: 0
+        instances:
+        -   x: 0
+            y: 0
+    imageLogo:
+        type: image
+        default: pl_logo_118x118.png
+        common:
+            orientation: 0
+        instances:
+        -   x: 30
+            y: 900
+    eventName1:
+        type: text
+        instances:
+        -   font_name: Arial
+            font_height: 34
+            font_width: 14
+            font_weight: 1000
+            x: 30
+            y: 700
+    eventName2:
+        type: text
+        instances:
+        -   font_name: Arial
+            font_height: 34
+            font_width: 14
+            font_weight: 1000
+            x: 30
+            y: 750
+    eventLocation:
+        type: text
+        instances:
+        -   font_name: Arial
+            font_height: 30
+            font_width: 12
+            font_weight: 1000
+            x: 30
+            y: 800
+    eventDateTime:
+        type: text
+        instances:
+        -   font_name: Arial
+            font_height: 30
+            font_width: 12
+            font_weight: 1000
+            x: 30
+            y: 840
+    section1:
+        type: text
+        instances:
+        -   font_name: Arial
+            font_height: 30
+            font_width: 12
+            font_weight: 1000
+            x: 200
+            y: 940
+    row1:
+        type: text
+        instances:
+        -   font_name: Arial
+            font_height: 30
+            font_width: 12
+            font_weight: 1000
+            x: 200
+            y: 980
+    seat1:
+        type: text
+        instances:
+        -   font_name: Arial
+            font_height: 30
+            font_width: 12
+            font_weight: 1000
+            x: 400
+            y: 980
+    priceGroup1:
+        type: text
+        instances:
+        -   font_name: Arial
+            font_height: 30
+            font_width: 13
+            font_weight: 800
+            x: 200
+            y: 900
+    ticketId:
+        type: text
+        common:
+            prefix: 'ID: '
+            font_name: Arial
+            font_height: 25
+            font_width: 10
+            font_weight: 500
+            color:
+                R: ff
+                G: ff
+                B: ff
+        instances:
+        -   x: 20
+            y: 20
+        -   x: 500
+            y: 20
+    ticketBarCode:
+        type: code128
+        common:
+            thickness: 10
+            width: 530
+            height: 75
+            orientation: 0
+            quietzone: true
+        instances:
+        -   x: 120
+            y: 955

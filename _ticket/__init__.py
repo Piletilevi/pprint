@@ -4,8 +4,9 @@ import decorators
 
 
 def print2postscript(ticket, job_no):
-    bmp_fns = print2bitmap(ticket, job_no)
+    bmp_fns, printOrientation = print2bitmap(ticket, job_no)
     from _ticket._postscript import PSPrint
+    ticket['printerData']['printOrientation'] = printOrientation
     ps = PSPrint(ticket['printerData'])
     for bmp_fn in bmp_fns:
         ps.printTicket(bmp_fn)
@@ -21,7 +22,7 @@ def print2bitmap(ticket, job_no):
     bmp = BMPPrint(ticket)
     bmp.printTicket(job_no)
     print('Printed', bmp.out_fn)
-    return bmp.out_fn
+    return (bmp.out_fn, bmp.page_settings['printOrientation'])
 
 
 def cantPrint(method):
