@@ -115,14 +115,15 @@ Layout:
             font_height: 25
             font_width: 10
             font_weight: 500
-            color:
-                R: ff
-                G: ff
-                B: ff
+            font_color:
+                # R: 255
+                G: 255
+                # B: 255
+                # A: 255
         instances:
         -   x: 20
             y: 20
-        -   x: 500
+        -   x: 450
             y: 20
     ticketBarCode:
         type: code128

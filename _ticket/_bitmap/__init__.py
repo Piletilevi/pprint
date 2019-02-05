@@ -56,18 +56,33 @@ class BMPPrint:
         return '{0}_{1}.png'.format(
             os.path.join(self.BASEDIR, 'tmp', os.path.basename(url)), rotate)
 
-    def _placeText(self, font_name, font_size, x, y, text, rotate=0):
+    def _placeText(self, font_name,
+                   font_size, x, y, text,
+                   rotate=0, color=None):
+        # print('color1', color)
+        if color is None:
+            color = (0, 0, 0, 255)
+        else:
+            color = dict(color)
+            color = (color.get('R', 0),
+                     color.get('G', 0),
+                     color.get('B', 0),
+                     color.get('A', 255))
+        # print('color2', color)
         font_fn = os.path.join(self.BASEDIR, 'ttf', font_name+'.ttf')
         # print(font_fn, font_size)
         font = ImageFont.truetype(font_fn, font_size)
         img_txt = Image.new('RGBA', font.getsize(text),
-                            color=(255, 255, 255, 255))
+                            color=(0, 0, 0, 0))
         img_txt.filename = text
         img_drw = ImageDraw.Draw(img_txt)
-        img_drw.text((0, 0), text,  font=font, fill=(0, 0, 0, 255))
-
+        img_drw.text((0, 0), text,  font=font, fill=color)
         img_txt = self._rotatePicture(img_txt, rotate)
-        self.image.paste(img_txt, (x, y))
+        transparent_bg = Image.new('RGBA', self.image.size,
+                                   color=(0, 0, 0, 0))
+        transparent_bg.paste(img_txt, (x, y))
+        self.image = Image.alpha_composite(self.image, transparent_bg)
+        # self.image.paste(img_txt, (x, y))
 
     def _indexedRotate(self, degrees):
         rix = {0: 0,
@@ -230,13 +245,15 @@ class BMPPrint:
                         y           = self._getInstanceProperty('y', instance, field)
                         if not (font_height and font_width and font_weight and x and y):
                             continue
+                        font_color  = self._getInstanceProperty('font_color', instance, field)
+
                         orientation = self._getInstanceProperty('orientation', instance, field)     or 0
                         prefix      = self._getInstanceProperty('prefix', instance, field) or ''
                         suffix      = self._getInstanceProperty('suffix', instance, field) or ''
                         # self._setFont(font_name, font_width, font_height, font_weight, orientation)
                         self._placeText(font_name, font_height, int(x), int(y),
                                         '{0}{1}{2}'.format(prefix, value, suffix),
-                                        orientation)
+                                        orientation, font_color)
                     continue
 
                 elif field['type'] == 'image':
