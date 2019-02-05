@@ -3,10 +3,12 @@
 import decorators
 
 import os
+import io
 import sys
 import requests
 import math
 import yaml
+import pyqrcode
 
 import collections
 
@@ -55,6 +57,42 @@ class BMPPrint:
     def _imgPath(self, url, rotate):
         return '{0}_{1}.png'.format(
             os.path.join(self.BASEDIR, 'tmp', os.path.basename(url)), rotate)
+
+    def _placeQR(self, text, x, y, scale,
+                 background=None, foreground=None):
+
+        if background is None:
+            background = (255, 255, 255, 255)
+        else:
+            background = dict(background)
+            background = (background.get('R', 255),
+                          background.get('G', 255),
+                          background.get('B', 255),
+                          background.get('A', 255))
+        if foreground is None:
+            foreground = (0, 0, 0, 255)
+        else:
+            foreground = dict(foreground)
+            foreground = (foreground.get('R', 0),
+                          foreground.get('G', 0),
+                          foreground.get('B', 0),
+                          foreground.get('A', 255))
+
+        print(foreground, background)
+        qrcode = pyqrcode.create(text,
+                                 error='H',
+                                 version=1,
+                                 # mode='numeric'
+                                 )
+        png_buffer = io.BytesIO()
+        qrcode.png(
+            png_buffer,
+            scale=scale,
+            module_color=foreground,
+            background=background
+            )
+        qr_img = Image.open(png_buffer).convert("RGBA")
+        self.image.paste(qr_img, (x, y))
 
     def _placeText(self, font_name,
                    font_size, x, y, text,
@@ -276,6 +314,19 @@ class BMPPrint:
                         if not (x and y):
                             continue
                         self._placeC128(value, int(x), int(y), width, height, thickness, orientation, quietzone)
+                    continue
+
+                elif field['type'] == 'qrcode':
+                    for instance in field['instances']:
+                        scale       = self._getInstanceProperty('scale', instance, field)           or 8
+                        x           = instance.get('x', field.get('common', {'x': False}).get('x', False))
+                        y           = instance.get('y', field.get('common', {'y': False}).get('y', False))
+                        if not (x and y):
+                            continue
+                        background  = self._getInstanceProperty('background', instance, field)
+                        foreground  = self._getInstanceProperty('foreground', instance, field)
+                        self._placeQR(value, int(x), int(y), scale,
+                                      background, foreground)
                     continue
 
             out_fn = os.path.join(self.BASEDIR, 'img',

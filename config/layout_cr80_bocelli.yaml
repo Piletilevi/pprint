@@ -125,14 +125,29 @@ Layout:
             y: 20
         -   x: 450
             y: 20
+    # ticketBarCode:
+    #     type: code128
+    #     common:
+    #         thickness: 10
+    #         width: 530
+    #         height: 75
+    #         orientation: 0
+    #         quietzone: true
+    #     instances:
+    #     -   x: 120
+    #         y: 955
     ticketBarCode:
-        type: code128
+        type: qrcode
         common:
-            thickness: 10
-            width: 530
-            height: 75
-            orientation: 0
-            quietzone: true
+            scale: 7
+            background:
+                # R: 255
+                # G: 255
+                B: 0
+            foreground:
+                # R: 0
+                # G: 0
+                # B: 0
         instances:
-        -   x: 120
-            y: 955
+        -   x: 425
+            y: 800
