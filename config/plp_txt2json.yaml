@@ -13,26 +13,16 @@ defaults:
             type: tickets_bitmap
             printerName: DTC1250e Card Printer
         layout: layout_cr80_2pages
+        # layout: layout_cr80_bocelli
 
-overwrites:
-    yritus1:
-      - contains: Saku
-        target:
-          - key: ticketData.layout
-            value: Layout
-          - key: printerData.printerName
-            value: Godex DT4x
-      - contains: Madonna
-        target:
-          - key: ticketData.layout
-            value: layout2pages
-          - key: printerData.printerName
-            value: Godex DT4x
-    sektor1:
-      - contains: 'Sektor 201'
-        target:
-          - key: ticketData.layout
-            value: layout2pages
+rules:
+-   if: # AND
+        ticketId: '17412414'
+        # eventName1: Saku|Madonna # regexp
+        # section1: Sektor 201 # regexp
+    then: # In matching tickets only
+        layout.name: layout
+        printerData.printerName: Godex DT4x
 
 
 mappings:

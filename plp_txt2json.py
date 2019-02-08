@@ -5,6 +5,7 @@ import sys
 import os
 import yaml
 import json
+import re
 
 
 BASEDIR = os.path.dirname(sys.executable) if hasattr(sys, "frozen")\
@@ -25,8 +26,7 @@ def main(PLPTXT_FN, PLPJSON_FN):
         MAPPINGS = m.setdefault('mappings', {})
         PLP_DATA = m.setdefault('defaults', {})
         PREFIXES = m.setdefault('prefixes', {})
-        RULES = m.setdefault('overwrites', {})
-        OVERWRITES = []
+        RULES = m.setdefault('rules', [])
         print('converting', PLPTXT_FN, 'to', PLPJSON_FN)
         with open(PLPTXT_FN, 'r', encoding='utf-8') as plptxt_file:
             plptxt = [line.rstrip('\n \t') for line in plptxt_file]
@@ -48,10 +48,6 @@ def main(PLPTXT_FN, PLPJSON_FN):
                     continue
                 (k, v) = line.split('=')
                 # print(k, v)
-                if k in RULES:
-                    for rule in RULES[k]:
-                        if rule.contains in v:
-                            OVERWRITES.append(rule.target)
                 if MAPPINGS[k] == 'deprecated':
                     PLP_DATA.setdefault('deprecated', []).append(k)
                 else:
@@ -69,14 +65,6 @@ def main(PLPTXT_FN, PLPJSON_FN):
                     # print('PLP_DATA:', PLP_DATA)
                     continue
                 (k, v) = line.split('=')
-                if k in RULES:
-                    for rule in RULES[k]:
-                        if rule['contains'] in v:
-                            # print(OVERWRITES)
-                            # print('\n --- \n')
-                            # print(rule['target'])
-                            # print('\n --- \n')
-                            OVERWRITES.extend(rule['target'])
                 if MAPPINGS[k] == 'deprecated':
                     PLP_DATA.setdefault('deprecated', []).append(k)
                 else:
@@ -85,9 +73,16 @@ def main(PLPTXT_FN, PLPJSON_FN):
                                MAPPINGS[k].split('.'),
                                v)
 
-        for overwrite in OVERWRITES:
-            print(overwrite)
-            nested_set(PLP_DATA, overwrite['key'].split('.'), overwrite['value'])
+        for ticket in PLP_DATA['ticketData']['tickets']:
+            for rule in RULES:
+                print(rule['if'])
+                for key, pattern in rule['if'].items():
+                    value_on_ticket = ticket.get(key, '')
+                    if re.match(pattern, value_on_ticket):
+                        for k, v in rule['then'].items():
+                            nested_set(ticket, k.split('.'), v)
+
+        print(json.dumps(PLP_DATA, indent=4))
         return PLP_DATA
 
 
