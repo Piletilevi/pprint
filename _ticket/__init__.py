@@ -8,8 +8,7 @@ def print2postscript(ticket, job_no):
     from _ticket._postscript import PSPrint
     ticket['printerData']['printOrientation'] = printOrientation
     ps = PSPrint(ticket['printerData'])
-    for bmp_fn in bmp_fns:
-        ps.printTicket(bmp_fn)
+    ps.printTicket(bmp_fns)
 
 
 def print2pdf(ticket, job_no):

@@ -11,7 +11,7 @@ defaults:
         printerData:
             type: tickets
             printerName: DTC1250e Card Printer
-        layout: layout_cr80_bocelli
+        layout: layout_cr80_2pages
 
 overwrites:
     yritus1:

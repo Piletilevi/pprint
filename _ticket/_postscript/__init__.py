@@ -97,23 +97,28 @@ class PSPrint:
         self.DEVICE_CONTEXT.StartDoc("ticket.txt")
         # print("DEVICE_CONTEXT.StartPage")
         self.DEVICE_CONTEXT.StartPage()
-        # print("win32ui.CreateFont");
-        font = win32ui.CreateFont({"name": "Arial", "height": 16})
-        # print("DEVICE_CONTEXT.SelectObject")
-        self.DEVICE_CONTEXT.SelectObject(font)
-        # print("DEVICE_CONTEXT.SelectObject DONE")
+
+    def _turnPage(self):
+        self.DEVICE_CONTEXT.EndPage()
+        self.DEVICE_CONTEXT.StartPage()
 
     def _printDocument(self):
         self.DEVICE_CONTEXT.EndPage()
         self.DEVICE_CONTEXT.EndDoc()
 
     @decorators.profiler('_ticket.printTicket')
-    def printTicket(self, bmp_fn=None):
-        if bmp_fn is None:
-            raise ValueError('Missing ticket bitmap file name')
+    def printTicket(self, bmp_fns=None):
+        if bmp_fns is None:
+            raise ValueError('Missing ticket bitmap file names')
 
+        print('Printing', len(bmp_fns), 'pages.')
         self._startDocument()
-        print('Printing from bitmap', bmp_fn)
-        self._placeImage(0, 0, bmp_fn)
+        page_no = 0
+        for bmp_fn in bmp_fns:
+            page_no += 1
+            print('Printing from bitmap', bmp_fn)
+            self._placeImage(0, 0, bmp_fn)
+            if len(bmp_fns) > page_no:
+                self._turnPage()
         self._printDocument()
         return
