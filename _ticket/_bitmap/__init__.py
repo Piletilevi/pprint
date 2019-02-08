@@ -155,10 +155,13 @@ class BMPPrint:
 
         _pic = self._rotatePicture(Image.open(_picture_fn), rotate)
 
-        self.image.paste(_pic, (x, y))
+        transparent_bg = Image.new('RGBA', self.image.size,
+                                   color=(0, 0, 0, 0))
+        transparent_bg.paste(_pic, (x, y))
+        self.image = Image.alpha_composite(self.image, transparent_bg)
+        # self.image.paste(_pic, (x, y))
 
-    def _placeC128(self, text, x, y,
-                   width, height, thickness, rotate, quietzone):
+    def _placeC128(self, text, x, y, width, height, thickness, rotate, quietzone):
         _pic = _c128image(text, int(width), int(height), quietzone)
         _pic.filename = 'c128'
         _pic = self._rotatePicture(_pic, rotate)

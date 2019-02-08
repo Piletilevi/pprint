@@ -9,7 +9,8 @@ defaults:
     salesPoint: "balti jaama müügipunkt"
     ticketData:
         printerData:
-            type: tickets
+            # type: tickets
+            type: tickets_bitmap
             printerName: DTC1250e Card Printer
         layout: layout_cr80_2pages
 
