@@ -120,5 +120,7 @@ class PSPrint:
             self._placeImage(0, 0, bmp_fn)
             if len(bmp_fns) > page_no:
                 self._turnPage()
+            os.unlink(bmp_fn)
+
         self._printDocument()
         return
