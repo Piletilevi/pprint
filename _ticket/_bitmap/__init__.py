@@ -8,6 +8,7 @@ import sys
 import requests
 import math
 import yaml
+import json
 import pyqrcode
 
 import collections
@@ -32,6 +33,11 @@ def ordered_load(stream, Loader=yaml.Loader,
     return yaml.load(stream, OrderedLoader)
 
 
+@decorators.log('')
+def log(*args):
+    pass
+
+
 # @decorators.profiler('_bitmap')
 class BMPPrint:
     @decorators.profiler('_bitmap')
@@ -42,14 +48,6 @@ class BMPPrint:
             self.BASEDIR = sys.path[0]
 
         self.TICKET = ticket
-
-    def __enter__(self):
-        print('Enter BMPPrint')
-        return self
-
-    def __exit__(self, exc_type, exc_value, traceback):
-        print('bye')
-        None
 
     def _setFont(self, font_name):
         None
@@ -78,7 +76,6 @@ class BMPPrint:
                           foreground.get('B', 0),
                           foreground.get('A', 255))
 
-        print(foreground, background)
         qrcode = pyqrcode.create(text,
                                  error='H',
                                  version=1,
@@ -243,28 +240,30 @@ class BMPPrint:
                     layout_file_path = os.path.join(
                         self.BASEDIR, 'config', default_lo_fn)
 
-        print(layout_file_path)
+        log('layout_file_path', layout_file_path)
         with open(layout_file_path, 'r', encoding='utf-8') as layout_file:
             ps_layout = ordered_load(layout_file, yaml.SafeLoader)
 
         self.page_settings = self._page_setup(ps_layout.get('Page'))
-        print('page_settings', self.page_settings)
+        log('page_settings', json.dumps(self.page_settings))
 
         self._startDocument()
+        # log('Doc started')
 
         if isinstance(ps_layout.get('Layout'), list):
-            print('layout is list')
+            # log('layout is list')
             layouts = ps_layout['Layout']
         else:
-            print('layout is NOT list')
+            # log('layout is NOT list')
             layouts = [ps_layout['Layout']]
 
         lo_page_no = 0
         self.out_fn = []
         for layout in layouts:
             lo_page_no += 1
+            log('Laying out page {} of {}'.format(lo_page_no, len(layouts)))
             for layout_key in layout.keys():
-                # print('layout_key : {0}'.format(layout_key))
+                # log('layout_key : {0}'.format(layout_key))
                 field = layout.get(layout_key)
                 value = self.TICKET.get(
                     layout_key,
@@ -273,11 +272,15 @@ class BMPPrint:
                 if value == '':
                     value = field.get('default')
                 if value == '':
-                    print('skip layout_key {0}'.format(layout_key))
+                    log('skip layout_key {0}'.format(layout_key))
                     continue
 
-                if field['type'] == 'text':
-                    for instance in field['instances']:
+                for instance in field['instances']:
+                    instance_type = self._getInstanceProperty(
+                        'type', instance, field)
+                    log('({}) {}'.format(instance_type, layout_key))
+
+                    if instance_type == 'text':
                         font_name   = self._getInstanceProperty('font_name', instance, field)
                         font_height = self._getInstanceProperty('font_height', instance, field)
                         font_width  = self._getInstanceProperty('font_width', instance, field)
@@ -295,45 +298,42 @@ class BMPPrint:
                         self._placeText(font_name, font_height, int(x), int(y),
                                         '{0}{1}{2}'.format(prefix, value, suffix),
                                         orientation, font_color)
-                    continue
+                        continue
 
-                elif field['type'] == 'image':
-                    for instance in field['instances']:
+                    elif instance_type == 'image':
                         x           = self._getInstanceProperty('x', instance, field)
                         y           = self._getInstanceProperty('y', instance, field)
                         orientation = self._getInstanceProperty('orientation', instance, field)     or 0
                         self._placeImage(int(x), int(y), value, orientation)
-                    continue
+                        continue
 
-                elif field['type'] == 'code128':
-                    for instance in field['instances']:
+                    elif instance_type == 'code128':
                         thickness   = self._getInstanceProperty('thickness', instance, field)       or 10
                         width       = self._getInstanceProperty('width', instance, field)           or 560
                         height      = self._getInstanceProperty('height', instance, field)          or 100
-                        x           = instance.get('x', field.get('common', {'x': False}).get('x', False))
-                        y           = instance.get('y', field.get('common', {'y': False}).get('y', False))
+                        x           = self._getInstanceProperty('x', instance, field)
+                        y           = self._getInstanceProperty('y', instance, field)
                         orientation = self._getInstanceProperty('orientation', instance, field)     or 0
                         quietzone   = self._getInstanceProperty('quietzone', instance, field)       or False
-                        if not (x and y):
-                            continue
-                        self._placeC128(value, int(x), int(y), width, height, thickness, orientation, quietzone)
-                    continue
+                        self._placeC128(value, int(x), int(y), width, height,
+                                        thickness, orientation, quietzone)
+                        continue
 
-                elif field['type'] == 'qrcode':
-                    for instance in field['instances']:
+                    elif instance_type == 'qrcode':
                         scale       = self._getInstanceProperty('scale', instance, field)           or 8
-                        x           = instance.get('x', field.get('common', {'x': False}).get('x', False))
-                        y           = instance.get('y', field.get('common', {'y': False}).get('y', False))
-                        if not (x and y):
-                            continue
+                        x           = self._getInstanceProperty('x', instance, field)
+                        y           = self._getInstanceProperty('y', instance, field)
                         background  = self._getInstanceProperty('background', instance, field)
                         foreground  = self._getInstanceProperty('foreground', instance, field)
                         self._placeQR(value, int(x), int(y), scale,
                                       background, foreground)
-                    continue
+                        continue
 
             out_fn = os.path.join(self.BASEDIR, 'img',
                                   self.TICKET['ticketId']+'_'+str(lo_page_no)+'.png')
+            log('Saving', out_fn)
             self.image.save(out_fn)
             self.out_fn.append(out_fn)
+            # log('Saved', 'out_fn')
+            log('Saved', out_fn)
         # print('outfn', self.out_fn)

@@ -3,6 +3,12 @@
 import decorators
 
 
+@decorators.log('')
+def log(*args):
+    # print('Logged', message)
+    pass
+
+
 def print2postscript(ticket, job_no):
     bmp_fns, printOrientation = print2bitmap(ticket, job_no)
     from _ticket._postscript import PSPrint
@@ -20,7 +26,7 @@ def print2bitmap(ticket, job_no):
     from _ticket._bitmap import BMPPrint
     bmp = BMPPrint(ticket)
     bmp.printTicket(job_no)
-    print('Printed', bmp.out_fn)
+    log('Printed', '; '.join(bmp.out_fn))
     return (bmp.out_fn, bmp.page_settings['printOrientation'])
 
 
@@ -57,7 +63,6 @@ def ticket(plp_json_data):
         ticket.setdefault('layout', {'name': g_layout})
 
         method = printerData['type']
-        print('printing method:', method)
         if method in switcher:
             func = switcher.get(method)
             func(ticket, job_no)

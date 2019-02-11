@@ -17,7 +17,7 @@ defaults:
 
 rules:
 -   if: # AND
-        ticketId: '17412414'
+        ticketId: '17412414z'
         # eventName1: Saku|Madonna # regexp
         # section1: Sektor 201 # regexp
     then: # In matching tickets only

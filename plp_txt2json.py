@@ -75,14 +75,14 @@ def main(PLPTXT_FN, PLPJSON_FN):
 
         for ticket in PLP_DATA['ticketData']['tickets']:
             for rule in RULES:
-                print(rule['if'])
+                # print(rule['if'])
                 for key, pattern in rule['if'].items():
                     value_on_ticket = ticket.get(key, '')
                     if re.match(pattern, value_on_ticket):
                         for k, v in rule['then'].items():
                             nested_set(ticket, k.split('.'), v)
 
-        print(json.dumps(PLP_DATA, indent=4))
+        # print(json.dumps(PLP_DATA, indent=4))
         return PLP_DATA
 
 

@@ -20,23 +20,24 @@ Page:
 
 Layout:
     imageBg:
-        type: image
         default: bocelli_02_square.png
         common:
+            type: image
             orientation: 0
         instances:
         -   x: 0
             y: 0
     imageLogo:
-        type: image
         default: pl_logo_118x118.png
         common:
+            type: image
             orientation: 0
         instances:
         -   x: 490
             y: 30
     eventName1:
-        type: text
+        common:
+            type: text
         instances:
         -   font_name: Arial
             font_height: 34
@@ -45,7 +46,8 @@ Layout:
             x: 36
             y: 665
     eventName2:
-        type: text
+        common:
+            type: text
         instances:
         -   font_name: Arial
             font_height: 34
@@ -54,7 +56,8 @@ Layout:
             x: 36
             y: 710
     eventLocation:
-        type: text
+        common:
+            type: text
         instances:
         -   font_name: Arial
             font_height: 30
@@ -63,7 +66,8 @@ Layout:
             x: 36
             y: 760
     eventDateTime:
-        type: text
+        common:
+            type: text
         instances:
         -   font_name: Arial
             font_height: 30
@@ -72,7 +76,8 @@ Layout:
             x: 36
             y: 800
     section1:
-        type: text
+        common:
+            type: text
         instances:
         -   font_name: Arial
             font_height: 30
@@ -81,7 +86,8 @@ Layout:
             x: 36
             y: 910
     row1:
-        type: text
+        common:
+            type: text
         instances:
         -   font_name: Arial
             font_height: 30
@@ -90,7 +96,8 @@ Layout:
             x: 36
             y: 950
     seat1:
-        type: text
+        common:
+            type: text
         instances:
         -   font_name: Arial
             font_height: 30
@@ -99,7 +106,8 @@ Layout:
             x: 220
             y: 950
     priceGroup1:
-        type: text
+        common:
+            type: text
         instances:
         -   font_name: Arial
             font_height: 30
@@ -108,8 +116,8 @@ Layout:
             x: 36
             y: 870
     ticketId:
-        type: text
         common:
+            type: text
             orientation: 0
         instances:
         -   prefix: 'ID: '
@@ -142,8 +150,8 @@ Layout:
     #        -   x: 30
     #            y: 830
     # ticketBarCode:
-    #     type: code128
     #     common:
+    #         type: code128
     #         thickness: 10
     #         width: 530
     #         height: 75
@@ -153,8 +161,8 @@ Layout:
     #     -   x: 120
     #         y: 955
     ticketBarCode:
-        type: qrcode
         common:
+            type: qrcode
             scale: 6
             background:
                 # R: 255
