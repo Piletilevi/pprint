@@ -2,7 +2,7 @@
 
 ### setup
 
-pip install pyyaml
+pip install pyyaml  
 pip install pyglet
 
 ### modules
