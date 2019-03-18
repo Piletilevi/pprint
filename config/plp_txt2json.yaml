@@ -9,11 +9,12 @@ defaults:
     salesPoint: "balti jaama müügipunkt"
     ticketData:
         printerData:
-            type: tickets_postscript
-            # type: tickets_bitmap
-            printerName: Godex DT4x
-            # printerName: DTC1250e Card Printer
-        layout: layout_cr80_2pages
+            # type: tickets_postscript
+            type: tickets_bitmap
+            # printerName: Godex DT4x
+            printerName: DTC1250e Card Printer
+            # printerName: ZDesigner ZD420-203dpi ZPL
+        layout: layout_egiptus_zd420
         # layout: layout_cr80_bocelli
 
 rules:
