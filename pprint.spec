@@ -5,7 +5,8 @@ block_cipher = None
 
 added_files = [
     ('README.md', '.'),
-    ('config/layout.yaml', 'config'),
+    ('config', 'config'),
+    ('ttf', 'ttf'),
     ('img', 'img')
     ]
 a = Analysis(['pprint.py'],
