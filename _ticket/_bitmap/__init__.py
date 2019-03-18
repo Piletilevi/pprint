@@ -94,7 +94,6 @@ class BMPPrint:
     def _placeText(self, font_name,
                    font_size, x, y, text,
                    rotate=0, color=None):
-        # print('color1', color)
         if color is None:
             color = (0, 0, 0, 255)
         else:
@@ -103,9 +102,7 @@ class BMPPrint:
                      color.get('G', 0),
                      color.get('B', 0),
                      color.get('A', 255))
-        # print('color2', color)
         font_fn = os.path.join(self.BASEDIR, 'ttf', font_name+'.ttf')
-        # print(font_fn, font_size)
         font = ImageFont.truetype(font_fn, font_size)
         img_txt = Image.new('RGBA', font.getsize(text),
                             color=(0, 0, 0, 0))
@@ -138,6 +135,8 @@ class BMPPrint:
         return _pic
 
     def _placeImage(self, x, y, url, rotate):
+        if os.path.basename(url) == '':
+            return
         _picture_fn = os.path.join(self.BASEDIR, 'img', os.path.basename(url))
         if not os.path.isfile(_picture_fn):
             cert_path = os.path.abspath(
@@ -146,7 +145,6 @@ class BMPPrint:
             r.raise_for_status()
 
             with open(_picture_fn, 'wb') as fd:
-                # print('with ', _picture_fn)
                 for chunk in r.iter_content(chunk_size=128):
                     fd.write(chunk)
 
@@ -261,7 +259,7 @@ class BMPPrint:
         self.out_fn = []
         for layout in layouts:
             lo_page_no += 1
-            log('Laying out page {} of {}'.format(lo_page_no, len(layouts)))
+            # log('Laying out page {} of {}'.format(lo_page_no, len(layouts)))
             for layout_key in layout.keys():
                 # log('layout_key : {0}'.format(layout_key))
                 field = layout.get(layout_key)
@@ -269,8 +267,10 @@ class BMPPrint:
                     layout_key,
                     self.TICKET.get('transactionData', {}).get(layout_key, '')
                 )
+                if value is None:
+                    value = ''
                 if value == '':
-                    value = field.get('default')
+                    value = field.get('default', '')
                 if value == '':
                     log('skip layout_key {0}'.format(layout_key))
                     continue
@@ -336,4 +336,3 @@ class BMPPrint:
             self.out_fn.append(out_fn)
             # log('Saved', 'out_fn')
             log('Saved', out_fn)
-        # print('outfn', self.out_fn)
