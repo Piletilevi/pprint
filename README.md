@@ -2,7 +2,7 @@
 
 ### setup
 
-pip install pyyaml
+pip install pyyaml  
 pip install pyglet
 
 ### modules
@@ -11,8 +11,7 @@ pprint:
 - update
 - ticket:
   - postscript
-  - bitmap - to move in
-  - PDF - todo
+  - bitmap
 - payment - to move in
 - fiscal - to move in
 - feedback - to move in
@@ -51,3 +50,7 @@ Pileti müümine BOs tähendab PLP faili genereerimist ja selle allalaadimise pr
     - Makse tüüp
       - Makse komponendid antud tüübiga
       - jne
+
+
+## Ajaarvestus
+https://gist.github.com/mitselek/1aeac6264a7d1ac52088afffbe2e0725
