@@ -5,6 +5,15 @@ import sys
 import os
 import json
 import shutil
+
+import sentry_sdk
+
+sentry_sdk.init(
+    'https://e03ea87113a644bb9ffd2a53318158e5@sentry.io/1456705',
+    max_breadcrumbs=50,
+    debug=False,
+)
+
 # import inspect
 
 

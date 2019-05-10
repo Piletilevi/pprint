@@ -42,6 +42,7 @@ class log(object):
                     diff=current_milli_time() - self.decoration_time,
                     name=self.topic,
                     e=e))
+                raise (e)
                 sys.exit(1)
         return wrapped_f
 
@@ -83,6 +84,7 @@ class profiler(object):
                     diff=current_milli_time() - self.decoration_time,
                     name=self.topic,
                     e=e))
+                raise (e)
                 sys.exit(1)
             print('[{total:4d} {diff:4d} Finish:{name}]'.format(
                 total=current_milli_time() - init_milli_time,
